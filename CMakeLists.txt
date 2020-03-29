@@ -63,6 +63,7 @@ add_definitions(
   -DQT_NO_CAST_FROM_BYTEARRAY
   -DQT_NO_KEYWORDS
   -DQT_USE_QSTRINGBUILDER
+  -DQT_DISABLE_DEPRECATED_BEFORE=0x050c00
 )
 
 # Always include the source and build directories in the include path

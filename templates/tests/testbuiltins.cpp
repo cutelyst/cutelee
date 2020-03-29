@@ -587,11 +587,11 @@ void TestBuiltinSyntax::testBasicSyntax_data()
   // Literal strings are permitted inside variables, mostly for i18n
   // purposes.
   QTest::newRow("basic-syntax25")
-      << "{{ \"fred\" }}" << dict << QStringLiteral("fred") << NoError;
+          << "{{ \"fred\" }}" << dict << QString::fromLatin1( "fred" ) << NoError;
   QTest::newRow("basic-syntax26")
-      << "{{ \"\\\"fred\\\"\" }}" << dict << "\"fred\"" << NoError;
+          << "{{ \"\\\"fred\\\"\" }}" << dict << "\"fred\"" << NoError;
   QTest::newRow("basic-syntax27")
-      << "{{ _(\"\\\"fred\\\"\") }}" << dict << "\"fred\"" << NoError;
+          << "{{ _(\"\\\"fred\\\"\") }}" << dict << "&quot;fred&quot;" << NoError;
 
   dict.clear();
   hash.clear();
@@ -1109,7 +1109,7 @@ void TestBuiltinSyntax::testEscaping_data()
   // html escaping is not to be confused with for example url escaping.
   dict.insert(QStringLiteral("var"), QStringLiteral("< > & \" \' # = % $"));
   QTest::newRow("escape01") << QStringLiteral("{{ var }}") << dict
-                            << "&lt; &gt; &amp; \" &#39; # = % $" << NoError;
+                            << "&lt; &gt; &amp; &quot; &#39; # = % $" << NoError;
 
   dict.clear();
   dict.insert(QStringLiteral("var"), QStringLiteral("this & that"));

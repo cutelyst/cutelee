@@ -157,7 +157,7 @@ public:
   /**
     Destructor
   */
-  ~Context();
+  virtual ~Context();
 
   /**
     Returns the context object identified by the key @p str

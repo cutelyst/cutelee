@@ -231,6 +231,11 @@ public:
    */
   void setSmartTrimEnabled(bool enabled);
 
+  /**
+   * Inserts the tag library without requiring to load a plugin
+   */
+  void insertLibrary(const QString &name, TagLibraryInterface *lib);
+
 #ifndef Q_QDOC
   /**
     @internal

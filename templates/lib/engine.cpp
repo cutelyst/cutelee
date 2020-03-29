@@ -76,7 +76,7 @@ QPair<QString, QString> Engine::mediaUri(const QString &fileName) const
   Q_D(const Engine);
 
   QPair<QString, QString> uri;
-  for (auto &loader : d->m_loaders) {
+  for (const auto &loader : d->m_loaders) {
     uri = loader->getMediaUri(fileName);
     if (!uri.second.isEmpty())
       break;
@@ -159,7 +159,8 @@ void Engine::loadDefaultLibraries()
   }
 #endif
 
-  Q_FOREACH (const QString &libName, d->m_defaultLibraries) {
+  const QStringList defaultLibraries = d->m_defaultLibraries;
+  for (const QString &libName : defaultLibraries) {
     if (libName == QLatin1String(__scriptableLibName))
       continue;
 
@@ -200,8 +201,10 @@ TagLibraryInterface *Engine::loadLibrary(const QString &name)
 #endif
 
   // already loaded by the engine.
-  if (d->m_libraries.contains(name))
-    return d->m_libraries.value(name).data();
+  const auto it = d->m_libraries.constFind(name);
+  if (it != d->m_libraries.constEnd()) {
+    return it->data();
+  }
 
   uint minorVersion = CUTELEE_VERSION_MINOR;
   while (acceptableVersion<CUTELEE_MIN_PLUGIN_VERSION>(minorVersion)) {
@@ -216,6 +219,13 @@ TagLibraryInterface *Engine::loadLibrary(const QString &name)
       TagSyntaxError,
       QStringLiteral("Plugin library '%1' not found.").arg(name));
   return 0;
+}
+
+void Engine::insertLibrary(const QString &name, TagLibraryInterface *lib)
+{
+    Q_D(Engine);
+    auto ptr = PluginPointer<TagLibraryInterface>(lib);
+    d->m_libraries.insert(name, ptr);
 }
 
 TagLibraryInterface *EnginePrivate::loadLibrary(const QString &name,
@@ -259,15 +269,15 @@ QString EnginePrivate::getScriptLibraryName(const QString &name,
       continue;
     return libFileName;
   }
-  auto it = m_loaders.constBegin();
-  const auto end = m_loaders.constEnd();
-  for (; it != end; ++it) {
-    const auto pair = (*it)->getMediaUri(prefix + name + QStringLiteral(".qs"));
 
-    if (!pair.first.isEmpty() && !pair.second.isEmpty()) {
-      return pair.first + pair.second;
-    }
+  for (const QSharedPointer<AbstractTemplateLoader> &loader : m_loaders) {
+      const auto pair = loader->getMediaUri(prefix + name + QStringLiteral(".qs"));
+
+      if (!pair.first.isEmpty() && !pair.second.isEmpty()) {
+        return pair.first + pair.second;
+      }
   }
+
   return QString();
 }
 

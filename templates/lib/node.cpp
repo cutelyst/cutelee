@@ -134,14 +134,14 @@ NodeList &NodeList::operator=(const NodeList &list)
 NodeList::NodeList(const QList<Cutelee::Node *> &list)
     : QList<Cutelee::Node *>(list)
 {
-  Q_FOREACH (Cutelee::Node *node, list) {
-    auto textNode = qobject_cast<TextNode *>(node);
-    if (!textNode) {
-      m_containsNonText = true;
-      return;
+    for (Cutelee::Node *node : list) {
+        auto textNode = qobject_cast<TextNode *>(node);
+        if (!textNode) {
+            m_containsNonText = true;
+            return;
+        }
     }
-  }
-  m_containsNonText = false;
+    m_containsNonText = false;
 }
 
 NodeList::~NodeList() {}
@@ -157,19 +157,19 @@ void NodeList::append(Cutelee::Node *node)
   QList<Cutelee::Node *>::append(node);
 }
 
-void NodeList::append(QList<Cutelee::Node *> nodeList)
+void NodeList::append(const QList<Cutelee::Node *> &nodeList)
 {
-  if (!m_containsNonText) {
-    Q_FOREACH (Cutelee::Node *node, nodeList) {
-      auto textNode = qobject_cast<TextNode *>(node);
-      if (!textNode) {
-        m_containsNonText = true;
-        break;
-      }
+    if (!m_containsNonText) {
+        for (const Cutelee::Node *node : nodeList) {
+            auto textNode = qobject_cast<const TextNode *>(node);
+            if (!textNode) {
+                m_containsNonText = true;
+                break;
+            }
+        }
     }
-  }
 
-  QList<Cutelee::Node *>::append(nodeList);
+    QList<Cutelee::Node *>::append(nodeList);
 }
 
 bool NodeList::containsNonText() const { return m_containsNonText; }

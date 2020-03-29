@@ -1,11 +1,10 @@
-
 cmake_minimum_required(VERSION 3.5)
 
 if (POLICY CMP0071)
   cmake_policy(SET CMP0071 NEW)
 endif()
 
-project(Cutelee5 VERSION 5.2.0)
+project(Cutelee5 VERSION 5.2.0 LANGUAGES CXX)
 
 # Workaround for http://public.kitware.com/Bug/view.php?id=12301
 if (MINGW)
@@ -139,55 +138,57 @@ add_custom_target(uninstall
   "${CMAKE_COMMAND}" -P
   "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
-find_package(Doxygen)
-if (DOXYGEN_FOUND AND DOXYGEN_DOT_FOUND)
-  message (STATUS "Doxygen and dot found. make docs target is available")
-  # Add support for a docs target
+if (BUILD_DOCS)
+    find_package(Doxygen REQUIRED dot)
+    if (DOXYGEN_FOUND AND DOXYGEN_DOT_FOUND)
+    message (STATUS "Doxygen and dot found. make docs target is available")
+    # Add support for a docs target
 
-  # Available from http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/libstdc++.tag
-  set(STLTAGFILE "${CMAKE_SOURCE_DIR}/scripts/libstdc++.tag=http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen")
-  find_file(qtcore_tag_file
-    qtcore.tags
-    HINTS
-      "/usr/share/qt5/doc/qtcore"
-    )
-  set(QTTAGFILE "${qtcore_tag_file}=https://doc.qt.io/qt-5/")
-
-  set(TAGFILES "${QTTAGFILE} ${STLTAGFILE}")
-  set(DOCS_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
-  configure_file(
-    "${Cutelee_MODULE_DIR}/Doxyfile.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
-    @ONLY)
-
-  # Add support for a Qt assistant docs target
-  # qttags.tag is too big to distribute with Cutelee. Get it
-  # from http://api.kde.org/kdereview-api/kdereview.tar.gz for example.
-  if(EXISTS ${qtcore_tag_file})
-    set(DOCS_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/qtdocs")
-
-    # Available from http://steveire.com/libstdc++-longnames.tag
-    # Also recommended: http://www.steveire.com/libstdc++-v3.qch
-    set(STLTAGFILE "${CMAKE_SOURCE_DIR}/scripts/libstdc++-longnames.tag=qthelp://org.gnu.libstdcxx/libstdc++-v3/")
-    set(QTTAGFILE "${qtcore_tag_file}=qthelp://org.qt-project.qtcore/qtcore/")
+    # Available from http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/libstdc++.tag
+    set(STLTAGFILE "${CMAKE_SOURCE_DIR}/scripts/libstdc++.tag=http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen")
+    find_file(qtcore_tag_file
+        qtcore.tags
+        HINTS
+        "/usr/share/qt5/doc/qtcore"
+        )
+    set(QTTAGFILE "${qtcore_tag_file}=https://doc.qt.io/qt-5/")
 
     set(TAGFILES "${QTTAGFILE} ${STLTAGFILE}")
-    set(GENERATE_QHP "yes")
-
+    set(DOCS_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
     configure_file(
-      "${Cutelee_MODULE_DIR}/Doxyfile.in"
-      "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.qt"
-      @ONLY)
-  endif()
+        "${Cutelee_MODULE_DIR}/Doxyfile.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
+        @ONLY)
 
-  set( DOCS_ARGS ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile" )
-  if(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.qt")
-    set(DOCS_ARGS ${DOCS_ARGS} COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.qt" )
-  endif()
+    # Add support for a Qt assistant docs target
+    # qttags.tag is too big to distribute with Cutelee. Get it
+    # from http://api.kde.org/kdereview-api/kdereview.tar.gz for example.
+    if(EXISTS ${qtcore_tag_file})
+        set(DOCS_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/qtdocs")
 
-  add_custom_target(docs
-    ${DOCS_ARGS}
-  )
+        # Available from http://steveire.com/libstdc++-longnames.tag
+        # Also recommended: http://www.steveire.com/libstdc++-v3.qch
+        set(STLTAGFILE "${CMAKE_SOURCE_DIR}/scripts/libstdc++-longnames.tag=qthelp://org.gnu.libstdcxx/libstdc++-v3/")
+        set(QTTAGFILE "${qtcore_tag_file}=qthelp://org.qt-project.qtcore/qtcore/")
+
+        set(TAGFILES "${QTTAGFILE} ${STLTAGFILE}")
+        set(GENERATE_QHP "yes")
+
+        configure_file(
+        "${Cutelee_MODULE_DIR}/Doxyfile.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.qt"
+        @ONLY)
+    endif()
+
+    set( DOCS_ARGS ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile" )
+    if(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.qt")
+        set(DOCS_ARGS ${DOCS_ARGS} COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.qt" )
+    endif()
+
+    add_custom_target(docs
+        ${DOCS_ARGS}
+    )
+    endif()
 endif()
 
 find_package(LCov)

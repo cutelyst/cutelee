@@ -162,7 +162,7 @@ public:
   /**
     Returns the context object identified by the key @p str
   */
-  QVariant lookup(const QString &str) const;
+  virtual QVariant lookup(const QString &str) const;
 
   /**
     Insert the context object @p object identified by @p name into

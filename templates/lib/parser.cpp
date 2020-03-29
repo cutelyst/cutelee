@@ -155,11 +155,13 @@ void Parser::skipPast(const QString &tag)
 
 QSharedPointer<Filter> Parser::getFilter(const QString &name) const
 {
-  Q_D(const Parser);
-  if (!d->m_filters.contains(name))
+    Q_D(const Parser);
+    const auto it = d->m_filters.constFind(name);
+    if (Q_LIKELY(it != d->m_filters.constEnd())) {
+        return it.value();
+    }
     throw Cutelee::Exception(UnknownFilterError,
-                              QStringLiteral("Unknown filter: %1").arg(name));
-  return d->m_filters.value(name);
+                             QStringLiteral("Unknown filter: %1").arg(name));
 }
 
 NodeList Parser::parse(Node *parent, const QString &stopAt)

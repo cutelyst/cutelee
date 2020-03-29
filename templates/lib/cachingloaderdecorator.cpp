@@ -86,13 +86,15 @@ Template
 CachingLoaderDecorator::loadByName(const QString &name,
                                    const Cutelee::Engine *engine) const
 {
-  Q_D(const CachingLoaderDecorator);
-  if (d->m_cache.contains(name))
-    return d->m_cache.value(name);
+    Q_D(const CachingLoaderDecorator);
+    const auto it = d->m_cache.constFind(name);
+    if (it != d->m_cache.constEnd()) {
+        return it.value();
+    }
 
-  const auto t = d->m_wrappedLoader->loadByName(name, engine);
+    const auto t = d->m_wrappedLoader->loadByName(name, engine);
 
-  d->m_cache.insert(name, t);
+    d->m_cache.insert(name, t);
 
-  return t;
+    return t;
 }

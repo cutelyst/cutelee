@@ -124,7 +124,7 @@ public:
   /**
     Constructor
   */
-  Engine(QObject *parent = {});
+  Engine(QObject *parent = nullptr);
 
   /**
     Destructor.

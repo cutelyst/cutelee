@@ -98,23 +98,24 @@ void Context::setAutoEscape(bool autoescape)
 
 QVariant Context::lookup(const QString &str) const
 {
-  Q_D(const Context);
+    Q_D(const Context);
 
-  // return a variant from the stack.
-  for (auto &h : d->m_variantHashStack) {
-    if (h.contains(str)) {
-      auto var = h.value(str);
-      // If the user passed a string into the context, turn it into a
-      // Cutelee::SafeString.
-      if (var.userType() == qMetaTypeId<QString>()) {
-        var = QVariant::fromValue<Cutelee::SafeString>(
-            getSafeString(var.value<QString>()));
-      }
-      return var;
+    // return a variant from the stack.
+    for (const QVariantHash &h : d->m_variantHashStack) {
+        auto it = h.constFind(str);
+        if (it != h.constEnd()) {
+            auto var = it.value();
+            // If the user passed a string into the context, turn it into a
+            // Cutelee::SafeString.
+            if (var.userType() == qMetaTypeId<QString>()) {
+                var = QVariant::fromValue<Cutelee::SafeString>(
+                            getSafeString(var.value<QString>()));
+            }
+            return var;
+        }
     }
-  }
 
-  return QVariant();
+    return QVariant();
 }
 
 void Context::push()

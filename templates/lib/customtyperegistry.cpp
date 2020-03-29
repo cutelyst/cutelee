@@ -50,35 +50,40 @@ void CustomTypeRegistry::registerLookupOperator(int id,
 QVariant CustomTypeRegistry::lookup(const QVariant &object,
                                     const QString &property) const
 {
-  if (!object.isValid())
-    return QVariant();
-  const auto id = object.userType();
-  MetaType::LookupFunction lf;
+    if (!object.isValid())
+        return QVariant();
 
-  {
-    if (!types.contains(id)) {
-      qCWarning(CUTELEE_CUSTOMTYPE)
-          << "Don't know how to handle metatype" << QMetaType::typeName(id);
-      // :TODO: Print out error message
-      return QVariant();
+    const auto id = object.userType();
+    MetaType::LookupFunction lf;
+    {
+        auto it = types.constFind(id);
+        if (it == types.constEnd()) {
+            qCWarning(CUTELEE_CUSTOMTYPE)
+                    << "Don't know how to handle metatype" << QMetaType::typeName(id);
+            // :TODO: Print out error message
+            return QVariant();
+        }
+
+        const CustomTypeInfo &info = it.value();
+        if (!info.lookupFunction) {
+            qCWarning(CUTELEE_CUSTOMTYPE)
+                    << "No lookup function for metatype" << QMetaType::typeName(id);
+            lf = 0;
+            // :TODO: Print out error message
+            return QVariant();
+        }
+
+        lf = info.lookupFunction;
     }
 
-    const CustomTypeInfo &info = types[id];
-    if (!info.lookupFunction) {
-      qCWarning(CUTELEE_CUSTOMTYPE)
-          << "No lookup function for metatype" << QMetaType::typeName(id);
-      lf = 0;
-      // :TODO: Print out error message
-      return QVariant();
-    }
-
-    lf = info.lookupFunction;
-  }
-
-  return lf(object, property);
+    return lf(object, property);
 }
 
 bool CustomTypeRegistry::lookupAlreadyRegistered(int id) const
 {
-  return types.contains(id) && types.value(id).lookupFunction != 0;
+    auto it = types.constFind(id);
+    if (it != types.constEnd()) {
+        return it.value().lookupFunction != 0;
+    }
+    return false;
 }

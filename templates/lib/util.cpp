@@ -40,7 +40,7 @@ bool Cutelee::variantIsTrue(const QVariant &variant)
     return false;
   switch (variant.userType()) {
   case QVariant::Bool: {
-    return variant.value<bool>();
+    return variant.toBool();
   }
   case QVariant::Int: {
     return variant.value<int>() > 0;
@@ -69,7 +69,7 @@ bool Cutelee::variantIsTrue(const QVariant &variant)
       return false;
 
     if (obj->property("__true__").isValid()) {
-      return obj->property("__true__").value<bool>();
+      return obj->property("__true__").toBool();
     }
     return true;
   }
@@ -107,7 +107,7 @@ Cutelee::SafeString Cutelee::getSafeString(const QVariant &input)
   if (input.userType() == qMetaTypeId<Cutelee::SafeString>()) {
     return input.value<Cutelee::SafeString>();
   } else {
-    return input.value<QString>();
+    return input.toString();
   }
 }
 
@@ -147,11 +147,11 @@ bool Cutelee::equals(const QVariant &lhs, const QVariant &rhs)
       equal = (lhs.value<Cutelee::SafeString>()
                == rhs.value<Cutelee::SafeString>());
     } else if (rhs.userType() == QVariant::String) {
-      equal = (lhs.value<Cutelee::SafeString>() == rhs.value<QString>());
+      equal = (lhs.value<Cutelee::SafeString>() == rhs.toString());
     }
   } else if (rhs.userType() == qMetaTypeId<Cutelee::SafeString>()
              && lhs.userType() == QVariant::String) {
-    equal = (rhs.value<Cutelee::SafeString>() == lhs.value<QString>());
+    equal = (rhs.value<Cutelee::SafeString>() == lhs.toString());
   } else if (rhs.userType() == qMetaTypeId<MetaEnumVariable>()) {
     if (lhs.userType() == qMetaTypeId<MetaEnumVariable>()) {
       equal = (rhs.value<MetaEnumVariable>() == lhs.value<MetaEnumVariable>());
@@ -186,7 +186,7 @@ Cutelee::SafeString Cutelee::toString(const QVariantList &list)
         || (item.userType() == qMetaTypeId<float>())
         || (item.userType() == qMetaTypeId<long long>())
         || (item.userType() == qMetaTypeId<unsigned long long>())) {
-      output += item.value<QString>();
+      output += item.toString();
     }
     if (item.userType() == qMetaTypeId<QVariantList>()) {
       output

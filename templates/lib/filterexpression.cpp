@@ -225,7 +225,7 @@ QVariant FilterExpression::resolve(OutputStream *stream, Context *c) const
       if (arg.userType() == qMetaTypeId<Cutelee::SafeString>()) {
         argString = arg.value<Cutelee::SafeString>();
       } else if (arg.userType() == qMetaTypeId<QString>()) {
-        argString = Cutelee::SafeString(arg.value<QString>());
+        argString = Cutelee::SafeString(arg.toString());
       }
       if (argVar.isConstant()) {
         argString = markSafe(argString);

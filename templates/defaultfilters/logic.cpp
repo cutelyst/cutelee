@@ -69,7 +69,7 @@ QVariant YesNoFilter::doFilter(const QVariant &input, const QVariant &argument,
     auto argList = arg.get().split(QLatin1Char(','));
     auto numArgs = argList.size();
     if ((numArgs < 2) || (numArgs > 3)) {
-      return input.value<QString>();
+      return input.toString();
     } else if (numArgs == 2) {
       yes = argList.first();
       no = argList.at(1);

@@ -42,7 +42,7 @@ public:
 class BlockNode : public Node
 {
   Q_OBJECT
-  Q_PROPERTY(Cutelee::SafeString super READ getSuper)
+  Q_PROPERTY(Cutelee::SafeString super READ getSuper CONSTANT)
 public:
   BlockNode(const QString &blockName, QObject *parent = {});
   ~BlockNode() override;

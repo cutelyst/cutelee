@@ -271,13 +271,13 @@ struct DictSortLessThan {
     case QVariant::Double:
       return l.value<double>() < r.value<double>();
     case QVariant::Char:
-      return l.value<QChar>() < r.value<QChar>();
+      return l.toChar() < r.toChar();
     case QVariant::Date:
-      return l.value<QDate>() < r.value<QDate>();
+      return l.toDate() < r.toDate();
     case QVariant::Time:
-      return l.value<QTime>() < r.value<QTime>();
+      return l.toTime() < r.toTime();
     case QVariant::DateTime:
-      return l.value<QDateTime>() < r.value<QDateTime>();
+      return l.toDateTime() < r.toDateTime();
     case QMetaType::QObjectStar:
       return l.value<QObject *>() < r.value<QObject *>();
     }
@@ -286,15 +286,15 @@ struct DictSortLessThan {
         return l.value<Cutelee::SafeString>().get()
                < r.value<Cutelee::SafeString>().get();
       } else if (r.userType() == qMetaTypeId<QString>()) {
-        return l.value<Cutelee::SafeString>().get() < r.value<QString>();
+        return l.value<Cutelee::SafeString>().get() < r.toString();
       }
     } else if (r.userType() == qMetaTypeId<Cutelee::SafeString>()) {
       if (l.userType() == qMetaTypeId<QString>()) {
-        return l.value<QString>() < r.value<Cutelee::SafeString>().get();
+        return l.toString() < r.value<Cutelee::SafeString>().get();
       }
     } else if (l.userType() == qMetaTypeId<QString>()) {
       if (r.userType() == qMetaTypeId<QString>()) {
-        return l.value<QString>() < r.value<QString>();
+        return l.toString() < r.toString();
       }
     }
     return false;
@@ -318,7 +318,7 @@ QVariant DictSortFilter::doFilter(const QVariant &input,
     const Variable v(getSafeString(argument));
 
     if (v.literal().isValid()) {
-      var = MetaType::lookup(var, v.literal().value<QString>());
+      var = MetaType::lookup(var, v.literal().toString());
     } else {
       const auto lookups = v.lookups();
       Q_FOREACH (const QString &lookup, lookups) {

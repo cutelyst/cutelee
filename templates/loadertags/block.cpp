@@ -55,7 +55,7 @@ Node *BlockNodeFactory::getNode(const QString &tagContent, Parser *p) const
       && loadedBlocksVariant.userType() == qMetaTypeId<QVariantList>()) {
     blockVariantList = loadedBlocksVariant.value<QVariantList>();
     for (auto &item : blockVariantList) {
-      const auto blockNodeName = item.value<QString>();
+      const auto blockNodeName = item.toString();
 
       if (blockNodeName == blockName) {
         throw Cutelee::Exception(

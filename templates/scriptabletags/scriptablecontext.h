@@ -39,13 +39,12 @@ public:
 
   Context *context() { return m_c; }
 
-public Q_SLOTS:
   QVariant lookup(const QString &name);
   void insert(const QString &name, const QVariant &variant);
   void push();
   void pop();
 
-  QString render(const QList<QObject *> &list) const;
+  Q_INVOKABLE QString render(const QList<QObject *> &list) const;
 
 private:
   Context *m_c;

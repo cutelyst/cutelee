@@ -33,11 +33,11 @@ AbstractLocalizer::~AbstractLocalizer() {}
 QString AbstractLocalizer::localize(const QVariant &variant) const
 {
   if (variant.userType() == qMetaTypeId<QDate>())
-    return localizeDate(variant.value<QDate>());
+    return localizeDate(variant.toDate());
   if (variant.userType() == qMetaTypeId<QTime>())
-    return localizeTime(variant.value<QTime>());
+    return localizeTime(variant.toTime());
   if (variant.userType() == qMetaTypeId<QDateTime>())
-    return localizeDateTime(variant.value<QDateTime>());
+    return localizeDateTime(variant.toDateTime());
   else if (isSafeString(variant))
     return localizeString(getSafeString(variant).get());
   else if (variant.userType() == qMetaTypeId<double>()

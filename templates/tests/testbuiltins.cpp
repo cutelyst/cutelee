@@ -47,14 +47,14 @@ using namespace Cutelee;
 class OtherClass : public QObject
 {
   Q_OBJECT
-  Q_PROPERTY(QString method READ method)
-  Q_PROPERTY(Animals animals READ animals)
+  Q_PROPERTY(QString method READ method CONSTANT)
+  Q_PROPERTY(Animals animals READ animals CONSTANT)
 public:
   OtherClass(QObject *parent = {}) : QObject(parent) {}
 
   enum Animals { Lions, Tigers, Bears };
+  Q_ENUM(Animals)
 
-  Q_ENUMS(Animals)
   Animals animals() const { return Tigers; }
 
   QString method() const { return QStringLiteral("OtherClass::method"); }
@@ -66,15 +66,15 @@ public:
 class SomeClass : public QObject
 {
   Q_OBJECT
-  Q_PROPERTY(QString method READ method)
-  Q_PROPERTY(QVariant otherClass READ otherClass)
+  Q_PROPERTY(QString method READ method CONSTANT)
+  Q_PROPERTY(QVariant otherClass READ otherClass CONSTANT)
 
 public:
   enum FirstEnum { Employee, Employer, Manager };
+  Q_ENUM(FirstEnum)
 
   enum SecondEnum { Voter = 2, Consumer = 4, Citizen = 8 };
-
-  Q_ENUMS(FirstEnum SecondEnum)
+  Q_ENUM(SecondEnum)
 
   SomeClass(QObject *parent = {})
       : QObject(parent), m_other(new OtherClass(this))
@@ -169,7 +169,7 @@ public:
     }
 
     auto retString = input;
-    for (auto escape : jsEscapes) {
+    for (const QPair<QString, QString> &escape : jsEscapes) {
       retString = retString.replace(escape.first, escape.second);
     }
     return retString;
@@ -1836,8 +1836,6 @@ void TestBuiltinSyntax::testGarbageInput_data()
 {
 
   QTest::addColumn<QString>("input");
-
-  Dict dict;
 
   QTest::newRow("garbage-input01") << QStringLiteral("content %}");
   QTest::newRow("garbage-input02") << QStringLiteral(" content %}");

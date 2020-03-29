@@ -36,8 +36,9 @@ public:
   void setContent(const SafeString &content);
   SafeString wrappedString() const;
 
+  Q_INVOKABLE bool isSafe() const;
+
 public Q_SLOTS:
-  bool isSafe() const;
   void setSafety(bool safeness);
   QString rawString();
 

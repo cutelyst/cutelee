@@ -227,7 +227,7 @@ QVariant TruncateWordsFilter::doFilter(const QVariant &input,
   auto numWords = s.get().toInt(&ok);
 
   if (!ok) {
-    return input.value<QString>();
+    return input.toString();
   }
 
   QString inputString = getSafeString(input);

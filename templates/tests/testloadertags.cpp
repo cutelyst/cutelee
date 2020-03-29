@@ -76,8 +76,6 @@ void TestLoaderTags::initTestCase()
   loader = QSharedPointer<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
   m_engine->addTemplateLoader(loader);
 
-  auto appDirPath
-      = QFileInfo(QCoreApplication::applicationDirPath()).absoluteDir().path();
   m_engine->setPluginPaths({
       QStringLiteral(CUTELEE_PLUGIN_PATH),
       QStringLiteral(":/plugins/") // For testtags.qs

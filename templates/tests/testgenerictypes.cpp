@@ -121,8 +121,8 @@ CUTELEE_END_LOOKUP
 class PersonObject : public QObject
 {
   Q_OBJECT
-  Q_PROPERTY(QString name READ name)
-  Q_PROPERTY(int age READ age)
+  Q_PROPERTY(QString name READ name CONSTANT)
+  Q_PROPERTY(int age READ age CONSTANT)
 public:
   PersonObject(const QString &name, int age, QObject *parent = {})
       : QObject(parent), m_name(name), m_age(age)
@@ -659,7 +659,7 @@ public:
 class OtherObject : public QObject
 {
   Q_OBJECT
-  Q_PROPERTY(CustomObject *custom READ custom)
+  Q_PROPERTY(CustomObject *custom READ custom CONSTANT)
 public:
   explicit OtherObject(QObject *parent = {})
       : QObject(parent), m_custom(new CustomObject(this))
@@ -785,7 +785,7 @@ void TestGenericTypes::testPointerNonQObject()
 
   auto result = Cutelee::MetaType::lookup(v, QStringLiteral("name"));
 
-  QCOMPARE(result.value<QString>(), QStringLiteral("Adele"));
+  QCOMPARE(result.toString(), QStringLiteral("Adele"));
 
   delete p;
 }
@@ -828,11 +828,11 @@ void TestGenericTypes::testGadgetMetaType()
 class ObjectWithProperties : public QObject
 {
   Q_OBJECT
-  Q_PROPERTY(QList<int> numberList READ numberList)
-  Q_PROPERTY(QList<CustomGadget> gadgetList READ gadgetList)
-  Q_PROPERTY(QVector<PersonObject *> personList READ personList)
+  Q_PROPERTY(QList<int> numberList READ numberList CONSTANT)
+  Q_PROPERTY(QList<CustomGadget> gadgetList READ gadgetList CONSTANT)
+  Q_PROPERTY(QVector<PersonObject *> personList READ personList CONSTANT)
   Q_PROPERTY(
-      QVector<QSharedPointer<PersonObject>> personPtrList READ personPtrList)
+      QVector<QSharedPointer<PersonObject>> personPtrList READ personPtrList CONSTANT)
 
 public:
   ObjectWithProperties(QObject *parent = {}) : QObject(parent)

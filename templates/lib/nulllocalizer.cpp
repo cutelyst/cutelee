@@ -101,9 +101,9 @@ static QString substituteArguments(const QString &input,
     else if (arg.userType() == qMetaTypeId<double>())
       string = string.arg(arg.value<double>());
     else if (arg.userType() == qMetaTypeId<QDateTime>())
-      string = string.arg(arg.value<QDateTime>().toString());
+      string = string.arg(arg.toDateTime().toString());
     else
-      string = string.arg(arg.value<QString>());
+      string = string.arg(arg.toString());
   }
   return string;
 }

@@ -161,7 +161,7 @@ void NodeList::append(const QList<Cutelee::Node *> &nodeList)
 {
     if (!m_containsNonText) {
         for (const Cutelee::Node *node : nodeList) {
-            auto textNode = qobject_cast<const TextNode *>(node);
+                auto textNode = qobject_cast<const TextNode *>(node);
             if (!textNode) {
                 m_containsNonText = true;
                 break;

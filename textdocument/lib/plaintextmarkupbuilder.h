@@ -21,6 +21,8 @@
 #ifndef CUTELEE_PLAINTEXTMARKUPBUILDER_H
 #define CUTELEE_PLAINTEXTMARKUPBUILDER_H
 
+#include <qglobal.h>
+
 #ifdef Q_OS_WIN
 #pragma warning(disable : 4250)
 #endif

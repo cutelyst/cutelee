@@ -98,7 +98,7 @@ void IfChangedNode::render(OutputStream *stream, Context *c) const
   // {% for %} loop in the template.
   if ((watchedVars != m_lastSeen.value<QVariantList>())
       || (!watchedString.isEmpty()
-          && (watchedString != m_lastSeen.value<QString>()))) {
+          && (watchedString != m_lastSeen.toString()))) {
     auto firstLoop = !m_lastSeen.isValid();
     if (!watchedString.isEmpty())
       m_lastSeen = watchedString;

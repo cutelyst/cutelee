@@ -38,7 +38,6 @@ Node *ForNodeFactory::getNode(const QString &tagContent, Parser *p) const
   }
 
   expr.takeAt(0);
-  QStringList vars;
 
   int reversed = ForNode::IsNotReversed;
   if (expr.last() == QStringLiteral("reversed")) {
@@ -53,16 +52,21 @@ Node *ForNodeFactory::getNode(const QString &tagContent, Parser *p) const
             .arg(tagContent));
   }
 
-  for (const QString &arg : expr.mid(0, expr.size() - 2)) {
-    vars << arg.split(QLatin1Char(','), QString::SkipEmptyParts);
+  QStringList vars;
+  const auto parts = expr.mid(0, expr.size() - 2);
+  for (const QString &arg : parts) {
+      const auto args = arg.split(QLatin1Char(','), QString::SkipEmptyParts);
+      for (const QString &var : args) {
+          if (var.isEmpty()) {
+              throw Cutelee::Exception(
+                          TagSyntaxError,
+                          QStringLiteral("'for' tag received invalid argument"));
+          }
+      }
+      vars << args;
   }
 
-  for (const QString &var : vars) {
-    if (var.isEmpty())
-      throw Cutelee::Exception(
-          TagSyntaxError,
-          QStringLiteral("'for' tag received invalid argument"));
-  }
+
 
   FilterExpression fe(expr.last(), p);
 

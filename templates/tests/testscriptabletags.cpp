@@ -65,8 +65,6 @@ void TestScriptableTagsSyntax::initTestCase()
   Q_INIT_RESOURCE(testresource);
 
   m_engine = new Engine(this);
-  auto appDirPath
-      = QFileInfo(QCoreApplication::applicationDirPath()).absoluteDir().path();
   m_engine->setPluginPaths({
       QStringLiteral(CUTELEE_PLUGIN_PATH),
       QStringLiteral(":/plugins/") // For scripteddefaults.qs

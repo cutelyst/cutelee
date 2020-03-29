@@ -117,7 +117,7 @@ QTextFrame::iterator MarkupDirector::processTable(QTextFrame::iterator it,
 
   auto headerRowCount = format.headerRowCount();
 
-  QList<QTextTableCell> alreadyProcessedCells;
+  QVector<QTextTableCell> alreadyProcessedCells;
 
   for (auto row = 0; row < table->rows(); ++row) {
     // Put a thead element around here somewhere?

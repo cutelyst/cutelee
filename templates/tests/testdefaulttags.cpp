@@ -66,8 +66,7 @@ public:
   Zoo(QObject *parent = {}) : QObject(parent) {}
 
   enum Animals { Lions, Tigers, Bears };
-
-  Q_ENUMS(Animals)
+  Q_ENUM(Animals)
 };
 
 using namespace Cutelee;
@@ -301,9 +300,9 @@ void TestDefaultTags::testFirstOfTag_data()
 class BadIfObject : public QObject
 {
   Q_OBJECT
-  Q_PROPERTY(bool isTrue READ isTrue)
-  Q_PROPERTY(bool isFalse READ isFalse)
-  Q_PROPERTY(bool isBad READ isBad)
+  Q_PROPERTY(bool isTrue READ isTrue CONSTANT)
+  Q_PROPERTY(bool isFalse READ isFalse CONSTANT)
+  Q_PROPERTY(bool isBad READ isBad CONSTANT)
 public:
   BadIfObject(QObject *parent = {}) : QObject(parent), mIsBadCalled(false) {}
 

@@ -39,12 +39,11 @@ class ScriptableTemplate : public QObject
 public:
   explicit ScriptableTemplate(Template t, QObject *parent = {});
 
-public Q_SLOTS:
-  QString render(ScriptableContext *c) const;
-
   QList<QObject *> nodeList() const;
 
   void setNodeList(const QList<QObject *> &list);
+
+  Q_INVOKABLE QString render(ScriptableContext *c) const;
 
 private:
   Template m_template;

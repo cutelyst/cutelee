@@ -40,6 +40,8 @@ public:
 
   Parser *parser() { return m_p; }
 
+  Q_INVOKABLE bool hasNextToken() const;
+
 public Q_SLOTS:
   QList<QObject *> parse(QObject *parent, const QString &stopAt);
   QList<QObject *> parse(QObject *parent, const QStringList &stopAt = {});
@@ -47,7 +49,6 @@ public Q_SLOTS:
   void skipPast(const QString &tag);
 
   QJSValue takeNextToken();
-  bool hasNextToken() const;
   void removeNextToken();
 
   void loadLib(const QString &name);

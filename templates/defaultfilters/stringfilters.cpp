@@ -378,15 +378,27 @@ QVariant FloatFormatFilter::doFilter(const QVariant &input,
                                      const QVariant &argument,
                                      bool autoescape) const
 {
-  Q_UNUSED(autoescape)
-  auto _input = getSafeString(input).get().toDouble();
-  int precision;
-  if (argument.isValid())
-    precision = getSafeString(argument).get().toInt();
-  else
-    precision = 1;
+    Q_UNUSED(autoescape)
+    double inputDouble;
+    switch (input.type()) {
+    case QVariant::Int:
+    case QVariant::UInt:
+    case QVariant::LongLong:
+    case QVariant::ULongLong:
+    case QVariant::Double:
+        inputDouble = input.toDouble();
+        break;
+    default:
+        inputDouble = getSafeString(input).get().toDouble();
+    }
 
-  return QString::number(_input, 'f', precision);
+    int precision;
+    if (argument.isValid())
+        precision = getSafeString(argument).get().toInt();
+    else
+        precision = 1;
+
+    return QString::number(inputDouble, 'f', precision);
 }
 
 QVariant SafeSequenceFilter::doFilter(const QVariant &input,

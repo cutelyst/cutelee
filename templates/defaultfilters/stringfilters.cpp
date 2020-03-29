@@ -136,7 +136,7 @@ QVariant CutFilter::doFilter(const QVariant &input, const QVariant &argument,
   retString.get().remove(argString);
 
   if (inputSafe && argString.get() != QChar::fromLatin1(';'))
-    return markSafe(retString);
+    return SafeString(retString, true);
   else
     return retString;
 }
@@ -166,7 +166,7 @@ QVariant LineNumbersFilter::doFilter(const QVariant &input,
               .arg(shouldEscape ? QString(escape(lines.at(i))) : lines.at(i));
   }
 
-  return markSafe(lines.join(QChar::fromLatin1('\n')));
+  return SafeString(lines.join(QChar::fromLatin1('\n')), true);
 }
 
 QVariant LowerFilter::doFilter(const QVariant &input, const QVariant &argument,
@@ -470,10 +470,9 @@ QVariant SlugifyFilter::doFilter(const QVariant &input,
   QString inputString = getSafeString(input);
   inputString = inputString.normalized(QString::NormalizationForm_KD);
   inputString = nofailStringToAscii(inputString);
-  inputString
-      = inputString.remove(QRegularExpression(QStringLiteral("[^\\w\\s-]")))
-            .trimmed()
-            .toLower();
-  return markSafe(inputString.replace(
-      QRegularExpression(QStringLiteral("[-\\s]+")), QChar::fromLatin1('-')));
+  inputString = inputString.trimmed()
+          .toLower()
+          .remove(QRegularExpression(QStringLiteral("[^\\w\\s-]")))
+          .replace(QRegularExpression(QStringLiteral("[-\\s]+")), QStringLiteral("-"));
+  return SafeString(inputString, true);
 }

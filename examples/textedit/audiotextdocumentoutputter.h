@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -21,19 +21,19 @@
 #ifndef AUDIOTEXTDOCUMENTDIRECTOR_H
 #define AUDIOTEXTDOCUMENTDIRECTOR_H
 
-#include <grantlee/markupdirector.h>
-#include <grantlee/plaintextmarkupbuilder.h>
-#include <grantlee/texthtmlbuilder.h>
+#include <cutelee/markupdirector.h>
+#include <cutelee/plaintextmarkupbuilder.h>
+#include <cutelee/texthtmlbuilder.h>
 
 #include "audioobject.h"
 
-class AbstractAudioBuilder : virtual public Grantlee::AbstractMarkupBuilder
+class AbstractAudioBuilder : virtual public Cutelee::AbstractMarkupBuilder
 {
 public:
   virtual void addAudioTag(const QString &source) = 0;
 };
 
-class AudioTextHtmlBuilder : public Grantlee::TextHTMLBuilder,
+class AudioTextHtmlBuilder : public Cutelee::TextHTMLBuilder,
                              public AbstractAudioBuilder
 {
 public:
@@ -42,7 +42,7 @@ public:
   /* reimp */ void addAudioTag(const QString &source);
 };
 
-class AudioPlainTextBuilder : public Grantlee::PlainTextMarkupBuilder,
+class AudioPlainTextBuilder : public Cutelee::PlainTextMarkupBuilder,
                               public AbstractAudioBuilder
 {
 public:
@@ -51,7 +51,7 @@ public:
   /* reimp */ void addAudioTag(const QString &source);
 };
 
-class AudioTextDocumentDirector : public Grantlee::MarkupDirector
+class AudioTextDocumentDirector : public Cutelee::MarkupDirector
 {
 public:
   AudioTextDocumentDirector(AbstractAudioBuilder *builder);

@@ -1,5 +1,5 @@
 /*
-  This file is part of Grantlee.
+  This file is part of Cutelee.
 
   Copyright (c) 2011 Stephen Kelly <steveire@gmail.com>
 
@@ -18,14 +18,14 @@
 
 */
 
-#ifndef GRANTLEE_TEXTDOCUMENT_H
-#define GRANTLEE_TEXTDOCUMENT_H
+#ifndef CUTELEE_TEXTDOCUMENT_H
+#define CUTELEE_TEXTDOCUMENT_H
 
-#include "grantlee/abstractmarkupbuilder.h"
-#include "grantlee/bbcodebuilder.h"
-#include "grantlee/markupdirector.h"
-#include "grantlee/mediawikimarkupbuilder.h"
-#include "grantlee/plaintextmarkupbuilder.h"
-#include "grantlee/texthtmlbuilder.h"
+#include "cutelee/abstractmarkupbuilder.h"
+#include "cutelee/bbcodebuilder.h"
+#include "cutelee/markupdirector.h"
+#include "cutelee/mediawikimarkupbuilder.h"
+#include "cutelee/plaintextmarkupbuilder.h"
+#include "cutelee/texthtmlbuilder.h"
 
 #endif

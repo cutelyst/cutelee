@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2011 Stephen Kelly <steveire@gmail.com>
 
@@ -21,17 +21,17 @@
 #ifndef CUSTOM_TAGS_H
 #define CUSTOM_TAGS_H
 
-#include <grantlee/taglibraryinterface.h>
+#include <cutelee/taglibraryinterface.h>
 
 #include "rssfeed.h"
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 class CustomPlugin : public QObject, public TagLibraryInterface
 {
   Q_OBJECT
-  Q_INTERFACES(Grantlee::TagLibraryInterface)
-  Q_PLUGIN_METADATA(IID "org.grantlee.TagLibraryInterface")
+  Q_INTERFACES(Cutelee::TagLibraryInterface)
+  Q_PLUGIN_METADATA(IID "org.cutelee.TagLibraryInterface")
 public:
   CustomPlugin(QObject *parent = 0) : QObject(parent) {}
 

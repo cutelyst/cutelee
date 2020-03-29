@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -22,7 +22,7 @@
 
 ScriptableSafeString::ScriptableSafeString(QObject *parent) : QObject(parent) {}
 
-void ScriptableSafeString::setContent(const Grantlee::SafeString &content)
+void ScriptableSafeString::setContent(const Cutelee::SafeString &content)
 {
   m_safeString = content;
 }
@@ -33,8 +33,8 @@ bool ScriptableSafeString::isSafe() const { return m_safeString.isSafe(); }
 
 void ScriptableSafeString::setSafety(bool safeness)
 {
-  m_safeString.setSafety(safeness ? Grantlee::SafeString::IsSafe
-                                  : Grantlee::SafeString::IsNotSafe);
+  m_safeString.setSafety(safeness ? Cutelee::SafeString::IsSafe
+                                  : Cutelee::SafeString::IsNotSafe);
 }
 
 QString ScriptableSafeString::rawString() { return m_safeString; }

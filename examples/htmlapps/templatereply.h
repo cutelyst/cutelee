@@ -6,16 +6,16 @@
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkRequest>
 
-#include <grantlee/context.h>
-#include <grantlee/template.h>
+#include <cutelee/context.h>
+#include <cutelee/template.h>
 
 class TemplateReply : public QNetworkReply
 {
   Q_OBJECT
 public:
   TemplateReply(const QNetworkRequest &req,
-                const QNetworkAccessManager::Operation op, Grantlee::Template t,
-                Grantlee::Context c, QObject *parent = 0);
+                const QNetworkAccessManager::Operation op, Cutelee::Template t,
+                Cutelee::Context c, QObject *parent = 0);
 
   virtual void abort();
   virtual qint64 readData(char *data, qint64 maxlen);
@@ -33,8 +33,8 @@ public:
   virtual bool open(OpenMode mode);
 
 private:
-  Grantlee::Template m_t;
-  Grantlee::Context m_c;
+  Cutelee::Template m_t;
+  Cutelee::Context m_c;
   QBuffer *m_buffer;
 };
 

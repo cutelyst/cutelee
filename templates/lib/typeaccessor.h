@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,16 +18,16 @@
 
 */
 
-#ifndef GRANTLEE_TYPEACCESSOR_H
-#define GRANTLEE_TYPEACCESSOR_H
+#ifndef CUTELEE_TYPEACCESSOR_H
+#define CUTELEE_TYPEACCESSOR_H
 
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 
 #include <QtCore/QObject>
 
 /// @file
 
-namespace Grantlee
+namespace Cutelee
 {
 
 #ifndef Q_QDOC

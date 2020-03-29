@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2008,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,22 +18,22 @@
 
 */
 
-#ifndef GRANTLEE_ABSTRACTMARKUPBUILDER_H
-#define GRANTLEE_ABSTRACTMARKUPBUILDER_H
+#ifndef CUTELEE_ABSTRACTMARKUPBUILDER_H
+#define CUTELEE_ABSTRACTMARKUPBUILDER_H
 
-#include "grantlee_textdocument_export.h"
+#include "cutelee_textdocument_export.h"
 
 #include <QtCore/QString>
 #include <QtGui/QTextListFormat>
 
 class QBrush;
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class AbstractMarkupBuilderPrivate;
 
-/// @headerfile abstractmarkupbuilder.h grantlee/abstractmarkupbuilder.h
+/// @headerfile abstractmarkupbuilder.h cutelee/abstractmarkupbuilder.h
 
 /**
   @brief Interface for creating marked-up text output.
@@ -48,7 +48,7 @@ class AbstractMarkupBuilderPrivate;
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEXTDOCUMENT_EXPORT AbstractMarkupBuilder
+class CUTELEE_TEXTDOCUMENT_EXPORT AbstractMarkupBuilder
 {
 public:
   /** Destructor */

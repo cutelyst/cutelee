@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -20,7 +20,7 @@
 
 #include "nodebuiltins_p.h"
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 TextNode::TextNode(const QString &content, QObject *parent)
     : Node(parent), m_content(content)

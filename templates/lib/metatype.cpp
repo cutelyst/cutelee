@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Michael Jansen <kde@michael-jansen.biz>
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
@@ -26,18 +26,18 @@
 
 #include <QtCore/QDebug>
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 Q_GLOBAL_STATIC(CustomTypeRegistry, customTypes)
 
-void Grantlee::MetaType::internalLock() { return customTypes()->mutex.lock(); }
+void Cutelee::MetaType::internalLock() { return customTypes()->mutex.lock(); }
 
-void Grantlee::MetaType::internalUnlock()
+void Cutelee::MetaType::internalUnlock()
 {
   return customTypes()->mutex.unlock();
 }
 
-void Grantlee::MetaType::registerLookUpOperator(int id, LookupFunction f)
+void Cutelee::MetaType::registerLookUpOperator(int id, LookupFunction f)
 {
   Q_ASSERT(id > 0);
   Q_ASSERT(f);
@@ -106,7 +106,7 @@ static QVariant doQobjectLookUp(const QObject *const object,
   return object->property(property.toUtf8().constData());
 }
 
-QVariant Grantlee::MetaType::lookup(const QVariant &object,
+QVariant Cutelee::MetaType::lookup(const QVariant &object,
                                     const QString &property)
 {
   if (object.canConvert<QObject *>()) {
@@ -188,7 +188,7 @@ QVariant Grantlee::MetaType::lookup(const QVariant &object,
   return customTypes()->lookup(object, property);
 }
 
-bool Grantlee::MetaType::lookupAlreadyRegistered(int id)
+bool Cutelee::MetaType::lookupAlreadyRegistered(int id)
 {
   return customTypes()->lookupAlreadyRegistered(id);
 }

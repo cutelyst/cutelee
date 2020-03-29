@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Michael Jansen <kde@michael-jansen.biz>
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
@@ -20,7 +20,7 @@
 */
 
 #include "engine.h"
-#include "grantlee_paths.h"
+#include "cutelee_paths.h"
 #include "metatype.h"
 #include "template.h"
 #include "test_macros.h"
@@ -106,17 +106,17 @@ int qHash(const Person &p) { return p.uid; }
 Q_DECLARE_METATYPE(Person)
 Q_DECLARE_METATYPE(PersonGadget)
 
-GRANTLEE_BEGIN_LOOKUP(Person)
+CUTELEE_BEGIN_LOOKUP(Person)
 if (property == QStringLiteral("name"))
   return QString::fromStdString(object.name);
 else if (property == QStringLiteral("age"))
   return object.age;
-GRANTLEE_END_LOOKUP
+CUTELEE_END_LOOKUP
 
-GRANTLEE_BEGIN_LOOKUP(PersonGadget)
+CUTELEE_BEGIN_LOOKUP(PersonGadget)
 if (property == QStringLiteral("age"))
   return object.m_age;
-GRANTLEE_END_LOOKUP
+CUTELEE_END_LOOKUP
 
 class PersonObject : public QObject
 {
@@ -140,15 +140,15 @@ private:
 void TestGenericTypes::initTestCase()
 {
   // Register the handler for our custom type
-  Grantlee::registerMetaType<Person>();
-  Grantlee::registerMetaType<PersonGadget>();
+  Cutelee::registerMetaType<Person>();
+  Cutelee::registerMetaType<PersonGadget>();
 }
 
 void TestGenericTypes::testGenericClassType()
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
   auto t1 = engine.newTemplate(
       QStringLiteral(
@@ -159,7 +159,7 @@ void TestGenericTypes::testGenericClassType()
   QVariantHash h;
   Person p("Grant Lee", 2);
   h.insert(QStringLiteral("p"), QVariant::fromValue(p));
-  Grantlee::Context c(h);
+  Cutelee::Context c(h);
   QCOMPARE(t1->render(&c),
            QStringLiteral("Person: \nName: Grant Lee\nAge: 2\nUnknown: "));
 }
@@ -174,7 +174,7 @@ static QMap<int, Person> getPeople()
 }
 
 template <typename SequentialContainer>
-void insertPeopleVariants(Grantlee::Context &c)
+void insertPeopleVariants(Cutelee::Context &c)
 {
   auto people = getPeople();
   auto it = people.constBegin();
@@ -186,7 +186,7 @@ void insertPeopleVariants(Grantlee::Context &c)
 }
 
 template <typename AssociativeContainer>
-void insertAssociatedPeopleVariants(Grantlee::Context &c)
+void insertAssociatedPeopleVariants(Cutelee::Context &c)
 {
   auto people = getPeople();
   auto it = people.constBegin();
@@ -199,25 +199,25 @@ void insertAssociatedPeopleVariants(Grantlee::Context &c)
 }
 
 template <>
-void insertPeopleVariants<QMap<QString, QVariant>>(Grantlee::Context &c)
+void insertPeopleVariants<QMap<QString, QVariant>>(Cutelee::Context &c)
 {
   insertAssociatedPeopleVariants<QMap<QString, QVariant>>(c);
 }
 
 template <>
-void insertPeopleVariants<QHash<QString, QVariant>>(Grantlee::Context &c)
+void insertPeopleVariants<QHash<QString, QVariant>>(Cutelee::Context &c)
 {
   insertAssociatedPeopleVariants<QHash<QString, QVariant>>(c);
 }
 
-template <typename Container> void testSequentialIteration(Grantlee::Context &c)
+template <typename Container> void testSequentialIteration(Cutelee::Context &c)
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
   {
-    Grantlee::Template t1 = engine.newTemplate(
+    Cutelee::Template t1 = engine.newTemplate(
         QStringLiteral(
             "{% for person in people %}{{ person.name }},{% endfor %}"),
         QStringLiteral("people_template"));
@@ -225,14 +225,14 @@ template <typename Container> void testSequentialIteration(Grantlee::Context &c)
   }
 }
 
-template <typename Container> void testSequentialIndexing(Grantlee::Context &c)
+template <typename Container> void testSequentialIndexing(Cutelee::Context &c)
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
   {
-    Grantlee::Template t1 = engine.newTemplate(
+    Cutelee::Template t1 = engine.newTemplate(
         QStringLiteral(
             "{{ people.0.name }},{{ people.1.name }},{{ people.2.name }},"),
         QStringLiteral("people_template"));
@@ -241,25 +241,25 @@ template <typename Container> void testSequentialIndexing(Grantlee::Context &c)
 }
 
 template <typename Container> struct SequentialContainerTester {
-  static void iteration(Grantlee::Context &c)
+  static void iteration(Cutelee::Context &c)
   {
     testSequentialIteration<Container>(c);
   }
 
-  static void indexing(Grantlee::Context &c)
+  static void indexing(Cutelee::Context &c)
   {
     testSequentialIndexing<Container>(c);
   }
 };
 
 template <typename T> struct SequentialContainerTester<QSet<T>> {
-  static void iteration(Grantlee::Context &c)
+  static void iteration(Cutelee::Context &c)
   {
-    Grantlee::Engine engine;
+    Cutelee::Engine engine;
 
-    engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+    engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
-    Grantlee::Template t1 = engine.newTemplate(
+    Cutelee::Template t1 = engine.newTemplate(
         QStringLiteral(
             "{% for person in people %}{{ person.name }},{% endfor %}"),
         QStringLiteral("people_template"));
@@ -273,30 +273,30 @@ template <typename T> struct SequentialContainerTester<QSet<T>> {
     QCOMPARE(result.length(), output.join(QString()).length());
   }
 
-  static void indexing(Grantlee::Context) {}
+  static void indexing(Cutelee::Context) {}
 };
 
 template <typename T> struct SequentialContainerTester<QLinkedList<T>> {
-  static void iteration(Grantlee::Context &c)
+  static void iteration(Cutelee::Context &c)
   {
     testSequentialIteration<QLinkedList<T>>(c);
   }
 
-  static void indexing(Grantlee::Context) {}
+  static void indexing(Cutelee::Context) {}
 };
 
 template <typename T> struct SequentialContainerTester<std::list<T>> {
-  static void iteration(Grantlee::Context &c)
+  static void iteration(Cutelee::Context &c)
   {
     testSequentialIteration<std::list<T>>(c);
   }
 
-  static void indexing(Grantlee::Context) {}
+  static void indexing(Cutelee::Context) {}
 };
 
 template <typename Container> void doTestSequentialContainer_Variant()
 {
-  Grantlee::Context c;
+  Cutelee::Context c;
 
   insertPeopleVariants<Container>(c);
 
@@ -305,14 +305,14 @@ template <typename Container> void doTestSequentialContainer_Variant()
 }
 
 template <typename Container>
-void testAssociativeValues(Grantlee::Context &c, bool unordered = {})
+void testAssociativeValues(Cutelee::Context &c, bool unordered = {})
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
   {
-    Grantlee::Template t1 = engine.newTemplate(
+    Cutelee::Template t1 = engine.newTemplate(
         QStringLiteral("{% for person in people.values %}({{ person.name }}:{{ "
                        "person.age }}),{% endfor %}"),
         QStringLiteral("people_template"));
@@ -330,14 +330,14 @@ void testAssociativeValues(Grantlee::Context &c, bool unordered = {})
 }
 
 template <typename Container>
-void testAssociativeItems(Grantlee::Context &c, bool unordered)
+void testAssociativeItems(Cutelee::Context &c, bool unordered)
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
   {
-    Grantlee::Template t1 = engine.newTemplate(
+    Cutelee::Template t1 = engine.newTemplate(
         QStringLiteral("{% for item in people.items %}({{ item.1.name }}:{{ "
                        "item.1.age }}),{% endfor %}"),
         QStringLiteral("people_template"));
@@ -356,11 +356,11 @@ void testAssociativeItems(Grantlee::Context &c, bool unordered)
 template <typename Container>
 void doTestAssociativeContainer_Variant(bool unordered = {})
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
-  Grantlee::Context c;
+  Cutelee::Context c;
 
   insertPeopleVariants<Container>(c);
   testAssociativeValues<Container>(c, unordered);
@@ -382,7 +382,7 @@ void TestGenericTypes::testAssociativeContainer_Variant()
   doTestAssociativeContainer_Variant<QVariantHash>(true);
 }
 
-template <typename SequentialContainer> void insertPeople(Grantlee::Context &c)
+template <typename SequentialContainer> void insertPeople(Cutelee::Context &c)
 {
   auto people = getPeople();
   auto it = people.constBegin();
@@ -393,7 +393,7 @@ template <typename SequentialContainer> void insertPeople(Grantlee::Context &c)
   c.insert(QStringLiteral("people"), QVariant::fromValue(container));
 }
 
-template <> void insertPeople<QSet<Person>>(Grantlee::Context &c)
+template <> void insertPeople<QSet<Person>>(Cutelee::Context &c)
 {
   auto people = getPeople();
   auto it = people.constBegin();
@@ -404,7 +404,7 @@ template <> void insertPeople<QSet<Person>>(Grantlee::Context &c)
   c.insert(QStringLiteral("people"), QVariant::fromValue(container));
 }
 
-template <> void insertPeople<ThreeArray<Person>>(Grantlee::Context &c)
+template <> void insertPeople<ThreeArray<Person>>(Cutelee::Context &c)
 {
   auto people = getPeople();
   auto it = people.constBegin();
@@ -417,7 +417,7 @@ template <> void insertPeople<ThreeArray<Person>>(Grantlee::Context &c)
 }
 
 template <typename AssociativeContainer>
-void insertAssociatedPeople(Grantlee::Context &c)
+void insertAssociatedPeople(Cutelee::Context &c)
 {
   auto people = getPeople();
   auto it = people.constBegin();
@@ -429,7 +429,7 @@ void insertAssociatedPeople(Grantlee::Context &c)
 }
 
 template <typename AssociativeContainer>
-void insertAssociatedPeople_Number(Grantlee::Context &c)
+void insertAssociatedPeople_Number(Cutelee::Context &c)
 {
   auto people = getPeople();
   auto it = people.constBegin();
@@ -442,7 +442,7 @@ void insertAssociatedPeople_Number(Grantlee::Context &c)
 
 template <typename Container> void doTestSequentialContainer_Type()
 {
-  Grantlee::Context c;
+  Cutelee::Context c;
 
   insertPeople<Container>(c);
 
@@ -453,11 +453,11 @@ template <typename Container> void doTestSequentialContainer_Type()
 template <typename Container>
 void doTestAssociativeContainer_Type(bool unordered = {})
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
-  Grantlee::Context c;
+  Cutelee::Context c;
 
   insertAssociatedPeople<Container>(c);
   testAssociativeValues<Container>(c, unordered);
@@ -467,18 +467,18 @@ void doTestAssociativeContainer_Type(bool unordered = {})
 template <typename Container>
 void doTestAssociativeContainer_Type_Number(bool unordered = {})
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
-  Grantlee::Context c;
+  Cutelee::Context c;
 
   insertAssociatedPeople_Number<Container>(c);
   testAssociativeValues<Container>(c, unordered);
   testAssociativeItems<Container>(c, unordered);
 
   {
-    Grantlee::Template t1
+    Cutelee::Template t1
         = engine.newTemplate(QStringLiteral("{{ people.23.name }}"),
                              QStringLiteral("claire_template"));
     auto result = t1->render(&c);
@@ -536,9 +536,9 @@ void TestGenericTypes::testAssociativeContainer_Type()
 
 void TestGenericTypes::testSharedPointer()
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
   auto t1 = engine.newTemplate(QStringLiteral("{{ p.name }} {{ p.age }}"),
                                QStringLiteral("template1"));
@@ -548,15 +548,15 @@ void TestGenericTypes::testSharedPointer()
   QSharedPointer<PersonObject> p(
       new PersonObject(QStringLiteral("Grant Lee"), 2));
   h.insert(QStringLiteral("p"), QVariant::fromValue(p));
-  Grantlee::Context c(h);
+  Cutelee::Context c(h);
   QCOMPARE(t1->render(&c), QStringLiteral("Grant Lee 2"));
 }
 
 void TestGenericTypes::testThirdPartySharedPointer()
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
   auto t1 = engine.newTemplate(QStringLiteral("{{ p.name }} {{ p.age }}"),
                                QStringLiteral("template1"));
@@ -566,7 +566,7 @@ void TestGenericTypes::testThirdPartySharedPointer()
   std::shared_ptr<PersonObject> p(
       new PersonObject(QStringLiteral("Grant Lee"), 2));
   h.insert(QStringLiteral("p"), QVariant::fromValue(p));
-  Grantlee::Context c(h);
+  Cutelee::Context c(h);
   QCOMPARE(t1->render(&c), QStringLiteral("Grant Lee 2"));
 }
 
@@ -612,11 +612,11 @@ static StackMapListVectorInt getMapStack()
 
 void TestGenericTypes::testNestedContainers()
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
-  Grantlee::Context c;
+  Cutelee::Context c;
   c.insert(QStringLiteral("stack"), QVariant::fromValue(getMapStack()));
 
 #if defined(Q_CC_MSVC)
@@ -675,14 +675,14 @@ private:
 
 void TestGenericTypes::testCustomQObjectDerived()
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
   auto customObject = new CustomObject(this);
   customObject->setProperty("someProp", QStringLiteral("propValue"));
 
-  Grantlee::Context c;
+  Cutelee::Context c;
   c.insert(QStringLiteral("custom"), QVariant::fromValue(customObject));
 
   {
@@ -721,11 +721,11 @@ struct RegisteredNotListType {
 
 Q_DECLARE_METATYPE(RegisteredNotListType)
 
-GRANTLEE_BEGIN_LOOKUP(RegisteredNotListType)
+CUTELEE_BEGIN_LOOKUP(RegisteredNotListType)
 Q_UNUSED(object)
 if (property == QStringLiteral("property"))
   return 42;
-GRANTLEE_END_LOOKUP
+CUTELEE_END_LOOKUP
 
 static QVariantList dummy(const UnregisteredType &) { return QVariantList{42}; }
 
@@ -738,18 +738,18 @@ void TestGenericTypes::testUnregistered()
     UnregisteredType unregType;
     auto v = QVariant::fromValue(unregType);
 
-    auto result = Grantlee::MetaType::lookup(v, QStringLiteral("property"));
+    auto result = Cutelee::MetaType::lookup(v, QStringLiteral("property"));
     QVERIFY(!result.isValid());
 
     QVERIFY(!v.canConvert<QVariantList>());
   }
 
-  Grantlee::registerMetaType<RegisteredNotListType>();
+  Cutelee::registerMetaType<RegisteredNotListType>();
 
   {
     RegisteredNotListType nonListType;
     auto v = QVariant::fromValue(nonListType);
-    auto result = Grantlee::MetaType::lookup(v, QStringLiteral("property"));
+    auto result = Cutelee::MetaType::lookup(v, QStringLiteral("property"));
     QVERIFY(result.isValid());
     QVERIFY(!v.canConvert<QVariantList>());
   }
@@ -758,32 +758,32 @@ void TestGenericTypes::testUnregistered()
     QMetaType::registerConverter<UnregisteredType, QVariantList>(&dummy);
     UnregisteredType unregType;
     auto v = QVariant::fromValue(unregType);
-    auto result = Grantlee::MetaType::lookup(v, QStringLiteral("property"));
+    auto result = Cutelee::MetaType::lookup(v, QStringLiteral("property"));
     QVERIFY(!result.isValid());
   }
 
   // Only do this in release mode?
-  //   Grantlee::MetaType::registerLookUpOperator(0, dummyLookup);
-  //   Grantlee::MetaType::registerToVariantListOperator(0, dummy);
+  //   Cutelee::MetaType::registerLookUpOperator(0, dummyLookup);
+  //   Cutelee::MetaType::registerToVariantListOperator(0, dummy);
 }
 
 Q_DECLARE_METATYPE(Person *)
 
-GRANTLEE_BEGIN_LOOKUP_PTR(Person)
+CUTELEE_BEGIN_LOOKUP_PTR(Person)
 if (property == QStringLiteral("name"))
   return QString::fromStdString(object->name);
 else if (property == QStringLiteral("age"))
   return object->age;
-GRANTLEE_END_LOOKUP
+CUTELEE_END_LOOKUP
 
 void TestGenericTypes::testPointerNonQObject()
 {
   auto p = new Person("Adele", 21);
   auto v = QVariant::fromValue(p);
 
-  Grantlee::registerMetaType<Person *>();
+  Cutelee::registerMetaType<Person *>();
 
-  auto result = Grantlee::MetaType::lookup(v, QStringLiteral("name"));
+  auto result = Cutelee::MetaType::lookup(v, QStringLiteral("name"));
 
   QCOMPARE(result.value<QString>(), QStringLiteral("Adele"));
 
@@ -803,15 +803,15 @@ void TestGenericTypes::testQGadget()
   CustomGadget g;
   auto v = QVariant::fromValue(g);
 
-  auto result = Grantlee::MetaType::lookup(v, QStringLiteral("fortyTwo"));
+  auto result = Cutelee::MetaType::lookup(v, QStringLiteral("fortyTwo"));
 
   QCOMPARE(result.value<int>(), 42);
 }
 
 void TestGenericTypes::testGadgetMetaType()
 {
-  Grantlee::Engine engine;
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  Cutelee::Engine engine;
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
   auto t1 = engine.newTemplate(
       QStringLiteral("Person: \nName: {{p.name}}\nAge: {{p.age}}"),
@@ -819,7 +819,7 @@ void TestGenericTypes::testGadgetMetaType()
 
   PersonGadget p;
   p.m_name = QStringLiteral("Some Name");
-  Grantlee::Context c;
+  Cutelee::Context c;
   c.insert(QStringLiteral("p"), QVariant::fromValue(p));
   QCOMPARE(t1->render(&c),
            QStringLiteral("Person: \nName: Some Name\nAge: 42"));
@@ -866,15 +866,15 @@ private:
 
 void TestGenericTypes::propertyMacroTypes()
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
   qRegisterMetaType<QList<CustomGadget>>();
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
   auto objectWithProperties = new ObjectWithProperties(this);
 
-  Grantlee::Context c;
+  Cutelee::Context c;
   c.insert(QStringLiteral("obj"), objectWithProperties);
 
   {

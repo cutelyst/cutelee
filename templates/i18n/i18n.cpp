@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -39,7 +39,7 @@ Node *I18nNodeFactory::getNode(const QString &tagContent, Parser *p) const
   auto expr = smartSplit(tagContent);
 
   if (expr.size() < 2)
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral("Error: i18n tag takes at least one argument"));
 
@@ -50,7 +50,7 @@ Node *I18nNodeFactory::getNode(const QString &tagContent, Parser *p) const
         && sourceText.endsWith(QLatin1Char('"')))
       && !(sourceText.startsWith(QLatin1Char('\''))
            && sourceText.endsWith(QLatin1Char('\'')))) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral(
             "Error: i18n tag first argument must be a static string."));
@@ -67,14 +67,14 @@ Node *I18nNodeFactory::getNode(const QString &tagContent, Parser *p) const
 
 I18nVarNodeFactory::I18nVarNodeFactory() {}
 
-Grantlee::Node *I18nVarNodeFactory::getNode(const QString &tagContent,
+Cutelee::Node *I18nVarNodeFactory::getNode(const QString &tagContent,
                                             Parser *p) const
 {
 
   auto expr = smartSplit(tagContent);
 
   if (expr.size() < 4)
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral("Error: i18n_var tag takes at least three arguments"));
 
@@ -85,7 +85,7 @@ Grantlee::Node *I18nVarNodeFactory::getNode(const QString &tagContent,
         && sourceText.endsWith(QLatin1Char('"')))
       && !(sourceText.startsWith(QLatin1Char('\''))
            && sourceText.endsWith(QLatin1Char('\'')))) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral(
             "Error: i18n tag first argument must be a static string."));
@@ -103,7 +103,7 @@ Grantlee::Node *I18nVarNodeFactory::getNode(const QString &tagContent,
 }
 
 I18nNode::I18nNode(const QString &sourceText,
-                   const QList<Grantlee::FilterExpression> &feList,
+                   const QList<Cutelee::FilterExpression> &feList,
                    QObject *parent)
     : Node(parent), m_sourceText(sourceText), m_filterExpressionList(feList)
 {
@@ -120,7 +120,7 @@ void I18nNode::render(OutputStream *stream, Context *c) const
 }
 
 I18nVarNode::I18nVarNode(const QString &sourceText,
-                         const QList<Grantlee::FilterExpression> &feList,
+                         const QList<Cutelee::FilterExpression> &feList,
                          const QString &resultName, QObject *parent)
     : Node(parent), m_sourceText(sourceText), m_filterExpressionList(feList),
       m_resultName(resultName)

@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -36,7 +36,7 @@ Node *IncludeNodeFactory::getNode(const QString &tagContent, Parser *p) const
   auto expr = smartSplit(tagContent);
 
   if (expr.size() != 2)
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral("Error: Include tag takes only one argument"));
 
@@ -66,16 +66,16 @@ void IncludeNode::render(OutputStream *stream, Context *c) const
   auto t = ti->engine()->loadByName(filename);
 
   if (!t)
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError, QStringLiteral("Template not found %1").arg(filename));
 
   if (t->error())
-    throw Grantlee::Exception(t->error(), t->errorString());
+    throw Cutelee::Exception(t->error(), t->errorString());
 
   t->render(stream, c);
 
   if (t->error())
-    throw Grantlee::Exception(t->error(), t->errorString());
+    throw Cutelee::Exception(t->error(), t->errorString());
 }
 
 ConstantIncludeNode::ConstantIncludeNode(const QString &name, QObject *parent)
@@ -90,16 +90,16 @@ void ConstantIncludeNode::render(OutputStream *stream, Context *c) const
 
   auto t = ti->engine()->loadByName(m_name);
   if (!t)
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError, QStringLiteral("Template not found %1").arg(m_name));
 
   if (t->error())
-    throw Grantlee::Exception(t->error(), t->errorString());
+    throw Cutelee::Exception(t->error(), t->errorString());
 
   t->render(stream, c);
 
   if (t->error())
-    throw Grantlee::Exception(t->error(), t->errorString());
+    throw Cutelee::Exception(t->error(), t->errorString());
 
   QVariant &variant = c->renderContext()->data(0);
   auto blockContext = variant.value<BlockContext>();

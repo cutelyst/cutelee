@@ -61,9 +61,9 @@
 #include <QToolBar>
 #include <QtDebug>
 
-#include "grantlee_paths.h"
-#include <grantlee/context.h>
-#include <grantlee/engine.h>
+#include "cutelee_paths.h"
+#include <cutelee/context.h>
+#include <cutelee/engine.h>
 
 #include "audioobject.h"
 
@@ -494,23 +494,23 @@ bool TextEdit::fileSaveAs()
 
 void TextEdit::exportThemedHtml()
 {
-  Grantlee::Engine *engine = new Grantlee::Engine();
+  Cutelee::Engine *engine = new Cutelee::Engine();
   engine->addDefaultLibrary("customtags");
-  engine->addDefaultLibrary("grantlee_scriptabletags");
+  engine->addDefaultLibrary("cutelee_scriptabletags");
 
-  QSharedPointer<Grantlee::FileSystemTemplateLoader> loader(
-      new Grantlee::FileSystemTemplateLoader());
-  qDebug() << GRANTLEE_TEMPLATE_PATH;
-  loader->setTemplateDirs(QStringList() << GRANTLEE_TEMPLATE_PATH);
+  QSharedPointer<Cutelee::FileSystemTemplateLoader> loader(
+      new Cutelee::FileSystemTemplateLoader());
+  qDebug() << CUTELEE_TEMPLATE_PATH;
+  loader->setTemplateDirs(QStringList() << CUTELEE_TEMPLATE_PATH);
   engine->addTemplateLoader(loader);
 
   engine->setPluginPaths(QStringList()
-                         << GRANTLEE_PLUGIN_PATH
+                         << CUTELEE_PLUGIN_PATH
                          << QApplication::applicationDirPath() + "/");
 
   QString themeName = "default.html";
-  Grantlee::Template t = engine->loadByName(themeName);
-  Grantlee::Context c;
+  Cutelee::Template t = engine->loadByName(themeName);
+  Cutelee::Context c;
 
   c.insert("abstract", abstractTextEdit->document());
   c.insert("content", textEdit->document());
@@ -522,21 +522,21 @@ void TextEdit::exportThemedHtml()
 
 void TextEdit::exportPlainText()
 {
-  Grantlee::Engine *engine = new Grantlee::Engine();
+  Cutelee::Engine *engine = new Cutelee::Engine();
   engine->addDefaultLibrary("customtags");
 
-  QSharedPointer<Grantlee::FileSystemTemplateLoader> loader(
-      new Grantlee::FileSystemTemplateLoader());
-  loader->setTemplateDirs(QStringList() << GRANTLEE_TEMPLATE_PATH);
+  QSharedPointer<Cutelee::FileSystemTemplateLoader> loader(
+      new Cutelee::FileSystemTemplateLoader());
+  loader->setTemplateDirs(QStringList() << CUTELEE_TEMPLATE_PATH);
   engine->addTemplateLoader(loader);
 
   engine->setPluginPaths(QStringList()
-                         << GRANTLEE_PLUGIN_PATH
+                         << CUTELEE_PLUGIN_PATH
                          << QApplication::applicationDirPath() + "/");
 
   QString themeName = "default.txt";
-  Grantlee::Template t = engine->loadByName(themeName);
-  Grantlee::Context c;
+  Cutelee::Template t = engine->loadByName(themeName);
+  Cutelee::Context c;
 
   c.insert("abstract", abstractTextEdit->document());
   c.insert("content", textEdit->document());

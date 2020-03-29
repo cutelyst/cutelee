@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -44,7 +44,7 @@ QVariant ScriptableVariable::resolve(ScriptableContext *c)
 {
   auto var = m_variable.resolve(c->context());
 
-  if (Grantlee::isSafeString(var)) {
+  if (Cutelee::isSafeString(var)) {
     auto ssObj = new ScriptableSafeString(m_engine);
     ssObj->setContent(getSafeString(var));
     return m_engine->newQObject(ssObj).toVariant();

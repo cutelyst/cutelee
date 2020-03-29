@@ -22,9 +22,9 @@ foreach(file ${files})
   endif()
   get_filename_component(path ${file} DIRECTORY)
 
-  # Remove include/grantlee lib/grantlee/${version} and lib/grantlee if no other
+  # Remove include/cutelee lib/cutelee/${version} and lib/cutelee if no other
   # versions are present.
-  while( ${path} MATCHES ".*grantlee.*" )
+  while( ${path} MATCHES ".*cutelee.*" )
     file(GLOB contents RELATIVE ${path} "${path}/*" )
     if (NOT contents)
       message(STATUS "Removing empty directory: ${path}")

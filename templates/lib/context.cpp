@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -26,9 +26,9 @@
 
 #include <QtCore/QStringList>
 
-using namespace Grantlee;
+using namespace Cutelee;
 
-namespace Grantlee
+namespace Cutelee
 {
 class ContextPrivate
 {
@@ -105,9 +105,9 @@ QVariant Context::lookup(const QString &str) const
     if (h.contains(str)) {
       auto var = h.value(str);
       // If the user passed a string into the context, turn it into a
-      // Grantlee::SafeString.
+      // Cutelee::SafeString.
       if (var.userType() == qMetaTypeId<QString>()) {
-        var = QVariant::fromValue<Grantlee::SafeString>(
+        var = QVariant::fromValue<Cutelee::SafeString>(
             getSafeString(var.value<QString>()));
       }
       return var;

@@ -49,7 +49,7 @@
 class QSqlRelationalTableModel;
 class QSqlError;
 
-namespace Grantlee
+namespace Cutelee
 {
 class Engine;
 }
@@ -68,7 +68,7 @@ private:
   Ui::BookWindow ui;
   QSqlRelationalTableModel *model;
   int authorIdx, genreIdx;
-  Grantlee::Engine *m_engine;
+  Cutelee::Engine *m_engine;
 };
 
 #endif

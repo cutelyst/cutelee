@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,15 +18,15 @@
 
 */
 
-#ifndef GRANTLEE_TEMPLATE_P_H
-#define GRANTLEE_TEMPLATE_P_H
+#ifndef CUTELEE_TEMPLATE_P_H
+#define CUTELEE_TEMPLATE_P_H
 
 #include "engine.h"
 #include "template.h"
 
 #include <QtCore/QPointer>
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class Engine;
@@ -51,7 +51,7 @@ class TemplatePrivate
   bool m_smartTrim;
   QPointer<const Engine> m_engine;
 
-  friend class Grantlee::Engine;
+  friend class Cutelee::Engine;
   friend class Parser;
 };
 }

@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -20,7 +20,7 @@
 
 #include "cachingloaderdecorator.h"
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class CachingLoaderDecoratorPrivate
@@ -41,7 +41,7 @@ public:
 };
 }
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 CachingLoaderDecorator::CachingLoaderDecorator(
     QSharedPointer<AbstractTemplateLoader> loader)
@@ -84,7 +84,7 @@ CachingLoaderDecorator::getMediaUri(const QString &fileName) const
 
 Template
 CachingLoaderDecorator::loadByName(const QString &name,
-                                   const Grantlee::Engine *engine) const
+                                   const Cutelee::Engine *engine) const
 {
   Q_D(const CachingLoaderDecorator);
   if (d->m_cache.contains(name))

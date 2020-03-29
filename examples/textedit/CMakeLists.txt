@@ -1,37 +1,37 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(textedit_grantlee)
+project(textedit_cutelee)
 
-find_package(Grantlee5 REQUIRED)
+find_package(Cutelee5 REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-## Grantlee plugin
+## Cutelee plugin
 
 add_library(customtags MODULE
   customtagslibrary.cpp
   audiotextdocumentoutputter.cpp
   filters.cpp
 )
-grantlee_adjust_plugin_name(customtags)
+cutelee_adjust_plugin_name(customtags)
 
 target_link_libraries(customtags
-  Grantlee5::Templates
-  Grantlee5::TextDocument
+  Cutelee5::Templates
+  Cutelee5::TextDocument
 )
 
 
 ## Application
 
-get_property(Grantlee_PLUGIN_DIR TARGET Grantlee5::defaulttags PROPERTY LOCATION)
-get_filename_component(Grantlee_PLUGIN_DIR ${Grantlee_PLUGIN_DIR} PATH)
-get_filename_component(Grantlee_PLUGIN_DIR ${Grantlee_PLUGIN_DIR} PATH)
-get_filename_component(Grantlee_PLUGIN_DIR ${Grantlee_PLUGIN_DIR} PATH)
+get_property(Cutelee_PLUGIN_DIR TARGET Cutelee5::defaulttags PROPERTY LOCATION)
+get_filename_component(Cutelee_PLUGIN_DIR ${Cutelee_PLUGIN_DIR} PATH)
+get_filename_component(Cutelee_PLUGIN_DIR ${Cutelee_PLUGIN_DIR} PATH)
+get_filename_component(Cutelee_PLUGIN_DIR ${Cutelee_PLUGIN_DIR} PATH)
 
-configure_file(grantlee_paths.h.cmake ${PROJECT_BINARY_DIR}/grantlee_paths.h)
+configure_file(cutelee_paths.h.cmake ${PROJECT_BINARY_DIR}/cutelee_paths.h)
 
 
 add_executable(textedit
@@ -43,6 +43,6 @@ add_executable(textedit
 
 target_link_libraries(
   textedit
-  Grantlee5::Templates
+  Cutelee5::Templates
   Qt5::Widgets
 )

@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,17 +18,17 @@
 
 */
 
-#ifndef GRANTLEE_NULLLOCALIZER_P_H
-#define GRANTLEE_NULLLOCALIZER_P_H
+#ifndef CUTELEE_NULLLOCALIZER_P_H
+#define CUTELEE_NULLLOCALIZER_P_H
 
-#include "grantlee_test_export.h"
+#include "cutelee_test_export.h"
 
 #include "abstractlocalizer.h"
 
-namespace Grantlee
+namespace Cutelee
 {
 
-class GRANTLEE_TESTS_EXPORT NullLocalizer : public AbstractLocalizer
+class CUTELEE_TESTS_EXPORT NullLocalizer : public AbstractLocalizer
 {
 public:
   NullLocalizer();

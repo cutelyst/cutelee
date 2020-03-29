@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -30,9 +30,9 @@
 
 #include <QtCore/QLoggingCategory>
 
-Q_LOGGING_CATEGORY(GRANTLEE_TEMPLATE, "grantlee.template")
+Q_LOGGING_CATEGORY(CUTELEE_TEMPLATE, "cutelee.template")
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 NodeList TemplatePrivate::compileString(const QString &str)
 {
@@ -65,8 +65,8 @@ void TemplateImpl::setContent(const QString &templateString)
   try {
     d->m_nodeList = d->compileString(templateString);
     d->setError(NoError, QString());
-  } catch (Grantlee::Exception &e) {
-    qCWarning(GRANTLEE_TEMPLATE) << e.what();
+  } catch (Cutelee::Exception &e) {
+    qCWarning(CUTELEE_TEMPLATE) << e.what();
     d->setError(e.errorCode(), e.what());
   }
 }
@@ -91,8 +91,8 @@ OutputStream *TemplateImpl::render(OutputStream *stream, Context *c) const
   try {
     d->m_nodeList.render(stream, c);
     d->setError(NoError, QString());
-  } catch (Grantlee::Exception &e) {
-    qCWarning(GRANTLEE_TEMPLATE) << e.what();
+  } catch (Cutelee::Exception &e) {
+    qCWarning(CUTELEE_TEMPLATE) << e.what();
     d->setError(e.errorCode(), e.what());
   }
 

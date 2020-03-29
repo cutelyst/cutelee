@@ -8,20 +8,20 @@ else
   exit
 fi
 
-tempDir="/tmp/grantlee-snapshot"
+tempDir="/tmp/cutelee-snapshot"
 
 if [ ! -d "$tempDir" ]
 then
   mkdir $tempDir
 fi
 
-echo Creating $tempDir/grantlee-$version.tar.gz
+echo Creating $tempDir/cutelee-$version.tar.gz
 
-git archive --format=tar --prefix=grantlee-$version/ $version | gzip > $tempDir/grantlee-$version.tar.gz
+git archive --format=tar --prefix=cutelee-$version/ $version | gzip > $tempDir/cutelee-$version.tar.gz
 
-rm -rf $tempDir/grantlee-$version/
-echo Unpacking to $tempDir/grantlee-$version
-tar -C $tempDir -xvf $tempDir/grantlee-$version.tar.gz
+rm -rf $tempDir/cutelee-$version/
+echo Unpacking to $tempDir/cutelee-$version
+tar -C $tempDir -xvf $tempDir/cutelee-$version.tar.gz
 
 if [ "$?" -ne "0" ]
 then
@@ -32,11 +32,11 @@ fi
 oldDir=$PWD
 
 echo Creating build directory
-mkdir -p $tempDir/grantlee-$version/build && cd $tempDir/grantlee-$version/build
+mkdir -p $tempDir/cutelee-$version/build && cd $tempDir/cutelee-$version/build
 
-cp $oldDir/scripts/qttags.tag $tempDir/grantlee-$version/scripts
-cp $oldDir/scripts/libstdc++.tag $tempDir/grantlee-$version/scripts
-cp $oldDir/scripts/libstdc++-longnames.tag $tempDir/grantlee-$version/scripts
+cp $oldDir/scripts/qttags.tag $tempDir/cutelee-$version/scripts
+cp $oldDir/scripts/libstdc++.tag $tempDir/cutelee-$version/scripts
+cp $oldDir/scripts/libstdc++-longnames.tag $tempDir/cutelee-$version/scripts
 
 echo Building
 cmake -DCMAKE_INSTALL_PREFIX=../prefix ..

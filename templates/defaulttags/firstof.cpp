@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -33,7 +33,7 @@ Node *FirstOfNodeFactory::getNode(const QString &tagContent, Parser *p) const
   const auto tagName = expr.takeAt(0);
 
   if (expr.isEmpty()) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral("%1 expects at least one argument").arg(tagName));
   }

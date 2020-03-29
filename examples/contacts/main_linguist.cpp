@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -24,16 +24,16 @@
 #include <QLibraryInfo>
 #include <QTranslator>
 
-#include <grantlee_templates.h>
+#include <cutelee_templates.h>
 
-#include "grantlee_paths.h"
+#include "cutelee_paths.h"
 
-#define TEMPLATE_DIR GRANTLEE_TEMPLATE_PATH "/linguist/"
+#define TEMPLATE_DIR CUTELEE_TEMPLATE_PATH "/linguist/"
 
-static QSharedPointer<Grantlee::AbstractLocalizer> getLocalizer()
+static QSharedPointer<Cutelee::AbstractLocalizer> getLocalizer()
 {
-  QSharedPointer<Grantlee::QtLocalizer> localizer
-      = QSharedPointer<Grantlee::QtLocalizer>(new Grantlee::QtLocalizer);
+  QSharedPointer<Cutelee::QtLocalizer> localizer
+      = QSharedPointer<Cutelee::QtLocalizer>(new Cutelee::QtLocalizer);
   localizer->setAppTranslatorPrefix("contacts_");
   localizer->setAppTranslatorPath(qApp->applicationDirPath());
 
@@ -57,10 +57,10 @@ static QSharedPointer<Grantlee::AbstractLocalizer> getLocalizer()
     localizer->installTranslator(myappTranslator, localeName);
   }
 
-  return localizer.staticCast<Grantlee::AbstractLocalizer>();
+  return localizer.staticCast<Cutelee::AbstractLocalizer>();
 }
 
-template <> void AppMainWindow<Grantlee::QtLocalizer>::initLocalizer()
+template <> void AppMainWindow<Cutelee::QtLocalizer>::initLocalizer()
 {
   m_localizer = getLocalizer();
 }
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
 
-  AppMainWindow<Grantlee::QtLocalizer> win(TEMPLATE_DIR);
+  AppMainWindow<Cutelee::QtLocalizer> win(TEMPLATE_DIR);
   win.show();
 
   return app.exec();

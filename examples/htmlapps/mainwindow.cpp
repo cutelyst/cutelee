@@ -5,8 +5,8 @@
 #include <QWebView>
 #include <QtCore/QDebug>
 
-#include "grantlee_paths.h"
-#include <grantlee_templates.h>
+#include "cutelee_paths.h"
+#include <cutelee_templates.h>
 
 #include "localrequestmanager.h"
 #include <QCoreApplication>
@@ -17,12 +17,12 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
 
   QWebView *wv = new QWebView;
 
-  Grantlee::Engine *engine = new Grantlee::Engine(this);
+  Cutelee::Engine *engine = new Cutelee::Engine(this);
   engine->addDefaultLibrary("customplugin");
 
-  QSharedPointer<Grantlee::FileSystemTemplateLoader> loader(
-      new Grantlee::FileSystemTemplateLoader);
-  loader->setTemplateDirs(QStringList() << GRANTLEE_TEMPLATE_PATH);
+  QSharedPointer<Cutelee::FileSystemTemplateLoader> loader(
+      new Cutelee::FileSystemTemplateLoader);
+  loader->setTemplateDirs(QStringList() << CUTELEE_TEMPLATE_PATH);
   engine->addTemplateLoader(loader);
 
   wv->page()->setNetworkAccessManager(new LocalRequestManager(engine, this));

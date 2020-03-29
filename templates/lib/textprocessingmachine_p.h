@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2011 Stephen Kelly <steveire@gmail.com>
 
@@ -18,12 +18,12 @@
 
 */
 
-#ifndef GRANTLEE_TEXTPROCESSINGMACHINE_P_H
-#define GRANTLEE_TEXTPROCESSINGMACHINE_P_H
+#ifndef CUTELEE_TEXTPROCESSINGMACHINE_P_H
+#define CUTELEE_TEXTPROCESSINGMACHINE_P_H
 
 #include "statemachine_p.h"
 
-namespace Grantlee
+namespace Cutelee
 {
 
 struct CharTransitionInterface {

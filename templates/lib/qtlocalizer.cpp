@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -28,7 +28,7 @@
 
 #include <QtCore/QLoggingCategory>
 
-Q_LOGGING_CATEGORY(GRANTLEE_LOCALIZER, "grantlee.localizer")
+Q_LOGGING_CATEGORY(CUTELEE_LOCALIZER, "cutelee.localizer")
 
 struct Locale {
   explicit Locale(const QLocale &_locale) : locale(_locale) {}
@@ -45,7 +45,7 @@ struct Locale {
   QVector<QTranslator *> themeTranslators;
 };
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class QtLocalizerPrivate
@@ -67,7 +67,7 @@ class QtLocalizerPrivate
   {
     Q_ASSERT(!m_locales.isEmpty());
     if (m_locales.isEmpty()) {
-      qCWarning(GRANTLEE_LOCALIZER) << "Invalid Locale";
+      qCWarning(CUTELEE_LOCALIZER) << "Invalid Locale";
       return QLocale();
     }
     return m_locales.last()->locale;
@@ -87,7 +87,7 @@ class QtLocalizerPrivate
 };
 }
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 static void replacePercentN(QString *result, int n)
 {

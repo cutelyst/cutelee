@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -27,7 +27,7 @@
 
 RangeNodeFactory::RangeNodeFactory() {}
 
-Grantlee::Node *RangeNodeFactory::getNode(const QString &tagContent,
+Cutelee::Node *RangeNodeFactory::getNode(const QString &tagContent,
                                           Parser *p) const
 {
   auto expr = smartSplit(tagContent);
@@ -36,13 +36,13 @@ Grantlee::Node *RangeNodeFactory::getNode(const QString &tagContent,
   auto numArgs = expr.size();
   if (numArgs != 1) {
     if (numArgs <= 2) {
-      throw Grantlee::Exception(
+      throw Cutelee::Exception(
           TagSyntaxError,
           QStringLiteral("'range' tag requires at least three arguments"));
     }
 
     if (expr.at(numArgs - 2) != QStringLiteral("as")) {
-      throw Grantlee::Exception(
+      throw Cutelee::Exception(
           TagSyntaxError, QStringLiteral("Invalid arguments to 'range' tag"));
     }
   }

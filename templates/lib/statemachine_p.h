@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2011 Stephen Kelly <steveire@gmail.com>
 
@@ -18,13 +18,13 @@
 
 */
 
-#ifndef GRANTLEE_STATEMACHINE_P_H
-#define GRANTLEE_STATEMACHINE_P_H
+#ifndef CUTELEE_STATEMACHINE_P_H
+#define CUTELEE_STATEMACHINE_P_H
 
 #include <QtCore/QString>
 #include <QtCore/QVector>
 
-namespace Grantlee
+namespace Cutelee
 {
 
 template <typename TransitionInterface> class State

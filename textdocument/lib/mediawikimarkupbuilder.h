@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2008 Stephen Kelly <steveire@gmail.com>
 
@@ -18,12 +18,12 @@
 
 */
 
-#ifndef GRANTLEE_MEDIAWIKIMARKUPBUILDER_H
-#define GRANTLEE_MEDIAWIKIMARKUPBUILDER_H
+#ifndef CUTELEE_MEDIAWIKIMARKUPBUILDER_H
+#define CUTELEE_MEDIAWIKIMARKUPBUILDER_H
 
 #include "abstractmarkupbuilder.h"
 
-namespace Grantlee
+namespace Cutelee
 {
 
 /**

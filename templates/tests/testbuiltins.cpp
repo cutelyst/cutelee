@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -30,16 +30,16 @@
 #include "coverageobject.h"
 #include "engine.h"
 #include "filterexpression.h"
-#include "grantlee_paths.h"
+#include "cutelee_paths.h"
 #include "template.h"
 #include "util.h"
 #include <metaenumvariable_p.h>
 
 typedef QHash<QString, QVariant> Dict;
 
-Q_DECLARE_METATYPE(Grantlee::Error)
+Q_DECLARE_METATYPE(Cutelee::Error)
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 /**
   For use with tests.
@@ -232,12 +232,12 @@ private:
 void TestBuiltinSyntax::testObjects()
 {
   {
-    auto loader = QSharedPointer<Grantlee::FileSystemTemplateLoader>::create();
+    auto loader = QSharedPointer<Cutelee::FileSystemTemplateLoader>::create();
     loader->setTemplateDirs(
         {QStringLiteral("/path/one"), QStringLiteral("/path/two")});
 
     auto cache
-        = QSharedPointer<Grantlee::CachingLoaderDecorator>::create(loader);
+        = QSharedPointer<Cutelee::CachingLoaderDecorator>::create(loader);
   }
 
   Context c1, c2;
@@ -376,7 +376,7 @@ void TestBuiltinSyntax::testRenderAfterError()
 {
 
   Engine engine;
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
   QSharedPointer<InMemoryTemplateLoader> loader(new InMemoryTemplateLoader);
   loader->setTemplate(QStringLiteral("template1"),
@@ -414,7 +414,7 @@ void TestBuiltinSyntax::initTestCase()
 Engine *TestBuiltinSyntax::getEngine()
 {
   auto engine = new Engine(this);
-  engine->setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine->setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
   return engine;
 }
 
@@ -425,7 +425,7 @@ void TestBuiltinSyntax::doTest()
   QFETCH(QString, input);
   QFETCH(Dict, dict);
   QFETCH(QString, output);
-  QFETCH(Grantlee::Error, error);
+  QFETCH(Cutelee::Error, error);
 
   auto t = m_engine->newTemplate(input, QLatin1String(QTest::currentDataTag()));
 
@@ -459,7 +459,7 @@ void TestBuiltinSyntax::testBasicSyntax_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -696,7 +696,7 @@ void TestBuiltinSyntax::testEnums_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -869,7 +869,7 @@ void TestBuiltinSyntax::testListIndex_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -928,7 +928,7 @@ void TestBuiltinSyntax::testFilterSyntax_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -1048,7 +1048,7 @@ void TestBuiltinSyntax::testCommentSyntax_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -1088,7 +1088,7 @@ void TestBuiltinSyntax::testMultiline_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -1102,7 +1102,7 @@ void TestBuiltinSyntax::testEscaping_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -1329,7 +1329,7 @@ void TestBuiltinSyntax::testTypeAccessorsUnordered()
   QFETCH(QString, input);
   QFETCH(Dict, dict);
   QFETCH(QStringList, output);
-  QFETCH(Grantlee::Error, error);
+  QFETCH(Cutelee::Error, error);
 
   auto t = m_engine->newTemplate(input, QLatin1String(QTest::currentDataTag()));
 
@@ -1360,7 +1360,7 @@ void TestBuiltinSyntax::testTypeAccessorsUnordered_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QStringList>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -1398,7 +1398,7 @@ void TestBuiltinSyntax::testTypeAccessors_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -1686,7 +1686,7 @@ void TestBuiltinSyntax::testDynamicProperties_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 

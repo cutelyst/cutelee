@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,13 +18,13 @@
 
 */
 
-#ifndef GRANTLEE_PLUGINPOINTER_H
-#define GRANTLEE_PLUGINPOINTER_H
+#ifndef CUTELEE_PLUGINPOINTER_H
+#define CUTELEE_PLUGINPOINTER_H
 
 #include <QtCore/QPluginLoader>
 #include <QtCore/QSharedPointer>
 
-namespace Grantlee
+namespace Cutelee
 {
 
 /**

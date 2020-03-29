@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(contacts_grantlee)
+project(contacts_cutelee)
 
-find_package(Grantlee5 REQUIRED)
+find_package(Cutelee5 REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
-configure_file(grantlee_paths.h.cmake ${PROJECT_BINARY_DIR}/grantlee_paths.h)
+configure_file(cutelee_paths.h.cmake ${PROJECT_BINARY_DIR}/cutelee_paths.h)
 
 add_executable(contacts_linguist
   main_linguist.cpp
@@ -20,7 +20,7 @@ find_package(Qt5LinguistTools REQUIRED)
 
 target_link_libraries(
   contacts_linguist
-  Grantlee5::Templates
+  Cutelee5::Templates
   Qt5::WebKitWidgets
 )
 

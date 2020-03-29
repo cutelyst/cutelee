@@ -1,15 +1,15 @@
 
-configure_file(grantlee_version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/grantlee_version.h)
+configure_file(cutelee_version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/cutelee_version.h)
 
-set(Grantlee_PLUGIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR} )
+set(Cutelee_PLUGIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR} )
 
-configure_file(grantlee_config_p.h.cmake  ${CMAKE_CURRENT_BINARY_DIR}/grantlee_config_p.h)
+configure_file(cutelee_config_p.h.cmake  ${CMAKE_CURRENT_BINARY_DIR}/cutelee_config_p.h)
 
 set_source_files_properties(taglibraryinterface.h PROPERTIES
   SKIP_AUTOMOC TRUE
 )
 
-add_library(Grantlee_Templates SHARED
+add_library(Cutelee_Templates SHARED
   abstractlocalizer.cpp
   cachingloaderdecorator.cpp
   customtyperegistry.cpp
@@ -38,8 +38,8 @@ add_library(Grantlee_Templates SHARED
   customtyperegistry_p.h
   engine_p.h
   exception.h
-  grantlee_tags_p.h
-  grantlee_templates.h
+  cutelee_tags_p.h
+  cutelee_templates.h
   lexer_p.h
   metaenumvariable_p.h
   nodebuiltins_p.h
@@ -52,12 +52,12 @@ add_library(Grantlee_Templates SHARED
   token.h
   typeaccessor.h
 )
-add_library(Grantlee5::Templates ALIAS Grantlee_Templates)
-generate_export_header(Grantlee_Templates)
-set_property(TARGET Grantlee_Templates PROPERTY
+add_library(Cutelee5::Templates ALIAS Cutelee_Templates)
+generate_export_header(Cutelee_Templates)
+set_property(TARGET Cutelee_Templates PROPERTY
   EXPORT_NAME Templates
 )
-target_compile_features(Grantlee_Templates
+target_compile_features(Cutelee_Templates
   PRIVATE
     cxx_auto_type
   PUBLIC
@@ -66,18 +66,18 @@ target_compile_features(Grantlee_Templates
 
 if (CMAKE_GENERATOR MATCHES "Visual Studio")
 
-  set_property(TARGET Grantlee_Templates PROPERTY DEBUG_POSTFIX "d")
+  set_property(TARGET Cutelee_Templates PROPERTY DEBUG_POSTFIX "d")
 
   foreach(cfg ${CMAKE_CONFIGURATION_TYPES})
     string(TOUPPER ${cfg} CFG)
-    set_target_properties(Grantlee_Templates
+    set_target_properties(Cutelee_Templates
       PROPERTIES
       LIBRARY_OUTPUT_DIRECTORY_${CFG} "${CMAKE_CURRENT_BINARY_DIR}"
       RUNTIME_OUTPUT_DIRECTORY_${CFG} "${CMAKE_CURRENT_BINARY_DIR}"
       )
   endforeach()
 endif()
-target_compile_definitions(Grantlee_Templates
+target_compile_definitions(Cutelee_Templates
   PRIVATE
     PLUGINS_PREFER_DEBUG_POSTFIX=$<CONFIG:Debug>
 )
@@ -99,29 +99,29 @@ if (Qt5Qml_FOUND)
     list(APPEND scriptabletags_SRCS ${CMAKE_SOURCE_DIR}/templates/scriptabletags/${file})
   endforeach()
 
-  target_sources(Grantlee_Templates PRIVATE ${scriptabletags_SRCS})
-  target_include_directories(Grantlee_Templates PRIVATE ../scriptabletags)
-  target_link_libraries(Grantlee_Templates
+  target_sources(Cutelee_Templates PRIVATE ${scriptabletags_SRCS})
+  target_include_directories(Cutelee_Templates PRIVATE ../scriptabletags)
+  target_link_libraries(Cutelee_Templates
     PRIVATE Qt5::Qml
   )
 endif()
 
 if (BUILD_TESTS)
-  set(GRANTLEE_TESTS_EXPORT "GRANTLEE_TEMPLATES_EXPORT")
+  set(CUTELEE_TESTS_EXPORT "CUTELEE_TEMPLATES_EXPORT")
 endif()
 
-configure_file(grantlee_test_export.h.in "${CMAKE_CURRENT_BINARY_DIR}/grantlee_test_export.h")
+configure_file(cutelee_test_export.h.in "${CMAKE_CURRENT_BINARY_DIR}/cutelee_test_export.h")
 
-target_link_libraries(Grantlee_Templates
+target_link_libraries(Cutelee_Templates
   LINK_PUBLIC Qt5::Core
 )
 
-set_target_properties(Grantlee_Templates PROPERTIES
-  VERSION    ${Grantlee5_VERSION}
-  SOVERSION  ${Grantlee5_VERSION_MAJOR}
+set_target_properties(Cutelee_Templates PROPERTIES
+  VERSION    ${Cutelee5_VERSION}
+  SOVERSION  ${Cutelee5_VERSION_MAJOR}
 )
 
-install(TARGETS Grantlee_Templates EXPORT grantlee_targets
+install(TARGETS Cutelee_Templates EXPORT cutelee_targets
   RUNTIME DESTINATION bin COMPONENT Templates
   LIBRARY DESTINATION ${LIB_INSTALL_DIR} COMPONENT Templates
   ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT Templates
@@ -136,8 +136,8 @@ install(FILES
   exception.h
   filter.h
   filterexpression.h
-  ${CMAKE_CURRENT_BINARY_DIR}/grantlee_templates_export.h
-  ${CMAKE_CURRENT_BINARY_DIR}/grantlee_version.h
+  ${CMAKE_CURRENT_BINARY_DIR}/cutelee_templates_export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/cutelee_version.h
   metatype.h
   node.h
   outputstream.h
@@ -152,10 +152,10 @@ install(FILES
   token.h
   util.h
   variable.h
-  DESTINATION include/grantlee COMPONENT Templates
+  DESTINATION include/cutelee COMPONENT Templates
 )
 
 install(FILES
-  grantlee_templates.h
+  cutelee_templates.h
   DESTINATION include COMPONENT Templates
 )

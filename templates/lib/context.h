@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,22 +18,22 @@
 
 */
 
-#ifndef GRANTLEE_CONTEXT_H
-#define GRANTLEE_CONTEXT_H
+#ifndef CUTELEE_CONTEXT_H
+#define CUTELEE_CONTEXT_H
 
 #include "abstractlocalizer.h"
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 
 #include <QtCore/QVariantHash>
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class RenderContext;
 
 class ContextPrivate;
 
-/// @headerfile context.h grantlee/context.h
+/// @headerfile context.h cutelee/context.h
 
 /**
   @brief The **%Context** class holds the context to render a Template with.
@@ -114,7 +114,7 @@ class ContextPrivate;
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT Context
+class CUTELEE_TEMPLATES_EXPORT Context
 {
 public:
   /**

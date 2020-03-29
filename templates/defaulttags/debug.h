@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -23,7 +23,7 @@
 
 #include "node.h"
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 class DebugNodeFactory : public AbstractNodeFactory
 {

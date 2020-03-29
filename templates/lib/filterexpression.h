@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,14 +18,14 @@
 
 */
 
-#ifndef GRANTLEE_FILTEREXPRESSION_H
-#define GRANTLEE_FILTEREXPRESSION_H
+#ifndef CUTELEE_FILTEREXPRESSION_H
+#define CUTELEE_FILTEREXPRESSION_H
 
 #include "variable.h"
 
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 
-namespace Grantlee
+namespace Cutelee
 {
 class Filter;
 class OutputStream;
@@ -34,7 +34,7 @@ struct Token;
 
 class FilterExpressionPrivate;
 
-/// @headerfile filterexpression.h grantlee/filterexpression.h
+/// @headerfile filterexpression.h cutelee/filterexpression.h
 
 /**
   @brief A **%FilterExpression** object represents a filter expression in a
@@ -116,7 +116,7 @@ class FilterExpressionPrivate;
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT FilterExpression
+class CUTELEE_TEMPLATES_EXPORT FilterExpression
 {
 public:
   /**
@@ -128,7 +128,7 @@ public:
     Constructs a filter expression from the string @p varString. The Parser @p
     parser is used to retrieve filters.
   */
-  FilterExpression(const QString &varString, Grantlee::Parser *parser);
+  FilterExpression(const QString &varString, Cutelee::Parser *parser);
 
   /**
     Copy constructor.

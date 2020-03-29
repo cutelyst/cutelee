@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -42,7 +42,7 @@ Node *BlockNodeFactory::getNode(const QString &tagContent, Parser *p) const
   const auto expr = tagContent.split(QLatin1Char(' '), QString::SkipEmptyParts);
 
   if (expr.size() != 2) {
-    throw Grantlee::Exception(TagSyntaxError,
+    throw Cutelee::Exception(TagSyntaxError,
                               QStringLiteral("block tag takes one argument"));
   }
 
@@ -58,7 +58,7 @@ Node *BlockNodeFactory::getNode(const QString &tagContent, Parser *p) const
       const auto blockNodeName = item.value<QString>();
 
       if (blockNodeName == blockName) {
-        throw Grantlee::Exception(
+        throw Cutelee::Exception(
             TagSyntaxError,
             QStringLiteral("'block' tag with name '%1' appears more than once.")
                 .arg(blockName));
@@ -89,7 +89,7 @@ Node *BlockNodeFactory::getNode(const QString &tagContent, Parser *p) const
 BlockNode::BlockNode(const QString &name, QObject *parent)
     : Node(parent), m_name(name), m_stream(0)
 {
-  qRegisterMetaType<Grantlee::SafeString>("Grantlee::SafeString");
+  qRegisterMetaType<Cutelee::SafeString>("Cutelee::SafeString");
 }
 
 BlockNode::~BlockNode() {}

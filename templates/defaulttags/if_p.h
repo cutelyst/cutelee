@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2016 Stephen Kelly <steveire@gmail.com>
 
@@ -30,7 +30,7 @@
 #include "node.h"
 #include "util.h"
 
-namespace Grantlee
+namespace Cutelee
 {
 class Parser;
 }
@@ -40,7 +40,7 @@ class IfToken;
 class IfParser
 {
 public:
-  IfParser(Grantlee::Parser *parser, const QStringList &args);
+  IfParser(Cutelee::Parser *parser, const QStringList &args);
 
   QSharedPointer<IfToken> parse();
 
@@ -52,7 +52,7 @@ private:
   QSharedPointer<IfToken> consumeToken();
 
 private:
-  Grantlee::Parser *mParser;
+  Cutelee::Parser *mParser;
   QVector<QSharedPointer<IfToken>> mParseNodes;
   int mPos = 0;
   QSharedPointer<IfToken> mCurrentToken;
@@ -60,19 +60,19 @@ private:
 
 static bool contains(const QVariant &needle, const QVariant &var)
 {
-  if (Grantlee::isSafeString(var)) {
+  if (Cutelee::isSafeString(var)) {
     return getSafeString(var).get().contains(getSafeString(needle));
   } else if (var.canConvert<QVariantList>()) {
     auto container = var.value<QVariantList>();
-    if (Grantlee::isSafeString(needle)) {
-      return container.contains(Grantlee::getSafeString(needle).get());
+    if (Cutelee::isSafeString(needle)) {
+      return container.contains(Cutelee::getSafeString(needle).get());
     }
     return container.contains(needle);
   }
   if (var.canConvert<QVariantHash>()) {
     auto container = var.value<QVariantHash>();
-    if (Grantlee::isSafeString(needle)) {
-      return container.contains(Grantlee::getSafeString(needle).get());
+    if (Cutelee::isSafeString(needle)) {
+      return container.contains(Cutelee::getSafeString(needle).get());
     }
     return container.contains(needle.toString());
   }
@@ -113,7 +113,7 @@ public:
     mOpCode = opCode;
   }
 
-  IfToken(const Grantlee::FilterExpression &fe) : mFe(fe)
+  IfToken(const Cutelee::FilterExpression &fe) : mFe(fe)
   {
     mLbp = 0;
     mTokenName = QStringLiteral("literal");
@@ -123,14 +123,14 @@ public:
   void nud(IfParser *parser);
   void led(QSharedPointer<IfToken> left, IfParser *parser);
 
-  QVariant evaluate(Grantlee::Context *c) const;
+  QVariant evaluate(Cutelee::Context *c) const;
 
   int lbp() const { return mLbp; }
 
   int mLbp;
   QString mTokenName;
 
-  Grantlee::FilterExpression mFe;
+  Cutelee::FilterExpression mFe;
   ArgsType mArgs;
 
   OpCode mOpCode;
@@ -151,8 +151,8 @@ void IfToken::nud(IfParser *parser)
     return;
   }
 
-  throw Grantlee::Exception(
-      Grantlee::TagSyntaxError,
+  throw Cutelee::Exception(
+      Cutelee::TagSyntaxError,
       QStringLiteral("Not expecting '%1' in this position in if tag.")
           .arg(mTokenName));
 }
@@ -177,13 +177,13 @@ void IfToken::led(QSharedPointer<IfToken> left, IfParser *parser)
     return;
   }
 
-  throw Grantlee::Exception(
-      Grantlee::TagSyntaxError,
+  throw Cutelee::Exception(
+      Cutelee::TagSyntaxError,
       QStringLiteral("Not expecting '%1' as infix operator in if tag.")
           .arg(mTokenName));
 }
 
-IfParser::IfParser(Grantlee::Parser *parser, const QStringList &args)
+IfParser::IfParser(Cutelee::Parser *parser, const QStringList &args)
     : mParser(parser)
 {
   mParseNodes.reserve(args.size());
@@ -237,8 +237,8 @@ QSharedPointer<IfToken> IfParser::parse()
   auto r = expression();
 
   if (mCurrentToken->mOpCode != IfToken::Sentinal) {
-    throw Grantlee::Exception(
-        Grantlee::TagSyntaxError,
+    throw Cutelee::Exception(
+        Cutelee::TagSyntaxError,
         QStringLiteral("Unused '%1' at end of if expression.")
             .arg(mCurrentToken->tokenName()));
   }
@@ -282,7 +282,7 @@ QSharedPointer<IfToken> IfParser::createNode(const QString &content) const
     return QSharedPointer<IfToken>::create(8, content, IfToken::NotCode);
   }
   return QSharedPointer<IfToken>::create(
-      Grantlee::FilterExpression(content, mParser));
+      Cutelee::FilterExpression(content, mParser));
 }
 
 QVariant IfToken::evaluate(Context *c) const
@@ -292,22 +292,22 @@ QVariant IfToken::evaluate(Context *c) const
     case Literal:
       return mFe.resolve(c);
     case OrCode:
-      return Grantlee::variantIsTrue(mArgs.first->evaluate(c))
-             || Grantlee::variantIsTrue(mArgs.second->evaluate(c));
+      return Cutelee::variantIsTrue(mArgs.first->evaluate(c))
+             || Cutelee::variantIsTrue(mArgs.second->evaluate(c));
     case AndCode:
-      return Grantlee::variantIsTrue(mArgs.first->evaluate(c))
-             && Grantlee::variantIsTrue(mArgs.second->evaluate(c));
+      return Cutelee::variantIsTrue(mArgs.first->evaluate(c))
+             && Cutelee::variantIsTrue(mArgs.second->evaluate(c));
     case NotCode:
-      return !Grantlee::variantIsTrue(mArgs.first->evaluate(c));
+      return !Cutelee::variantIsTrue(mArgs.first->evaluate(c));
     case InCode:
       return contains(mArgs.first->evaluate(c), mArgs.second->evaluate(c));
     case NotInCode:
       return !contains(mArgs.first->evaluate(c), mArgs.second->evaluate(c));
     case EqCode:
-      return Grantlee::equals(mArgs.first->evaluate(c),
+      return Cutelee::equals(mArgs.first->evaluate(c),
                               mArgs.second->evaluate(c));
     case NeqCode:
-      return !Grantlee::equals(mArgs.first->evaluate(c),
+      return !Cutelee::equals(mArgs.first->evaluate(c),
                                mArgs.second->evaluate(c));
     case GtCode:
       return mArgs.first->evaluate(c) > mArgs.second->evaluate(c);
@@ -321,7 +321,7 @@ QVariant IfToken::evaluate(Context *c) const
       Q_ASSERT(!"Invalid OpCode");
       return QVariant();
     }
-  } catch (const Grantlee::Exception &) {
+  } catch (const Cutelee::Exception &) {
     return false;
   }
 }

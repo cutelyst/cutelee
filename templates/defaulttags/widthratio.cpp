@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -30,7 +30,7 @@ Node *WidthRatioNodeFactory::getNode(const QString &tagContent, Parser *p) const
   auto expr = smartSplit(tagContent);
 
   if (expr.size() != 4) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError, QStringLiteral("widthratio takes three arguments"));
   }
   FilterExpression valExpr(expr.at(1), p);

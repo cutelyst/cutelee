@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -20,10 +20,10 @@
 
 // krazy:excludeall=dpointer
 
-#ifndef GRANTLEE_FILTER_H
-#define GRANTLEE_FILTER_H
+#ifndef CUTELEE_FILTER_H
+#define CUTELEE_FILTER_H
 
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 #include "outputstream.h"
 #include "safestring.h"
 
@@ -31,10 +31,10 @@
 #include <QtCore/QStringList>
 #include <QtCore/QVariant>
 
-namespace Grantlee
+namespace Cutelee
 {
 
-/// @headerfile filter.h grantlee/filter.h
+/// @headerfile filter.h cutelee/filter.h
 
 /**
   @brief Base class for all filters.
@@ -56,7 +56,7 @@ namespace Grantlee
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT Filter
+class CUTELEE_TEMPLATES_EXPORT Filter
 {
 public:
   /**

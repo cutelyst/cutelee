@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -25,9 +25,9 @@
 
 #include <QListWidget>
 #include <QWebView>
-#include <grantlee/templateloader.h>
+#include <cutelee/templateloader.h>
 
-namespace Grantlee
+namespace Cutelee
 {
 class Engine;
 }
@@ -49,7 +49,7 @@ private Q_SLOTS:
   void delayedInit();
 
 protected:
-  QSharedPointer<Grantlee::AbstractLocalizer> m_localizer;
+  QSharedPointer<Cutelee::AbstractLocalizer> m_localizer;
 
 private:
   QListWidget *m_list;
@@ -57,8 +57,8 @@ private:
   QComboBox *m_combo;
   QString m_templateDir;
 
-  Grantlee::Engine *m_engine;
-  QSharedPointer<Grantlee::FileSystemTemplateLoader> m_templateLoader;
+  Cutelee::Engine *m_engine;
+  QSharedPointer<Cutelee::FileSystemTemplateLoader> m_templateLoader;
 };
 
 template <typename T> class AppMainWindow : public MainWindow
@@ -73,7 +73,7 @@ public:
 protected:
   virtual void initLocalizer()
   {
-    m_localizer = QSharedPointer<Grantlee::AbstractLocalizer>(new T);
+    m_localizer = QSharedPointer<Cutelee::AbstractLocalizer>(new T);
   }
 };
 

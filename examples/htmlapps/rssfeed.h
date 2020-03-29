@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2011 Stephen Kelly <steveire@gmail.com>
 
@@ -21,95 +21,95 @@
 #ifndef RSS_FEED_H
 #define RSS_FEED_H
 
-#include <grantlee/filter.h>
-#include <grantlee/node.h>
+#include <cutelee/filter.h>
+#include <cutelee/node.h>
 
-namespace Grantlee
+namespace Cutelee
 {
 class Parser;
 class OutputStream;
 class Context;
 }
 
-class RssFeedNodeFactory : public Grantlee::AbstractNodeFactory
+class RssFeedNodeFactory : public Cutelee::AbstractNodeFactory
 {
   Q_OBJECT
 public:
   RssFeedNodeFactory(QObject *parent = 0);
 
-  virtual Grantlee::Node *getNode(const QString &tagContent,
-                                  Grantlee::Parser *p) const;
+  virtual Cutelee::Node *getNode(const QString &tagContent,
+                                  Cutelee::Parser *p) const;
 };
 
-class RssFeedNode : public Grantlee::Node
+class RssFeedNode : public Cutelee::Node
 {
   Q_OBJECT
 public:
-  RssFeedNode(const Grantlee::FilterExpression &url,
-              const Grantlee::FilterExpression &query, QObject *parent = 0);
+  RssFeedNode(const Cutelee::FilterExpression &url,
+              const Cutelee::FilterExpression &query, QObject *parent = 0);
 
   void setChildNodes(QList<Node *> childNodes);
 
-  virtual void render(Grantlee::OutputStream *stream,
-                      Grantlee::Context *c) const;
+  virtual void render(Cutelee::OutputStream *stream,
+                      Cutelee::Context *c) const;
 
 private:
-  Grantlee::FilterExpression m_url;
-  Grantlee::FilterExpression m_query;
+  Cutelee::FilterExpression m_url;
+  Cutelee::FilterExpression m_query;
   QList<Node *> m_childNodes;
 };
 
-class XmlRoleNodeFactory : public Grantlee::AbstractNodeFactory
+class XmlRoleNodeFactory : public Cutelee::AbstractNodeFactory
 {
   Q_OBJECT
 public:
   XmlRoleNodeFactory(QObject *parent = 0);
 
-  virtual Grantlee::Node *getNode(const QString &tagContent,
-                                  Grantlee::Parser *p) const;
+  virtual Cutelee::Node *getNode(const QString &tagContent,
+                                  Cutelee::Parser *p) const;
 };
 
-class XmlRoleNode : public Grantlee::Node
+class XmlRoleNode : public Cutelee::Node
 {
   Q_OBJECT
 public:
-  XmlRoleNode(const Grantlee::FilterExpression &query, QObject *parent = 0);
+  XmlRoleNode(const Cutelee::FilterExpression &query, QObject *parent = 0);
 
-  virtual void render(Grantlee::OutputStream *stream,
-                      Grantlee::Context *c) const;
+  virtual void render(Cutelee::OutputStream *stream,
+                      Cutelee::Context *c) const;
 
 private:
-  Grantlee::FilterExpression m_name;
-  Grantlee::FilterExpression m_query;
+  Cutelee::FilterExpression m_name;
+  Cutelee::FilterExpression m_query;
   int m_count;
 };
 
-class XmlNamespaceNodeFactory : public Grantlee::AbstractNodeFactory
+class XmlNamespaceNodeFactory : public Cutelee::AbstractNodeFactory
 {
   Q_OBJECT
 public:
   XmlNamespaceNodeFactory(QObject *parent = 0);
 
-  virtual Grantlee::Node *getNode(const QString &tagContent,
-                                  Grantlee::Parser *p) const;
+  virtual Cutelee::Node *getNode(const QString &tagContent,
+                                  Cutelee::Parser *p) const;
 };
 
-class XmlNamespaceNode : public Grantlee::Node
+class XmlNamespaceNode : public Cutelee::Node
 {
   Q_OBJECT
 public:
-  XmlNamespaceNode(const Grantlee::FilterExpression &query, const QString &name,
+  XmlNamespaceNode(const Cutelee::FilterExpression &query, const QString &name,
                    QObject *parent = 0);
 
-  virtual void render(Grantlee::OutputStream *stream,
-                      Grantlee::Context *c) const;
+  virtual void render(Cutelee::OutputStream *stream,
+                      Cutelee::Context *c) const;
 
 private:
   QString m_name;
-  Grantlee::FilterExpression m_query;
+  Cutelee::FilterExpression m_query;
 };
 
-class ResizeFilter : public Grantlee::Filter
+class ResizeFilter : public Cutelee::Filter
 {
 public:
   QVariant doFilter(const QVariant &input,

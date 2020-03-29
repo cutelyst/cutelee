@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Michael Jansen <kde@michael-jansen.biz>
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
@@ -19,10 +19,10 @@
 
 */
 
-#ifndef GRANTLEE_METATYPE_H
-#define GRANTLEE_METATYPE_H
+#ifndef CUTELEE_METATYPE_H
+#define CUTELEE_METATYPE_H
 
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 
 #include "typeaccessor.h"
 
@@ -30,24 +30,24 @@
 
 /// @file
 
-namespace Grantlee
+namespace Cutelee
 {
 
-/// @headerfile metatype.h grantlee/metatype.h
+/// @headerfile metatype.h cutelee/metatype.h
 
 #ifndef Q_QDOC
 /**
-  @brief The **%MetaType** is the interface to the Grantlee introspection
+  @brief The **%MetaType** is the interface to the Cutelee introspection
   system.
 
   The **%MetaType** class is used as part of the type registration system of
-  %Grantlee.
+  %Cutelee.
 
   @see @ref generic_types_and_templates
   @author Michael Jansen <kde@michael-jansen.biz>
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT MetaType
+class CUTELEE_TEMPLATES_EXPORT MetaType
 {
 public:
   /**
@@ -94,7 +94,7 @@ namespace
 template <typename RealType, typename HandleAs> struct LookupTrait {
   static QVariant doLookUp(const QVariant &object, const QString &property)
   {
-    typedef typename Grantlee::TypeAccessor<RealType> Accessor;
+    typedef typename Cutelee::TypeAccessor<RealType> Accessor;
     return Accessor::lookUp(object.value<RealType>(), property);
   }
 };
@@ -103,7 +103,7 @@ template <typename RealType, typename HandleAs>
 struct LookupTrait<RealType &, HandleAs &> {
   static QVariant doLookUp(const QVariant &object, const QString &property)
   {
-    typedef typename Grantlee::TypeAccessor<HandleAs &> Accessor;
+    typedef typename Cutelee::TypeAccessor<HandleAs &> Accessor;
     return Accessor::lookUp(object.value<HandleAs>(), property);
   }
 };
@@ -123,7 +123,7 @@ template <typename RealType, typename HandleAs> static int doRegister(int id)
 }
 
 /*
-  Register a type so grantlee knows how to handle it.
+  Register a type so cutelee knows how to handle it.
  */
 template <typename RealType, typename HandleAs> struct InternalRegisterType {
   static int doReg()
@@ -159,10 +159,10 @@ struct InternalRegisterType<RealType *, HandleAs *> {
 
     // define some introspectable API for SomeType
 
-    GRANTLEE_BEGIN_LOOKUP(SomeType)
+    CUTELEE_BEGIN_LOOKUP(SomeType)
       if (property == "someProp")
         return object.someProp();
-    GRANTLEE_END_LOOKUP
+    CUTELEE_END_LOOKUP
 
 
     class OtherType : public SomeType
@@ -193,7 +193,7 @@ template <typename RealType, typename HandleAs> int registerMetaType()
 #ifndef Q_QDOC
 /**
   @internal
-  Register a type so %Grantlee knows how to handle it.
+  Register a type so %Cutelee knows how to handle it.
 
   This is a convenience method.
  */
@@ -203,15 +203,15 @@ template <typename Type> int registerMetaType()
 }
 
 #endif
-} // namespace Grantlee
+} // namespace Cutelee
 
 /**
   Top boundary of a lookup function for Type.
 
   @see @ref generic_types
  */
-#define GRANTLEE_BEGIN_LOOKUP(Type)                                            \
-  namespace Grantlee                                                           \
+#define CUTELEE_BEGIN_LOOKUP(Type)                                            \
+  namespace Cutelee                                                           \
   {                                                                            \
   template <>                                                                  \
   inline QVariant TypeAccessor<Type &>::lookUp(const Type &object,             \
@@ -223,8 +223,8 @@ template <typename Type> int registerMetaType()
 
   @see @ref generic_types
  */
-#define GRANTLEE_BEGIN_LOOKUP_PTR(Type)                                        \
-  namespace Grantlee                                                           \
+#define CUTELEE_BEGIN_LOOKUP_PTR(Type)                                        \
+  namespace Cutelee                                                           \
   {                                                                            \
   template <>                                                                  \
   inline QVariant TypeAccessor<Type *>::lookUp(const Type *const object,       \
@@ -236,9 +236,9 @@ template <typename Type> int registerMetaType()
 
   @see @ref generic_types
  */
-#define GRANTLEE_END_LOOKUP                                                    \
+#define CUTELEE_END_LOOKUP                                                    \
   return QVariant();                                                           \
   }                                                                            \
   }
 
-#endif // #define GRANTLEE_METATYPE_H
+#endif // #define CUTELEE_METATYPE_H

@@ -14,20 +14,20 @@ else
   name_fragment=$1
 fi
 
-tempDir="/tmp/grantlee-release"
+tempDir="/tmp/cutelee-release"
 
 if [ ! -d "$tempDir" ]
 then
   mkdir $tempDir
 fi
 
-echo Creating $tempDir/grantlee-$name_fragment.tar.gz
+echo Creating $tempDir/cutelee-$name_fragment.tar.gz
 
-git archive --format=tar --prefix=grantlee-$name_fragment/ $version | gzip > $tempDir/grantlee-$name_fragment.tar.gz
+git archive --format=tar --prefix=cutelee-$name_fragment/ $version | gzip > $tempDir/cutelee-$name_fragment.tar.gz
 
-rm -rf $tempDir/grantlee-$name_fragment/
-echo Unpacking to $tempDir/grantlee-$name_fragment
-tar -C $tempDir -xvf $tempDir/grantlee-$name_fragment.tar.gz
+rm -rf $tempDir/cutelee-$name_fragment/
+echo Unpacking to $tempDir/cutelee-$name_fragment
+tar -C $tempDir -xvf $tempDir/cutelee-$name_fragment.tar.gz
 
 if [ "$?" -ne "0" ]
 then
@@ -38,11 +38,11 @@ fi
 oldDir=$PWD
 
 echo Creating build directory
-mkdir -p $tempDir/grantlee-$name_fragment/build && cd $tempDir/grantlee-$name_fragment/build
+mkdir -p $tempDir/cutelee-$name_fragment/build && cd $tempDir/cutelee-$name_fragment/build
 
-cp $oldDir/scripts/qttags.tag $tempDir/grantlee-$name_fragment/scripts
-cp $oldDir/scripts/libstdc++.tag $tempDir/grantlee-$name_fragment/scripts
-cp $oldDir/scripts/libstdc++-longnames.tag $tempDir/grantlee-$name_fragment/scripts
+cp $oldDir/scripts/qttags.tag $tempDir/cutelee-$name_fragment/scripts
+cp $oldDir/scripts/libstdc++.tag $tempDir/cutelee-$name_fragment/scripts
+cp $oldDir/scripts/libstdc++-longnames.tag $tempDir/cutelee-$name_fragment/scripts
 
 echo Building.
 cmake -DCMAKE_INSTALL_PREFIX=../prefix ..
@@ -52,19 +52,19 @@ echo "Testing"
 make test
 LC_ALL=de make test
 
-echo Copying archive to $oldDir/grantlee-$name_fragment.tar.gz
-cp $tempDir/grantlee-$name_fragment.tar.gz $oldDir
+echo Copying archive to $oldDir/cutelee-$name_fragment.tar.gz
+cp $tempDir/cutelee-$name_fragment.tar.gz $oldDir
 
 qch_version_string=`echo $name_fragment | sed 's/\.//g'`
 
 echo "Creating Docs"
 make docs
 sed -i 's/at your option, any later version.<\/p>/at your option, any later version.<\/p>\
-<p>A version of this documentation suitable for viewing in Qt Assistant is available <a href\=\"http:\/\/www.grantlee.org\/grantlee-'${qch_version_string}'.qch\">here<\/a>.<\/p>/' apidox/index.html
+<p>A version of this documentation suitable for viewing in Qt Assistant is available <a href\=\"http:\/\/www.cutelee.org\/cutelee-'${qch_version_string}'.qch\">here<\/a>.<\/p>/' apidox/index.html
 
 tar -czf $oldDir/apidox.tar.gz apidox
 
-cp $tempDir/grantlee-$name_fragment/build/grantlee-$qch_version_string.qch $oldDir
+cp $tempDir/cutelee-$name_fragment/build/cutelee-$qch_version_string.qch $oldDir
 
 make cccc
 tar -czf $oldDir/cccc.tar.gz cccc
@@ -77,4 +77,4 @@ make coverage
 tar -czf $oldDir/coverage.tar.gz coverage
 
 cd $oldDir
-gpg -u D02D6509 --detach-sign --armor grantlee-$name_fragment.tar.gz
+gpg -u D02D6509 --detach-sign --armor cutelee-$name_fragment.tar.gz

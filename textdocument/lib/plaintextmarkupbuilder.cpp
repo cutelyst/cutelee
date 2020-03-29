@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2008 Stephen Kelly <steveire@gmail.com>
 
@@ -20,7 +20,7 @@
 
 #include "plaintextmarkupbuilder.h"
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class PlainTextMarkupBuilderPrivate
@@ -61,7 +61,7 @@ public:
 };
 }
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 QString PlainTextMarkupBuilderPrivate::getRomanString(int item)
 {
@@ -439,4 +439,4 @@ void PlainTextMarkupBuilder::endTableCell() {}
 
 void PlainTextMarkupBuilder::endTableHeaderCell() {}
 
-void Grantlee::PlainTextMarkupBuilder::endTableRow() {}
+void Cutelee::PlainTextMarkupBuilder::endTableRow() {}

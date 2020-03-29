@@ -8,7 +8,7 @@
 
 #include "templatereply.h"
 
-LocalRequestManager::LocalRequestManager(Grantlee::Engine *engine,
+LocalRequestManager::LocalRequestManager(Cutelee::Engine *engine,
                                          QObject *parent)
     : QNetworkAccessManager(parent), m_engine(engine)
 {
@@ -24,7 +24,7 @@ LocalRequestManager::createRequest(QNetworkAccessManager::Operation op,
     return QNetworkAccessManager::createRequest(op, request, outgoingData);
   }
 
-  Grantlee::Template t = m_engine->loadByName(requestUrl.path());
+  Cutelee::Template t = m_engine->loadByName(requestUrl.path());
 
   if (t->error()) {
     qDebug() << t->errorString();
@@ -36,7 +36,7 @@ LocalRequestManager::createRequest(QNetworkAccessManager::Operation op,
     postData.setEncodedQuery(outgoingData->readAll());
   }
 
-  Grantlee::Context c;
+  Cutelee::Context c;
 
   TemplateReply *reply = new TemplateReply(request, op, t, c);
 

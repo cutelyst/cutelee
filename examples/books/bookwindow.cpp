@@ -44,14 +44,14 @@
 #include "bookwindow.h"
 #include "bookdelegate.h"
 #include "bookwrapper.h"
-#include "grantlee_paths.h"
+#include "cutelee_paths.h"
 #include "initdb.h"
 
 #include <QDataWidgetMapper>
 #include <QInputDialog>
 #include <QMessageBox>
 
-#include <grantlee_templates.h>
+#include <cutelee_templates.h>
 
 BookWindow::BookWindow()
 {
@@ -132,14 +132,14 @@ BookWindow::BookWindow()
 
   connect(ui.exportButton, SIGNAL(pressed()), SLOT(renderBooks()));
 
-  m_engine = new Grantlee::Engine();
-  QSharedPointer<Grantlee::FileSystemTemplateLoader> loader
-      = QSharedPointer<Grantlee::FileSystemTemplateLoader>(
-          new Grantlee::FileSystemTemplateLoader());
-  loader->setTemplateDirs(QStringList() << GRANTLEE_TEMPLATE_PATH);
+  m_engine = new Cutelee::Engine();
+  QSharedPointer<Cutelee::FileSystemTemplateLoader> loader
+      = QSharedPointer<Cutelee::FileSystemTemplateLoader>(
+          new Cutelee::FileSystemTemplateLoader());
+  loader->setTemplateDirs(QStringList() << CUTELEE_TEMPLATE_PATH);
   m_engine->addTemplateLoader(loader);
 
-  m_engine->setPluginPaths(QStringList() << GRANTLEE_PLUGIN_PATH);
+  m_engine->setPluginPaths(QStringList() << CUTELEE_PLUGIN_PATH);
 }
 
 void BookWindow::showError(const QSqlError &err)
@@ -167,9 +167,9 @@ void BookWindow::renderBooks() const
 
   QString themeName = ui.exportTheme->currentText();
 
-  Grantlee::Context c(mapping);
+  Cutelee::Context c(mapping);
 
-  Grantlee::Template t = m_engine->loadByName(themeName + ".html");
+  Cutelee::Template t = m_engine->loadByName(themeName + ".html");
   if (!t) {
     QMessageBox::critical(
         const_cast<BookWindow *>(this), "Unable to load template",

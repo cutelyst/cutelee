@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,30 +18,30 @@
 
 */
 
-#ifndef GRANTLEE_TEMPLATES_H
-#define GRANTLEE_TEMPLATES_H
+#ifndef CUTELEE_TEMPLATES_H
+#define CUTELEE_TEMPLATES_H
 
-#include "grantlee/abstractlocalizer.h"
-#include "grantlee/cachingloaderdecorator.h"
-#include "grantlee/context.h"
-#include "grantlee/engine.h"
-#include "grantlee/exception.h"
-#include "grantlee/filter.h"
-#include "grantlee/filterexpression.h"
-#include "grantlee/grantlee_version.h"
-#include "grantlee/metatype.h"
-#include "grantlee/node.h"
-#include "grantlee/outputstream.h"
-#include "grantlee/parser.h"
-#include "grantlee/qtlocalizer.h"
-#include "grantlee/rendercontext.h"
-#include "grantlee/safestring.h"
-#include "grantlee/taglibraryinterface.h"
-#include "grantlee/template.h"
-#include "grantlee/templateloader.h"
-#include "grantlee/token.h"
-#include "grantlee/typeaccessor.h"
-#include "grantlee/util.h"
-#include "grantlee/variable.h"
+#include "cutelee/abstractlocalizer.h"
+#include "cutelee/cachingloaderdecorator.h"
+#include "cutelee/context.h"
+#include "cutelee/engine.h"
+#include "cutelee/exception.h"
+#include "cutelee/filter.h"
+#include "cutelee/filterexpression.h"
+#include "cutelee/cutelee_version.h"
+#include "cutelee/metatype.h"
+#include "cutelee/node.h"
+#include "cutelee/outputstream.h"
+#include "cutelee/parser.h"
+#include "cutelee/qtlocalizer.h"
+#include "cutelee/rendercontext.h"
+#include "cutelee/safestring.h"
+#include "cutelee/taglibraryinterface.h"
+#include "cutelee/template.h"
+#include "cutelee/templateloader.h"
+#include "cutelee/token.h"
+#include "cutelee/typeaccessor.h"
+#include "cutelee/util.h"
+#include "cutelee/variable.h"
 
 #endif

@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -23,12 +23,12 @@
 
 #include "node.h"
 
-namespace Grantlee
+namespace Cutelee
 {
 class Parser;
 }
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 class BlockNodeFactory : public AbstractNodeFactory
 {
@@ -42,7 +42,7 @@ public:
 class BlockNode : public Node
 {
   Q_OBJECT
-  Q_PROPERTY(Grantlee::SafeString super READ getSuper)
+  Q_PROPERTY(Cutelee::SafeString super READ getSuper)
 public:
   BlockNode(const QString &blockName, QObject *parent = {});
   ~BlockNode() override;

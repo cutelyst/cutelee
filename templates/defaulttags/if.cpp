@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -63,7 +63,7 @@ Node *IfNodeFactory::getNode(const QString &tagContent, Parser *p) const
 
   auto commandName = expr.takeAt(0);
   if (expr.size() <= 0) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral("'%1' statement requires at least one argument")
             .arg(commandName));
@@ -89,8 +89,8 @@ void IfNode::render(OutputStream *stream, Context *c) const
     bool match = false;
     if (pair.first) {
       try {
-        match = Grantlee::variantIsTrue(pair.first->evaluate(c));
-      } catch (const Grantlee::Exception &) {
+        match = Cutelee::variantIsTrue(pair.first->evaluate(c));
+      } catch (const Cutelee::Exception &) {
       }
     } else {
       match = true;

@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2011 Stephen Kelly <steveire@gmail.com>
 
@@ -20,7 +20,7 @@
 
 #include "textprocessingmachine_p.h"
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 void TextProcessingMachine::processCharacter(QString::const_iterator character)
 {

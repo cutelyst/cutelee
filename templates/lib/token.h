@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,12 +18,12 @@
 
 */
 
-#ifndef GRANTLEE_TOKEN_H
-#define GRANTLEE_TOKEN_H
+#ifndef CUTELEE_TOKEN_H
+#define CUTELEE_TOKEN_H
 
 #include <QtCore/QString>
 
-namespace Grantlee
+namespace Cutelee
 {
 
 /**
@@ -38,7 +38,7 @@ enum TokenType {
   CommentToken   ///< The Token is a comment node.
 };
 
-/// @headerfile token.h grantlee/token.h
+/// @headerfile token.h cutelee/token.h
 
 /**
   A token in a parse stream for a template.
@@ -52,6 +52,6 @@ struct Token {
 };
 }
 
-Q_DECLARE_TYPEINFO(Grantlee::Token, Q_MOVABLE_TYPE);
+Q_DECLARE_TYPEINFO(Cutelee::Token, Q_MOVABLE_TYPE);
 
 #endif

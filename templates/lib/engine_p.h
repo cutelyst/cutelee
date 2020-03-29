@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,8 +18,8 @@
 
 */
 
-#ifndef GRANTLEE_ENGINE_P_H
-#define GRANTLEE_ENGINE_P_H
+#ifndef CUTELEE_ENGINE_P_H
+#define CUTELEE_ENGINE_P_H
 
 #include "engine.h"
 #include "filter.h"
@@ -28,7 +28,7 @@
 
 class QPluginLoader;
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class ScriptableTagLibrary;

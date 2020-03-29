@@ -1,20 +1,20 @@
-namespace Grantlee
+namespace Cutelee
 {
 
 /**
 
-  @page for_themers Grantlee for theme artists
+  @page for_themers Cutelee for theme artists
 
-  The syntax of %Grantlee templates is the same as Django templates. This page is an introduction to the syntax, but any Django template introduction is also relevant. Here's some good ones:
+  The syntax of %Cutelee templates is the same as Django templates. This page is an introduction to the syntax, but any Django template introduction is also relevant. Here's some good ones:
 
   - https://djangobook.com/mdj2-django-templates/
   - https://djangobook.com/extending-template-system/
   - http://docs.djangoproject.com/en/dev/topics/templates/
 
 
-  @section template_syntax Syntax of Grantlee templates
+  @section template_syntax Syntax of Cutelee templates
 
-  The syntax of %Grantlee templates contains four types of tokens - plain text, comments, variables and control tags.
+  The syntax of %Cutelee templates contains four types of tokens - plain text, comments, variables and control tags.
 
   A simple template might look like this:
   @verbatim
@@ -35,7 +35,7 @@ namespace Grantlee
 
   - Content inside <tt>{# #}</tt> are comments and are not part of the output.
   - Content inside <tt>{{ }}</tt> are variables which are substitued when the template is rendered.
-  - Content inside <tt>{% %}</tt> are control tags which can affect the rendering of the template. %Grantlee ships with commonly used tags such as @gr_tag{if}, @gr_tag{for}, @gr_tag{cycle} and a host of others (see&nbsp;http://docs.djangoproject.com/en/dev/ref/templates/builtins/). It is also possible for application developers and artists to define their own tags.
+  - Content inside <tt>{% %}</tt> are control tags which can affect the rendering of the template. %Cutelee ships with commonly used tags such as @gr_tag{if}, @gr_tag{for}, @gr_tag{cycle} and a host of others (see&nbsp;http://docs.djangoproject.com/en/dev/ref/templates/builtins/). It is also possible for application developers and artists to define their own tags.
 
 
   @subsection loops Loops
@@ -151,7 +151,7 @@ namespace Grantlee
     // The people are Dave Ellen Frank.
   @endverbatim
 
-  %Grantlee ships with many useful filters including <tt>upper</tt>, <tt>lower</tt>, <tt>slice</tt>, <tt>truncate</tt>, <tt>join</tt>, <tt>split</tt> etc (see&nbsp;http://docs.djangoproject.com/en/dev/ref/templates/builtins/). Application developers and artists can also define their own filters.
+  %Cutelee ships with many useful filters including <tt>upper</tt>, <tt>lower</tt>, <tt>slice</tt>, <tt>truncate</tt>, <tt>join</tt>, <tt>split</tt> etc (see&nbsp;http://docs.djangoproject.com/en/dev/ref/templates/builtins/). Application developers and artists can also define their own filters.
 
   @subsection template_loading Template Inclusion and Inheritance
 
@@ -235,7 +235,7 @@ namespace Grantlee
 
   @section templates_safestring Autoescaping in templates.
 
-  When creating HTML string output it is necessary to consider escaping data inserted into the template. HTML escaping involves replacing <tt>'&lt;'</tt> with <tt>'&amp;lt;'</tt> and <tt>'&amp;'</tt> with <tt>'&amp;amp;'</tt> etc. %Grantlee automatically escapes string input before adding it to the output.
+  When creating HTML string output it is necessary to consider escaping data inserted into the template. HTML escaping involves replacing <tt>'&lt;'</tt> with <tt>'&amp;lt;'</tt> and <tt>'&amp;'</tt> with <tt>'&amp;amp;'</tt> etc. %Cutelee automatically escapes string input before adding it to the output.
 
   This is relevant when writing a variable from the context into the Template.
 
@@ -348,7 +348,7 @@ namespace Grantlee
 
   @subsection extending_syntax Extending the syntax
 
-  It is also possible to extend the syntax of %Grantlee as you need it using Javascript if the application developer chooses. See @ref javascript_libraries for more. This is considered an advanced topic.
+  It is also possible to extend the syntax of %Cutelee as you need it using Javascript if the application developer chooses. See @ref javascript_libraries for more. This is considered an advanced topic.
 
 */
 

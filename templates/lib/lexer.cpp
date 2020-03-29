@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010,2011 Stephen Kelly <steveire@gmail.com>
 
@@ -20,7 +20,7 @@
 
 #include "lexer_p.h"
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 typedef State<TextProcessingMachine::Type> TextProcessingState;
 typedef TextProcessingMachine::Transition TextProcessingTransition;

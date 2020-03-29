@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -29,14 +29,14 @@
 #include "context.h"
 #include "coverageobject.h"
 #include "engine.h"
-#include "grantlee_paths.h"
+#include "cutelee_paths.h"
 #include "template.h"
 
 typedef QHash<QString, QVariant> Dict;
 
-Q_DECLARE_METATYPE(Grantlee::Error)
+Q_DECLARE_METATYPE(Cutelee::Error)
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 class TestLoaderTags : public CoverageObject
 {
@@ -79,11 +79,11 @@ void TestLoaderTags::initTestCase()
   auto appDirPath
       = QFileInfo(QCoreApplication::applicationDirPath()).absoluteDir().path();
   m_engine->setPluginPaths({
-      QStringLiteral(GRANTLEE_PLUGIN_PATH),
+      QStringLiteral(CUTELEE_PLUGIN_PATH),
       QStringLiteral(":/plugins/") // For testtags.qs
   });
 #ifdef HAVE_QTQML_LIB
-  m_engine->addDefaultLibrary(QStringLiteral("grantlee_scriptabletags"));
+  m_engine->addDefaultLibrary(QStringLiteral("cutelee_scriptabletags"));
 #endif
 }
 
@@ -93,10 +93,10 @@ void TestLoaderTags::testTemplateFromQrc()
 {
   Engine engine;
 
-  auto loader = QSharedPointer<Grantlee::FileSystemTemplateLoader>::create();
+  auto loader = QSharedPointer<Cutelee::FileSystemTemplateLoader>::create();
   loader->setTemplateDirs({QStringLiteral(":/templates/")});
   engine.addTemplateLoader(loader);
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
   auto t = engine.loadByName(QStringLiteral("resourcetemplate1.html"));
 
@@ -126,7 +126,7 @@ void TestLoaderTags::doTest()
   QFETCH(QString, input);
   QFETCH(Dict, dict);
   QFETCH(QString, output);
-  QFETCH(Grantlee::Error, error);
+  QFETCH(Cutelee::Error, error);
 
   auto t = m_engine->newTemplate(input, QLatin1String(QTest::currentDataTag()));
 
@@ -161,7 +161,7 @@ void TestLoaderTags::testIncludeTag_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -210,7 +210,7 @@ void TestLoaderTags::testExtendsTag_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
   // Basic test
@@ -545,7 +545,7 @@ void TestLoaderTags::testBlockTagErrors_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -564,7 +564,7 @@ void TestLoaderTags::testIncludeAndExtendsTag_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 

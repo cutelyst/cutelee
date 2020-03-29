@@ -1,11 +1,11 @@
 
 #include "filter.h"
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 Filter::~Filter() {}
 
-void Filter::setStream(Grantlee::OutputStream *stream) { m_stream = stream; }
+void Filter::setStream(Cutelee::OutputStream *stream) { m_stream = stream; }
 
 SafeString Filter::escape(const QString &input) const
 {

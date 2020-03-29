@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010,2011 Stephen Kelly <steveire@gmail.com>
 
@@ -18,15 +18,15 @@
 
 */
 
-#ifndef GRANTLEE_LEXER_P_H
-#define GRANTLEE_LEXER_P_H
+#ifndef CUTELEE_LEXER_P_H
+#define CUTELEE_LEXER_P_H
 
 #include "textprocessingmachine_p.h"
 #include "token.h"
 
 #include <QList>
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class Lexer

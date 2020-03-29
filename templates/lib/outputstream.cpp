@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -22,7 +22,7 @@
 
 #include "safestring.h"
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 OutputStream::OutputStream() : m_stream(0) {}
 
@@ -40,12 +40,12 @@ QString OutputStream::escape(const QString &input) const
   return temp;
 }
 
-QString OutputStream::escape(const Grantlee::SafeString &input) const
+QString OutputStream::escape(const Cutelee::SafeString &input) const
 {
   return escape(input.get());
 }
 
-QString OutputStream::conditionalEscape(const Grantlee::SafeString &input) const
+QString OutputStream::conditionalEscape(const Cutelee::SafeString &input) const
 {
   if (!input.isSafe())
     return escape(input.get());
@@ -64,7 +64,7 @@ OutputStream &OutputStream::operator<<(const QString &input)
   return *this;
 }
 
-OutputStream &OutputStream::operator<<(const Grantlee::SafeString &input)
+OutputStream &OutputStream::operator<<(const Cutelee::SafeString &input)
 {
   if (m_stream) {
     if (input.needsEscape())
@@ -75,7 +75,7 @@ OutputStream &OutputStream::operator<<(const Grantlee::SafeString &input)
   return *this;
 }
 /*
-OutputStream& OutputStream::operator<<(const Grantlee::OutputStream::Escape& e)
+OutputStream& OutputStream::operator<<(const Cutelee::OutputStream::Escape& e)
 {
   ( *m_stream ) << escape( e.m_content );
   return *this;
@@ -88,13 +88,13 @@ OutputStream &OutputStream::operator<<(QTextStream *stream)
   return *this;
 }
 /*
-Grantlee::OutputStream::MarkSafe::MarkSafe(const QString& input)
+Cutelee::OutputStream::MarkSafe::MarkSafe(const QString& input)
   : m_safe( false ), m_content( input )
 {
 
 }
 
-Grantlee::OutputStream::MarkSafe::MarkSafe(const Grantlee::SafeString& input)
+Cutelee::OutputStream::MarkSafe::MarkSafe(const Cutelee::SafeString& input)
   : m_safe( input.isSafe() ), m_content( input.get() )
 {
 

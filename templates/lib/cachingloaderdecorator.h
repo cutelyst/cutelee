@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,32 +18,32 @@
 
 */
 
-#ifndef GRANTLEE_CACHINGLOADERDECORATOR_H
-#define GRANTLEE_CACHINGLOADERDECORATOR_H
+#ifndef CUTELEE_CACHINGLOADERDECORATOR_H
+#define CUTELEE_CACHINGLOADERDECORATOR_H
 
 #include "templateloader.h"
 
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class CachingLoaderDecoratorPrivate;
 
-/// @headerfile cachingloaderdecorator.h grantlee/cachingloaderdecorator.h
+/// @headerfile cachingloaderdecorator.h cutelee/cachingloaderdecorator.h
 
 /**
   @brief Implements a loader decorator which caches compiled Template objects.
 
   The **%CachingLoaderDecorator** can be used with any implementation of
-  Grantlee::AbstractTemplateLoader.
+  Cutelee::AbstractTemplateLoader.
 
   @code
-    auto loader = QSharedPointer<Grantlee::FileSystemTemplateLoader>::create();
+    auto loader = QSharedPointer<Cutelee::FileSystemTemplateLoader>::create();
     loader->setTemplateDirs({"/path/one", "/path/two"});
 
     auto cache =
-        QSharedPointer<Grantlee::CachingLoaderDecorator>::create( loader );
+        QSharedPointer<Cutelee::CachingLoaderDecorator>::create( loader );
     m_engine->addTemplateLoader( cache );
   @endcode
 
@@ -67,7 +67,7 @@ class CachingLoaderDecoratorPrivate;
 
   @author Stephen Kelly <steveire@gmail.com>
  */
-class GRANTLEE_TEMPLATES_EXPORT CachingLoaderDecorator
+class CUTELEE_TEMPLATES_EXPORT CachingLoaderDecorator
     : public AbstractTemplateLoader
 {
 public:
@@ -86,7 +86,7 @@ public:
   QPair<QString, QString> getMediaUri(const QString &fileName) const override;
 
   Template loadByName(const QString &name,
-                      const Grantlee::Engine *engine) const override;
+                      const Cutelee::Engine *engine) const override;
 
   /**
     Clears the Templates objects cached in the decorator.

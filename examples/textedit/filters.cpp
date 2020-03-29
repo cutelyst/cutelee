@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -23,7 +23,7 @@
 #include <QStringList>
 #include <QTextDocument>
 
-#include <grantlee/util.h>
+#include <cutelee/util.h>
 
 #include "audiotextdocumentoutputter.h"
 
@@ -38,7 +38,7 @@ QVariant CleanHtmlFilter::doFilter(const QVariant &input,
     return QString();
 
   AudioTextHtmlBuilder *builder = new AudioTextHtmlBuilder();
-  Grantlee::MarkupDirector *director = new AudioTextDocumentDirector(builder);
+  Cutelee::MarkupDirector *director = new AudioTextDocumentDirector(builder);
 
   director->processDocument(document);
   QString result = builder->getResult();
@@ -58,7 +58,7 @@ QVariant PlainTextFilter::doFilter(const QVariant &input,
     return QString();
 
   AudioPlainTextBuilder *builder = new AudioPlainTextBuilder();
-  Grantlee::MarkupDirector *director = new AudioTextDocumentDirector(builder);
+  Cutelee::MarkupDirector *director = new AudioTextDocumentDirector(builder);
 
   director->processDocument(document);
   QString result = builder->getResult();

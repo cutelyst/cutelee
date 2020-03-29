@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -21,7 +21,7 @@
 #define MINIMAL_CONTAINER_TESTS
 
 #include "engine.h"
-#include "grantlee_paths.h"
+#include "cutelee_paths.h"
 #include "metatype.h"
 #include "test_macros.h"
 
@@ -247,11 +247,11 @@ void testContainer(const QString &stringTemplate,
                    const QVariant &containerVariant,
                    const QStringList &expectedResults, bool unordered)
 {
-  Grantlee::Engine engine;
+  Cutelee::Engine engine;
 
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
-  Grantlee::Context c;
+  Cutelee::Context c;
   c.insert(QStringLiteral("container"), containerVariant);
 
   auto t1 = engine.newTemplate(stringTemplate, QStringLiteral("template1"));

@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -27,9 +27,9 @@
 
 #include <QtCore/QRegularExpressionMatchIterator>
 
-using namespace Grantlee;
+using namespace Cutelee;
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class NodePrivate
@@ -88,7 +88,7 @@ Node::~Node() { delete d_ptr; }
 void Node::streamValueInContext(OutputStream *stream, const QVariant &input,
                                 Context *c) const
 {
-  Grantlee::SafeString inputString;
+  Cutelee::SafeString inputString;
   if (input.userType() == qMetaTypeId<QVariantList>()) {
     inputString = toString(input.value<QVariantList>());
   } else if (input.userType() == qMetaTypeId<MetaEnumVariable>()) {
@@ -116,25 +116,25 @@ TemplateImpl *Node::containerTemplate() const
   return ti;
 }
 
-NodeList::NodeList() : QList<Grantlee::Node *>(), m_containsNonText(false) {}
+NodeList::NodeList() : QList<Cutelee::Node *>(), m_containsNonText(false) {}
 
-NodeList::NodeList(const NodeList &list) : QList<Grantlee::Node *>(list)
+NodeList::NodeList(const NodeList &list) : QList<Cutelee::Node *>(list)
 {
   m_containsNonText = list.m_containsNonText;
 }
 
 NodeList &NodeList::operator=(const NodeList &list)
 {
-  static_cast<QList<Grantlee::Node *> &>(*this)
-      = static_cast<QList<Grantlee::Node *>>(list);
+  static_cast<QList<Cutelee::Node *> &>(*this)
+      = static_cast<QList<Cutelee::Node *>>(list);
   m_containsNonText = list.m_containsNonText;
   return *this;
 }
 
-NodeList::NodeList(const QList<Grantlee::Node *> &list)
-    : QList<Grantlee::Node *>(list)
+NodeList::NodeList(const QList<Cutelee::Node *> &list)
+    : QList<Cutelee::Node *>(list)
 {
-  Q_FOREACH (Grantlee::Node *node, list) {
+  Q_FOREACH (Cutelee::Node *node, list) {
     auto textNode = qobject_cast<TextNode *>(node);
     if (!textNode) {
       m_containsNonText = true;
@@ -146,7 +146,7 @@ NodeList::NodeList(const QList<Grantlee::Node *> &list)
 
 NodeList::~NodeList() {}
 
-void NodeList::append(Grantlee::Node *node)
+void NodeList::append(Cutelee::Node *node)
 {
   if (!m_containsNonText) {
     auto textNode = qobject_cast<TextNode *>(node);
@@ -154,13 +154,13 @@ void NodeList::append(Grantlee::Node *node)
       m_containsNonText = true;
   }
 
-  QList<Grantlee::Node *>::append(node);
+  QList<Cutelee::Node *>::append(node);
 }
 
-void NodeList::append(QList<Grantlee::Node *> nodeList)
+void NodeList::append(QList<Cutelee::Node *> nodeList)
 {
   if (!m_containsNonText) {
-    Q_FOREACH (Grantlee::Node *node, nodeList) {
+    Q_FOREACH (Cutelee::Node *node, nodeList) {
       auto textNode = qobject_cast<TextNode *>(node);
       if (!textNode) {
         m_containsNonText = true;
@@ -169,7 +169,7 @@ void NodeList::append(QList<Grantlee::Node *> nodeList)
     }
   }
 
-  QList<Grantlee::Node *>::append(nodeList);
+  QList<Cutelee::Node *>::append(nodeList);
 }
 
 bool NodeList::containsNonText() const { return m_containsNonText; }

@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -24,7 +24,7 @@
 #include "engine.h"
 #include "node.h"
 
-ScriptableTemplate::ScriptableTemplate(Grantlee::Template t, QObject *parent)
+ScriptableTemplate::ScriptableTemplate(Cutelee::Template t, QObject *parent)
     : QObject(parent), m_template(t)
 {
 }

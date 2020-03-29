@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,20 +18,20 @@
 
 */
 
-#ifndef GRANTLEE_OUTPUTSTREAM_H
-#define GRANTLEE_OUTPUTSTREAM_H
+#ifndef CUTELEE_OUTPUTSTREAM_H
+#define CUTELEE_OUTPUTSTREAM_H
 
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 
 #include <QtCore/QSharedPointer>
 #include <QtCore/QTextStream>
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class SafeString;
 
-/// @headerfile outputstream.h grantlee/outputstream.h
+/// @headerfile outputstream.h cutelee/outputstream.h
 
 /**
   @brief The **%OutputStream** class is used to render templates to a
@@ -58,7 +58,7 @@ class SafeString;
   overriden to return an **%OutputStream** with the same escaping behaviour.
 
   @code
-    class NoEscapeStream : public Grantlee::OutputStream
+    class NoEscapeStream : public Cutelee::OutputStream
     {
     public:
       // ...
@@ -77,7 +77,7 @@ class SafeString;
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT OutputStream
+class CUTELEE_TEMPLATES_EXPORT OutputStream
 {
 public:
   /**
@@ -118,7 +118,7 @@ public:
     Returns @p after escaping it, unless @p input is "safe", in which case,
     @p input is returned unmodified.
   */
-  QString conditionalEscape(const Grantlee::SafeString &input) const;
+  QString conditionalEscape(const Cutelee::SafeString &input) const;
 
   /**
     Writes @p input to the stream after escaping it.

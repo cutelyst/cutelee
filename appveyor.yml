@@ -7,7 +7,7 @@ branches:
 shallow_clone: true
 clone_depth: 1
 
-clone_folder: c:\dev\grantlee
+clone_folder: c:\dev\cutelee
 
 environment:
   matrix:
@@ -84,7 +84,7 @@ init:
   - git config --global core.autocrlf input
 
 before_build:
-  - set PATH=C:\cygwin\bin;%QT5%\bin;c:\dev\grantlee\build\templates\lib;c:\dev\grantlee\build\textdocument\lib;%PATH%
+  - set PATH=C:\cygwin\bin;%QT5%\bin;c:\dev\cutelee\build\templates\lib;c:\dev\cutelee\build\textdocument\lib;%PATH%
   - sed -i "s|std::equal(b, e, lb)|std::equal(b, e,\n#if defined(Q_CC_MSVC)\nstdext::make_unchecked_array_iterator(lb)\n#else\nlb\n#endif\n)|" %QT5%\include\QtCore\qlist.h
   - set PATH=%PATH:C:\cygwin\bin;=%
   - if "%CMAKE_GENERATOR%" == "MinGW Makefiles" set PATH=%MINGW_PATH%\bin;%PATH:C:\Program Files\Git\usr\bin;=%
@@ -93,7 +93,7 @@ before_build:
 build:
 
 build_script:
-  - cd c:\dev\grantlee
+  - cd c:\dev\cutelee
   - md build
   - cd build
   - cmake .. -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QT5%"

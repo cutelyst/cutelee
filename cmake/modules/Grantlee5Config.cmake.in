@@ -1,9 +1,9 @@
-# Grantlee CMake configuration file - http://www.grantlee.org/
+# Cutelee CMake configuration file - http://www.cutelee.org/
 
 # Any changes in this file will be overwritten by CMake.
 
-if (Grantlee@Grantlee5_VERSION_MAJOR@_FIND_COMPONENTS)
-  foreach( component ${Grantlee@Grantlee5_VERSION_MAJOR@_FIND_COMPONENTS})
+if (Cutelee@Cutelee5_VERSION_MAJOR@_FIND_COMPONENTS)
+  foreach( component ${Cutelee@Cutelee5_VERSION_MAJOR@_FIND_COMPONENTS})
     if (component STREQUAL "Textdocument")
       set(RequiredQtComponents ${RequiredQtComponents} Gui)
     endif()
@@ -16,6 +16,6 @@ else()
   find_package(Qt5Gui REQUIRED)
 endif()
 
-include("${CMAKE_CURRENT_LIST_DIR}/GrantleeTargets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/CuteleeTargets.cmake")
 
-include("${CMAKE_CURRENT_LIST_DIR}/GrantleeMacros.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/CuteleeMacros.cmake")

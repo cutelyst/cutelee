@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -46,7 +46,7 @@ void AudioTextDocumentDirector::processCustomFragment(
     const QTextFragment &fragment, const QTextDocument *doc)
 {
   if (fragment.charFormat().objectType() != AudioType)
-    return Grantlee::MarkupDirector::processCustomFragment(fragment, doc);
+    return Cutelee::MarkupDirector::processCustomFragment(fragment, doc);
 
   QString name = fragment.charFormat().property(AudioProperty).toString();
 

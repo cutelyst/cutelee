@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,8 +18,8 @@
 
 */
 
-#ifndef GRANTLEE_METAENUMVARIABLE_P_H
-#define GRANTLEE_METAENUMVARIABLE_P_H
+#ifndef CUTELEE_METAENUMVARIABLE_P_H
+#define CUTELEE_METAENUMVARIABLE_P_H
 
 #include <QtCore/QMetaEnum>
 

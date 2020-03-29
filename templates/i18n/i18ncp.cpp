@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -39,7 +39,7 @@ Node *I18ncpNodeFactory::getNode(const QString &tagContent, Parser *p) const
   auto expr = smartSplit(tagContent);
 
   if (expr.size() < 4)
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral("Error: i18ncp tag takes at least three arguments"));
 
@@ -49,7 +49,7 @@ Node *I18ncpNodeFactory::getNode(const QString &tagContent, Parser *p) const
         && contextText.endsWith(QLatin1Char('"')))
       && !(contextText.startsWith(QLatin1Char('\''))
            && contextText.endsWith(QLatin1Char('\'')))) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral(
             "Error: i18ncp tag first argument must be a static string."));
@@ -62,7 +62,7 @@ Node *I18ncpNodeFactory::getNode(const QString &tagContent, Parser *p) const
         && sourceText.endsWith(QLatin1Char('"')))
       && !(sourceText.startsWith(QLatin1Char('\''))
            && sourceText.endsWith(QLatin1Char('\'')))) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral(
             "Error: i18ncp tag second argument must be a static string."));
@@ -92,13 +92,13 @@ Node *I18ncpNodeFactory::getNode(const QString &tagContent, Parser *p) const
 
 I18ncpVarNodeFactory::I18ncpVarNodeFactory() {}
 
-Grantlee::Node *I18ncpVarNodeFactory::getNode(const QString &tagContent,
+Cutelee::Node *I18ncpVarNodeFactory::getNode(const QString &tagContent,
                                               Parser *p) const
 {
   auto expr = smartSplit(tagContent);
 
   if (expr.size() < 6) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral("Error: i18ncp_var tag takes at least five arguments"));
   }
@@ -109,7 +109,7 @@ Grantlee::Node *I18ncpVarNodeFactory::getNode(const QString &tagContent,
         && contextText.endsWith(QLatin1Char('"')))
       && !(contextText.startsWith(QLatin1Char('\''))
            && contextText.endsWith(QLatin1Char('\'')))) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral(
             "Error: i18ncp_var tag first argument must be a static string."));
@@ -122,7 +122,7 @@ Grantlee::Node *I18ncpVarNodeFactory::getNode(const QString &tagContent,
         && sourceText.endsWith(QLatin1Char('"')))
       && !(sourceText.startsWith(QLatin1Char('\''))
            && sourceText.endsWith(QLatin1Char('\'')))) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral(
             "Error: i18ncp_var tag second argument must be a static string."));
@@ -155,7 +155,7 @@ Grantlee::Node *I18ncpVarNodeFactory::getNode(const QString &tagContent,
 
 I18ncpNode::I18ncpNode(const QString &contextText, const QString &sourceText,
                        const QString &pluralText,
-                       const QList<Grantlee::FilterExpression> &feList,
+                       const QList<Cutelee::FilterExpression> &feList,
                        QObject *parent)
     : Node(parent), m_contextText(contextText), m_sourceText(sourceText),
       m_pluralText(pluralText), m_filterExpressionList(feList)
@@ -176,7 +176,7 @@ void I18ncpNode::render(OutputStream *stream, Context *c) const
 I18ncpVarNode::I18ncpVarNode(const QString &contextText,
                              const QString &sourceText,
                              const QString &pluralText,
-                             const QList<Grantlee::FilterExpression> &feList,
+                             const QList<Cutelee::FilterExpression> &feList,
                              const QString &resultName, QObject *parent)
     : Node(parent), m_contextText(contextText), m_sourceText(sourceText),
       m_pluralText(pluralText), m_filterExpressionList(feList),

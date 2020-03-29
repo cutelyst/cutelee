@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -34,7 +34,7 @@ Node *AutoescapeNodeFactory::getNode(const QString &tagContent, Parser *p) const
   auto expr = tagContent.split(QLatin1Char(' '), QString::SkipEmptyParts);
 
   if (expr.size() != 2) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError, QStringLiteral("autoescape takes two arguments."));
   }
 
@@ -45,7 +45,7 @@ Node *AutoescapeNodeFactory::getNode(const QString &tagContent, Parser *p) const
   else if (strState == QStringLiteral("off"))
     state = AutoescapeNode::Off;
   else {
-    throw Grantlee::Exception(TagSyntaxError,
+    throw Cutelee::Exception(TagSyntaxError,
                               QStringLiteral("argument must be 'on' or 'off'"));
   }
 

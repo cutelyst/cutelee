@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,25 +18,25 @@
 
 */
 
-#ifndef GRANTLEE_ENGINE_H
-#define GRANTLEE_ENGINE_H
+#ifndef CUTELEE_ENGINE_H
+#define CUTELEE_ENGINE_H
 
 #include "template.h"
 #include "templateloader.h"
 
-namespace Grantlee
+namespace Cutelee
 {
 class TagLibraryInterface;
 
 class EnginePrivate;
 
-/// @headerfile engine.h grantlee/engine.h
+/// @headerfile engine.h cutelee/engine.h
 
 /**
-  @brief **%Grantlee::Engine** is the main entry point for creating %Grantlee
+  @brief **%Cutelee::Engine** is the main entry point for creating %Cutelee
   Templates.
 
-  The **%Grantlee::Engine** is responsible for configuring and creating Template
+  The **%Cutelee::Engine** is responsible for configuring and creating Template
   objects.  In typical use, one or more AbstractTemplateLoader objects will be
   added to the Engine to load template objects, and plugin directories will be
   set to enable finding template tags and filters.
@@ -59,7 +59,7 @@ class EnginePrivate;
   name by loading the templates with the @ref loadByName method, or by defining
   the content in the @ref newTemplate method.
 
-  By default the builtin tags and filters distributed with %Grantlee are
+  By default the builtin tags and filters distributed with %Cutelee are
   available in all templates without using the @gr_tag{load} tag in the
   template. These pre-loaded libraries may be configured if appropriate to the
   application. For example, an application which defines its own tags and
@@ -117,7 +117,7 @@ class EnginePrivate;
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT Engine : public QObject
+class CUTELEE_TEMPLATES_EXPORT Engine : public QObject
 {
   Q_OBJECT
 public:

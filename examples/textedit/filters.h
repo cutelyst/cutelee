@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -21,9 +21,9 @@
 #ifndef CLEAN_HTML_FILTER_H
 #define CLEAN_HTML_FILTER_H
 
-#include <grantlee/filter.h>
+#include <cutelee/filter.h>
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 class CleanHtmlFilter : public Filter
 {

@@ -64,7 +64,7 @@ import os.path
 # == Introduction to the template syntax ==
 #
 # The template syntax looks like this:
-# (For more see here: http://grantlee.org/apidox/for_themers.html )
+# (For more see here: http://cutelee.org/apidox/for_themers.html )
 #
 # This is plain text
 # This is text with a {{ value }} substitution

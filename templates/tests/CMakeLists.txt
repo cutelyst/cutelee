@@ -2,9 +2,9 @@ find_package(Qt5Test 5.2.0 REQUIRED)
 
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 
-set( GRANTLEE_PLUGIN_PATH "${CMAKE_BINARY_DIR}/" )
+set( CUTELEE_PLUGIN_PATH "${CMAKE_BINARY_DIR}/" )
 
-configure_file(grantlee_paths.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/grantlee_paths.h)
+configure_file(cutelee_paths.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/cutelee_paths.h)
 
 find_package(Qt5LinguistTools QUIET)
 if (Qt5LinguistTools_FOUND)
@@ -55,13 +55,13 @@ add_library(template_test_builtins STATIC coverageobject.cpp
 target_link_libraries(template_test_builtins Qt5::Test)
 target_compile_definitions(template_test_builtins PUBLIC cxx_auto_type)
 
-macro(grantlee_templates_unit_tests)
+macro(cutelee_templates_unit_tests)
   foreach(_testname ${ARGN})
     add_executable(${_testname}_exec
                   ${_testname}.cpp
     )
     add_test(${_testname} ${_testname}_exec )
-    target_link_libraries(${_testname}_exec Grantlee5::Templates template_test_builtins)
+    target_link_libraries(${_testname}_exec Cutelee5::Templates template_test_builtins)
 
     if (Qt5Qml_FOUND)
       target_compile_definitions(${_testname}_exec PRIVATE HAVE_QTQML_LIB)
@@ -71,7 +71,7 @@ macro(grantlee_templates_unit_tests)
   endforeach(_testname)
 endmacro()
 
-grantlee_templates_unit_tests(
+cutelee_templates_unit_tests(
   testsafestring
   testbuiltins
   testloadertags
@@ -83,13 +83,13 @@ grantlee_templates_unit_tests(
 )
 
 if (Qt5Qml_FOUND)
-  grantlee_templates_unit_tests(
+  cutelee_templates_unit_tests(
     testscriptabletags
   )
 endif()
 
 if (Qt5LinguistTools_FOUND)
-  grantlee_templates_unit_tests(
+  cutelee_templates_unit_tests(
     testinternationalization
   )
   if ("x${CMAKE_CXX_COMPILER_ID}x" MATCHES "xMSVCx")

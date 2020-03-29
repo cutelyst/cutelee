@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -25,13 +25,13 @@
 
 #include <QtCore/QHash>
 
-namespace Grantlee
+namespace Cutelee
 {
 class AbstractNodeFactory;
 class Engine;
 class Filter;
 
-/// @headerfile taglibraryinterface.h grantlee/taglibraryinterface.h
+/// @headerfile taglibraryinterface.h cutelee/taglibraryinterface.h
 
 /**
   @brief The **%TagLibraryInterface** returns available tags and filters from
@@ -45,7 +45,7 @@ class Filter;
     class MyTagLibrary : public QObject, public TagLibraryInterface
     {
       Q_OBJECT
-      Q_INTERFACES( Grantlee::TagLibraryInterface )
+      Q_INTERFACES( Cutelee::TagLibraryInterface )
     public:
       MyTagLibrary( QObject *parent = {} )
           : QObject( parent ) {
@@ -103,7 +103,7 @@ public:
 };
 }
 
-Q_DECLARE_INTERFACE(Grantlee::TagLibraryInterface,
-                    "org.grantlee.TagLibraryInterface/1.0")
+Q_DECLARE_INTERFACE(Cutelee::TagLibraryInterface,
+                    "org.cutelee.TagLibraryInterface/1.0")
 
 #endif

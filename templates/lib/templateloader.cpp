@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -28,11 +28,11 @@
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 AbstractTemplateLoader::~AbstractTemplateLoader() {}
 
-namespace Grantlee
+namespace Cutelee
 {
 class FileSystemTemplateLoaderPrivate
 {
@@ -207,7 +207,7 @@ Template InMemoryTemplateLoader::loadByName(const QString &name,
   if (m_namedTemplates.contains(name)) {
     return engine->newTemplate(m_namedTemplates.value(name), name);
   }
-  throw Grantlee::Exception(
+  throw Cutelee::Exception(
       TagSyntaxError,
       QStringLiteral("Couldn't load template %1. Template does not exist.")
           .arg(name));

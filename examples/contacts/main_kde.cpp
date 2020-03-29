@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -26,14 +26,14 @@
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 
-#include "grantlee_paths.h"
+#include "cutelee_paths.h"
 
-#define TEMPLATE_DIR GRANTLEE_TEMPLATE_PATH "/gettext/"
+#define TEMPLATE_DIR CUTELEE_TEMPLATE_PATH "/gettext/"
 
 int main(int argc, char **argv)
 {
   const QByteArray &ba = QByteArray("contacts_kde");
-  const KLocalizedString name = ki18n("Grantlee KDE i18n example");
+  const KLocalizedString name = ki18n("Cutelee KDE i18n example");
   KAboutData aboutData(ba, ba, name, ba, name);
   KCmdLineArgs::init(argc, argv, &aboutData);
 

@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2008 Stephen Kelly <steveire@gmail.com>
 
@@ -23,7 +23,7 @@
 #include <QtCore/QList>
 #include <QtGui/QTextDocument>
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class TextHTMLBuilderPrivate
@@ -40,7 +40,7 @@ public:
 };
 }
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 TextHTMLBuilder::TextHTMLBuilder()
     : AbstractMarkupBuilder(), d_ptr(new TextHTMLBuilderPrivate(this))

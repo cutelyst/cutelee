@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Michael Jansen <kde@michael-jansen.biz>
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
@@ -26,14 +26,14 @@
 
 #include <QtCore/QMutex>
 
-namespace Grantlee
+namespace Cutelee
 {
 
 struct CustomTypeInfo {
 public:
   CustomTypeInfo() : lookupFunction(0) {}
 
-  Grantlee::MetaType::LookupFunction lookupFunction;
+  Cutelee::MetaType::LookupFunction lookupFunction;
 };
 
 struct CustomTypeRegistry {

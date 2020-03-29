@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2015 Stephen Kelly <steveire@gmail.com>
 
@@ -27,15 +27,15 @@
 #include "coverageobject.h"
 #include "engine.h"
 #include "filterexpression.h"
-#include "grantlee_paths.h"
+#include "cutelee_paths.h"
 #include "template.h"
 #include <metaenumvariable_p.h>
 
 typedef QHash<QString, QVariant> Dict;
 
-Q_DECLARE_METATYPE(Grantlee::Error)
+Q_DECLARE_METATYPE(Cutelee::Error)
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 class TestCachingLoader : public CoverageObject
 {
@@ -48,7 +48,7 @@ private Q_SLOTS:
 void TestCachingLoader::testRenderAfterError()
 {
   Engine engine;
-  engine.setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+  engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
   QSharedPointer<InMemoryTemplateLoader> loader(new InMemoryTemplateLoader);
   loader->setTemplate(QStringLiteral("template1"),
@@ -57,8 +57,8 @@ void TestCachingLoader::testRenderAfterError()
   loader->setTemplate(QStringLiteral("main"),
                       QStringLiteral("{% include template_var %}"));
 
-  QSharedPointer<Grantlee::CachingLoaderDecorator> cache(
-      new Grantlee::CachingLoaderDecorator(loader));
+  QSharedPointer<Cutelee::CachingLoaderDecorator> cache(
+      new Cutelee::CachingLoaderDecorator(loader));
 
   engine.addTemplateLoader(cache);
 

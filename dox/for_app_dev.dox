@@ -1,16 +1,16 @@
-namespace Grantlee
+namespace Cutelee
 {
 
 /**
 
-  @page for_app_dev %Grantlee for application developers
+  @page for_app_dev %Cutelee for application developers
 
-  Integrating %Grantlee into applications is very simple. This page describes
+  Integrating %Cutelee into applications is very simple. This page describes
 
   @li How to render a Template with a Context
   @li How to load Templates
-  @li How to extend the syntax of %Grantlee
-  @li Patterns of use of %Grantlee
+  @li How to extend the syntax of %Cutelee
+  @li Patterns of use of %Cutelee
 
   If you are not already familiar with Django template syntax and structure, start with @ref for_themers. If you are already familiar with Django, you might find @ref differences_django informative.
 
@@ -21,21 +21,21 @@ namespace Grantlee
   Rendering templates is very easy in application code. A single Template may be rendered multiple times with different Context objects.
 
   @code
-    auto engine = new Grantlee::Engine( this );
+    auto engine = new Cutelee::Engine( this );
     auto t = engine->newTemplate("My name is {{ name }}.", "my_template_name");
     QVariantHash mapping;
     mapping.insert("name", "Grainne");
-    Grantlee::Context c(mapping);
+    Cutelee::Context c(mapping);
 
     t->render(&c); // Returns "My name is Grainne."
 
     mapping.insert("name", "Henry");
-    c = Grantlee::Context(mapping);
+    c = Cutelee::Context(mapping);
 
     t->render(&c); // Returns "My name is Henry."
   @endcode
 
-  Usually, applications do not create a Template directly, but instead use a Grantlee::Engine to load external files. This allows artists to define the template without needing to recompile.
+  Usually, applications do not create a Template directly, but instead use a Cutelee::Engine to load external files. This allows artists to define the template without needing to recompile.
 
   @code
     auto t = engine->loadByName("template.html");
@@ -68,9 +68,9 @@ namespace Grantlee
   It is additionally possible to insert any type of object or any container (not just QVariantHash and QVariantList) into the Context.
   @see @ref generic_types_and_templates.
 
-  @section extending_grantlee Extending Grantlee
+  @section extending_cutelee Extending Cutelee
 
-  %Grantlee has 5 extension points.
+  %Cutelee has 5 extension points.
 
   - Custom object variables
   - Generic types and containers
@@ -124,15 +124,15 @@ namespace Grantlee
 
   to the class. Note also that those methods are <tt>const</tt>. Rendering a template should never change an object it is rendering. Always make sure the READ properties of your wrapper objects are <tt>const</tt>. It is also possible to lookup dynamic properties of <tt>QObject</tt>s. In the case of dynamic properties, the property name must be UTF-8 encoded.
 
-  If you already have <tt>QObject</tt>s in your application which would be suitable for use in templates, you only need to add some <tt>Q_PROPERTY</tt> entries to the classes to make them accessible to %Grantlee.
+  If you already have <tt>QObject</tt>s in your application which would be suitable for use in templates, you only need to add some <tt>Q_PROPERTY</tt> entries to the classes to make them accessible to %Cutelee.
 
   @note If you are familiar with Django you may be aware of the <tt>alters_data</tt> attribute for methods. This method of using wrappers and <tt>const</tt> is the equivalent to the <tt>alters_data</tt> attribute. You the wrapper writer choose the properties which will be accessible from the templates and makes them <tt>const</tt>, so there's no need to mark other methods as <tt>alters_data</tt>.
 
-  For most uses of %Grantlee, this is enough to get make an application themable easily and quickly. For more advanced usage, see @ref extension. For some example uses of %Grantlee, see @ref examples.
+  For most uses of %Cutelee, this is enough to get make an application themable easily and quickly. For more advanced usage, see @ref extension. For some example uses of %Cutelee, see @ref examples.
 
   @subsection custom_object_properties Custom Object Properties
 
-  The broad introspection features of Qt5 are relied upon by %Grantlee via the <tt>Q_PROPERTY</tt> macro.  Most types used with that macro may be accessed in %Grantlee templates without further code. 
+  The broad introspection features of Qt5 are relied upon by %Cutelee via the <tt>Q_PROPERTY</tt> macro.  Most types used with that macro may be accessed in %Cutelee templates without further code. 
 
   We can define a <tt>Home</tt> type like this:
 
@@ -198,12 +198,12 @@ namespace Grantlee
 
   @subsection generic_variables
 
-  An alternative to writing wrapper QObject classes with <tt>Q_PROPERTY</tt> macros is to use the Grantlee::MetaType system to provide introspection
+  An alternative to writing wrapper QObject classes with <tt>Q_PROPERTY</tt> macros is to use the Cutelee::MetaType system to provide introspection
   for any type or any container. This subject is treated in detail in @ref generic_types_and_templates
 
   @subsection enumerator_variables Enumerators
 
-  %Grantlee has built-in support for enumerators which use the <tt>Q_ENUMS</tt> macro.
+  %Cutelee has built-in support for enumerators which use the <tt>Q_ENUMS</tt> macro.
 
   @code
   class MyClass : public QObject

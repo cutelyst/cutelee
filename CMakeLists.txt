@@ -5,7 +5,7 @@ if (POLICY CMP0071)
   cmake_policy(SET CMP0071 NEW)
 endif()
 
-project(Grantlee5 VERSION 5.2.0)
+project(Cutelee5 VERSION 5.2.0)
 
 # Workaround for http://public.kitware.com/Bug/view.php?id=12301
 if (MINGW)
@@ -16,18 +16,18 @@ if (MINGW)
   endif()
 endif()
 
-option( BUILD_TEMPLATES "Build the Grantlee template library" TRUE )
-option( BUILD_TEXTDOCUMENT "Build the Grantlee textdocument library" TRUE )
-option( BUILD_MAIN_PLUGINS "Build the Grantlee Templates plugins" TRUE )
-option( BUILD_I18N_PLUGIN "Build the Grantlee Templates i18n plugin" TRUE )
-option( BUILD_TESTS "Build the Grantlee tests" TRUE )
+option( BUILD_TEMPLATES "Build the Cutelee template library" TRUE )
+option( BUILD_TEXTDOCUMENT "Build the Cutelee textdocument library" TRUE )
+option( BUILD_MAIN_PLUGINS "Build the Cutelee Templates plugins" TRUE )
+option( BUILD_I18N_PLUGIN "Build the Cutelee Templates i18n plugin" TRUE )
+option( BUILD_TESTS "Build the Cutelee tests" TRUE )
 
 if (BUILD_TESTS)
   enable_testing()
 endif()
 
-set(Grantlee_MODULE_DIR ${CMAKE_SOURCE_DIR}/cmake/modules)
-list(APPEND CMAKE_MODULE_PATH ${Grantlee_MODULE_DIR})
+set(Cutelee_MODULE_DIR ${CMAKE_SOURCE_DIR}/cmake/modules)
+list(APPEND CMAKE_MODULE_PATH ${Cutelee_MODULE_DIR})
 
 include(GenerateExportHeader)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
@@ -72,20 +72,20 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE ON)
 set(CMAKE_AUTOMOC ON)
 
-set(Grantlee5_MIN_PLUGIN_VERSION 0)
+set(Cutelee5_MIN_PLUGIN_VERSION 0)
 
-set(Grantlee5_MAJOR_MINOR_VERSION_STRING "${Grantlee5_VERSION_MAJOR}.${Grantlee5_VERSION_MINOR}" )
+set(Cutelee5_MAJOR_MINOR_VERSION_STRING "${Cutelee5_VERSION_MAJOR}.${Cutelee5_VERSION_MINOR}" )
 
 set (LIB_SUFFIX "" CACHE STRING "Define suffix of library directory name (eg. '64')")
 
 set( LIB_INSTALL_DIR lib${LIB_SUFFIX} )
-set( PLUGIN_INSTALL_DIR ${LIB_INSTALL_DIR}/grantlee/${Grantlee5_MAJOR_MINOR_VERSION_STRING} )
+set( PLUGIN_INSTALL_DIR ${LIB_INSTALL_DIR}/cutelee/${Cutelee5_MAJOR_MINOR_VERSION_STRING} )
 
 # set up RPATH/install_name_dir
 set( CMAKE_INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})
 set( CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
-include("${Grantlee_MODULE_DIR}/GrantleeMacros.cmake")
+include("${Cutelee_MODULE_DIR}/CuteleeMacros.cmake")
 
 if (BUILD_TEMPLATES)
   add_subdirectory(templates)
@@ -95,43 +95,43 @@ if (BUILD_TEXTDOCUMENT)
   add_subdirectory(textdocument)
 endif()
 
-set(CMAKECONFIG_INSTALL_DIR "${LIB_INSTALL_DIR}/cmake/Grantlee${Grantlee5_VERSION_MAJOR}" )
+set(CMAKECONFIG_INSTALL_DIR "${LIB_INSTALL_DIR}/cmake/Cutelee${Cutelee5_VERSION_MAJOR}" )
 
 configure_file(
-  "${Grantlee_MODULE_DIR}/Grantlee${Grantlee5_VERSION_MAJOR}Config.cmake.in"
-  "${CMAKE_BINARY_DIR}/Grantlee${Grantlee5_VERSION_MAJOR}Config.cmake"
+  "${Cutelee_MODULE_DIR}/Cutelee${Cutelee5_VERSION_MAJOR}Config.cmake.in"
+  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee5_VERSION_MAJOR}Config.cmake"
   @ONLY
 )
 
 include(CMakePackageConfigHelpers)
-write_basic_package_version_file("${CMAKE_BINARY_DIR}/Grantlee${Grantlee5_VERSION_MAJOR}ConfigVersion.cmake"
-  VERSION ${Grantlee5_VERSION}
+write_basic_package_version_file("${CMAKE_BINARY_DIR}/Cutelee${Cutelee5_VERSION_MAJOR}ConfigVersion.cmake"
+  VERSION ${Cutelee5_VERSION}
   COMPATIBILITY AnyNewerVersion
 )
 
 install(FILES
-  "${CMAKE_BINARY_DIR}/Grantlee${Grantlee5_VERSION_MAJOR}Config.cmake"
-  "${CMAKE_BINARY_DIR}/Grantlee${Grantlee5_VERSION_MAJOR}ConfigVersion.cmake"
+  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee5_VERSION_MAJOR}Config.cmake"
+  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee5_VERSION_MAJOR}ConfigVersion.cmake"
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
   COMPONENT Common
 )
 
 install(FILES
-  "${Grantlee_MODULE_DIR}/GrantleeMacros.cmake"
+  "${Cutelee_MODULE_DIR}/CuteleeMacros.cmake"
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
   COMPONENT Common
 )
 
-install(EXPORT grantlee_targets
+install(EXPORT cutelee_targets
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-  NAMESPACE Grantlee${Grantlee5_VERSION_MAJOR}::
-  FILE GrantleeTargets.cmake
+  NAMESPACE Cutelee${Cutelee5_VERSION_MAJOR}::
+  FILE CuteleeTargets.cmake
   COMPONENT Common
 )
 
 # Add support for an uninstall target
 configure_file(
-  "${Grantlee_MODULE_DIR}/cmake_uninstall.cmake.in"
+  "${Cutelee_MODULE_DIR}/cmake_uninstall.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
   @ONLY)
 
@@ -156,12 +156,12 @@ if (DOXYGEN_FOUND AND DOXYGEN_DOT_FOUND)
   set(TAGFILES "${QTTAGFILE} ${STLTAGFILE}")
   set(DOCS_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
   configure_file(
-    "${Grantlee_MODULE_DIR}/Doxyfile.in"
+    "${Cutelee_MODULE_DIR}/Doxyfile.in"
     "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
     @ONLY)
 
   # Add support for a Qt assistant docs target
-  # qttags.tag is too big to distribute with Grantlee. Get it
+  # qttags.tag is too big to distribute with Cutelee. Get it
   # from http://api.kde.org/kdereview-api/kdereview.tar.gz for example.
   if(EXISTS ${qtcore_tag_file})
     set(DOCS_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/qtdocs")
@@ -175,7 +175,7 @@ if (DOXYGEN_FOUND AND DOXYGEN_DOT_FOUND)
     set(GENERATE_QHP "yes")
 
     configure_file(
-      "${Grantlee_MODULE_DIR}/Doxyfile.in"
+      "${Cutelee_MODULE_DIR}/Doxyfile.in"
       "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.qt"
       @ONLY)
   endif()
@@ -257,12 +257,12 @@ if (CCCC_FOUND)
   endmacro()
 
 
-  append_target_sources(Grantlee_Templates)
-  append_target_sources(Grantlee_TextDocument)
-  append_target_sources(grantlee_defaultfilters)
-  append_target_sources(grantlee_defaulttags)
-  append_target_sources(grantlee_loadertags)
-  append_target_sources(grantlee_i18ntags)
+  append_target_sources(Cutelee_Templates)
+  append_target_sources(Cutelee_TextDocument)
+  append_target_sources(cutelee_defaultfilters)
+  append_target_sources(cutelee_defaulttags)
+  append_target_sources(cutelee_loadertags)
+  append_target_sources(cutelee_i18ntags)
 
   set(cccc_ARGS ${CCCC_EXECUTABLE} ${target_files} --outdir=${CMAKE_BINARY_DIR}/cccc --html_outfile=${CMAKE_BINARY_DIR}/cccc/index.html)
 
@@ -272,22 +272,22 @@ if (CCCC_FOUND)
 endif()
 
 # http://www.vtk.org/Wiki/CMake:Component_Install_With_CPack
-set(CPACK_PACKAGE_NAME "grantlee")
-set(CPACK_PACKAGE_VERSION_MAJOR ${Grantlee5_VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${Grantlee5_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${Grantlee5_VERSION_PATCH})
+set(CPACK_PACKAGE_NAME "cutelee")
+set(CPACK_PACKAGE_VERSION_MAJOR ${Cutelee5_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${Cutelee5_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${Cutelee5_VERSION_PATCH})
 set(CPACK_PACKAGE_CONTACT "Stephen Kelly <steveire@gmail.com>")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A set of frameworks for use with Qt")
 set(CPACK_GENERATOR "TGZ" )
 set(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/COPYING.LIB")
 
-set(CPACK_COMPONENT_COMMON_DISPLAY_NAME "Grantlee Common files")
-set(CPACK_COMPONENT_TEMPLATES_DISPLAY_NAME "Grantlee String Templates")
-set(CPACK_COMPONENT_TEXTDOCUMENT_DISPLAY_NAME "Grantlee TextDocument framework")
+set(CPACK_COMPONENT_COMMON_DISPLAY_NAME "Cutelee Common files")
+set(CPACK_COMPONENT_TEMPLATES_DISPLAY_NAME "Cutelee String Templates")
+set(CPACK_COMPONENT_TEXTDOCUMENT_DISPLAY_NAME "Cutelee TextDocument framework")
 
 set(CPACK_COMPONENT_COMMON_DESCRIPTION
-  "Files needed by all Grantlee frameworks")
+  "Files needed by all Cutelee frameworks")
 set(CPACK_COMPONENT_TEMPLATES_DESCRIPTION
   "A string template system for Qt based on Django syntax")
 set(CPACK_COMPONENT_TEXTDOCUMENT_DESCRIPTION

@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -22,8 +22,8 @@
 #include "engine_p.h"
 
 #include "exception.h"
-#include "grantlee_config_p.h"
-#include "grantlee_version.h"
+#include "cutelee_config_p.h"
+#include "cutelee_version.h"
 #ifdef QT_QML_LIB
 #include "scriptabletags.h"
 #endif
@@ -35,19 +35,19 @@
 #include <QtCore/QPluginLoader>
 #include <QtCore/QTextStream>
 
-using namespace Grantlee;
+using namespace Cutelee;
 
-static const char __scriptableLibName[] = "grantlee_scriptabletags";
+static const char __scriptableLibName[] = "cutelee_scriptabletags";
 
 Engine::Engine(QObject *parent)
     : QObject(parent), d_ptr(new EnginePrivate(this))
 {
-  d_ptr->m_defaultLibraries << QStringLiteral("grantlee_defaulttags")
-                            << QStringLiteral("grantlee_loadertags")
-                            << QStringLiteral("grantlee_defaultfilters");
+  d_ptr->m_defaultLibraries << QStringLiteral("cutelee_defaulttags")
+                            << QStringLiteral("cutelee_loadertags")
+                            << QStringLiteral("cutelee_defaultfilters");
 
   d_ptr->m_pluginDirs = QCoreApplication::instance()->libraryPaths();
-  d_ptr->m_pluginDirs << QString::fromLocal8Bit(GRANTLEE_PLUGIN_PATH);
+  d_ptr->m_pluginDirs << QString::fromLocal8Bit(CUTELEE_PLUGIN_PATH);
 }
 
 Engine::~Engine()
@@ -151,10 +151,10 @@ void Engine::loadDefaultLibraries()
 // so we new the library directly.
 // https://bugs.webkit.org/show_bug.cgi?id=38193
 #if 0
-    d->loadCppLibrary( __scriptableLibName, GRANTLEE_VERSION_MINOR );
-    PluginPointer<TagLibraryInterface> library = d->loadCppLibrary( __scriptableLibName, GRANTLEE_VERSION_MINOR );
+    d->loadCppLibrary( __scriptableLibName, CUTELEE_VERSION_MINOR );
+    PluginPointer<TagLibraryInterface> library = d->loadCppLibrary( __scriptableLibName, CUTELEE_VERSION_MINOR );
     if ( !library )
-      throw Grantlee::Exception( TagSyntaxError, QStringLiteral("Could not load scriptable tags library") );
+      throw Cutelee::Exception( TagSyntaxError, QStringLiteral("Could not load scriptable tags library") );
 #endif
   }
 #endif
@@ -167,8 +167,8 @@ void Engine::loadDefaultLibraries()
     if (d->m_libraries.contains(libName))
       continue;
 
-    uint minorVersion = GRANTLEE_VERSION_MINOR;
-    while (acceptableVersion<GRANTLEE_MIN_PLUGIN_VERSION>(minorVersion)) {
+    uint minorVersion = CUTELEE_VERSION_MINOR;
+    while (acceptableVersion<CUTELEE_MIN_PLUGIN_VERSION>(minorVersion)) {
 #ifdef QT_QML_LIB
       // Although we don't use scripted libaries here, we need to
       // recognize them being first in the search path and not load a
@@ -203,8 +203,8 @@ TagLibraryInterface *Engine::loadLibrary(const QString &name)
   if (d->m_libraries.contains(name))
     return d->m_libraries.value(name).data();
 
-  uint minorVersion = GRANTLEE_VERSION_MINOR;
-  while (acceptableVersion<GRANTLEE_MIN_PLUGIN_VERSION>(minorVersion)) {
+  uint minorVersion = CUTELEE_VERSION_MINOR;
+  while (acceptableVersion<CUTELEE_MIN_PLUGIN_VERSION>(minorVersion)) {
     auto library = d->loadLibrary(name, minorVersion);
     if (library)
       return library;
@@ -212,7 +212,7 @@ TagLibraryInterface *Engine::loadLibrary(const QString &name)
       break;
     minorVersion--;
   }
-  throw Grantlee::Exception(
+  throw Cutelee::Exception(
       TagSyntaxError,
       QStringLiteral("Plugin library '%1' not found.").arg(name));
   return 0;
@@ -248,7 +248,7 @@ QString EnginePrivate::getScriptLibraryName(const QString &name,
 {
   auto pluginIndex = 0;
   const QString prefix
-      = QStringLiteral("/grantlee/") + QString::number(GRANTLEE_VERSION_MAJOR)
+      = QStringLiteral("/cutelee/") + QString::number(CUTELEE_VERSION_MAJOR)
         + QLatin1Char('.') + QString::number(minorVersion) + QLatin1Char('/');
   while (m_pluginDirs.size() > pluginIndex) {
     const auto nextDir = m_pluginDirs.at(pluginIndex++);
@@ -316,8 +316,8 @@ EnginePrivate::loadCppLibrary(const QString &name, uint minorVersion)
   while (m_pluginDirs.size() > pluginIndex) {
     const auto nextDir = m_pluginDirs.at(pluginIndex++);
     const QString pluginDirString
-        = nextDir + QStringLiteral("/grantlee/")
-          + QString::number(GRANTLEE_VERSION_MAJOR) + QLatin1Char('.')
+        = nextDir + QStringLiteral("/cutelee/")
+          + QString::number(CUTELEE_VERSION_MAJOR) + QLatin1Char('.')
           + QString::number(minorVersion) + QLatin1Char('/');
 
     const QDir pluginDir(pluginDirString);

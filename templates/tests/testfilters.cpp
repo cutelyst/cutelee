@@ -1,5 +1,5 @@
 ﻿/*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -29,15 +29,15 @@
 #include "context.h"
 #include "coverageobject.h"
 #include "engine.h"
-#include "grantlee_paths.h"
+#include "cutelee_paths.h"
 #include "template.h"
 #include <util.h>
 
 typedef QHash<QString, QVariant> Dict;
 
-Q_DECLARE_METATYPE(Grantlee::Error)
+Q_DECLARE_METATYPE(Cutelee::Error)
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 class TestFilters : public CoverageObject
 {
@@ -82,7 +82,7 @@ void TestFilters::initTestCase()
   auto appDirPath
       = QFileInfo(QCoreApplication::applicationDirPath()).absoluteDir().path();
   m_engine->setPluginPaths({
-      QStringLiteral(GRANTLEE_PLUGIN_PATH),
+      QStringLiteral(CUTELEE_PLUGIN_PATH),
       appDirPath + QStringLiteral("/tests/") // For testtags.qs
   });
 }
@@ -94,7 +94,7 @@ void TestFilters::doTest()
   QFETCH(QString, input);
   QFETCH(Dict, dict);
   QFETCH(QString, output);
-  QFETCH(Grantlee::Error, error);
+  QFETCH(Cutelee::Error, error);
 
   auto t = m_engine->newTemplate(input, QLatin1String(QTest::currentDataTag()));
 
@@ -122,7 +122,7 @@ void TestFilters::testDateBasedFilters_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
   auto now = QDateTime::currentDateTimeUtc();
@@ -389,7 +389,7 @@ void TestFilters::testStringFilters_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -598,11 +598,11 @@ void TestFilters::testStringFilters_data()
       << dict << QStringLiteral(".foo a&lt;b bar. .baz a<b bat.") << NoError;
 
   dict.clear();
-  dict.insert(QStringLiteral("path"), QStringLiteral("www.grantlee.org"));
+  dict.insert(QStringLiteral("path"), QStringLiteral("www.cutelee.org"));
   QTest::newRow("filter-stringformat04")
       << "{% with path|stringformat:\"<a href=\\\"%1\\\">%1</a>\"|safe as "
          "result %}{{ result }}{% endwith %}"
-      << dict << "<a href=\"www.grantlee.org\">www.grantlee.org</a>" << NoError;
+      << dict << "<a href=\"www.cutelee.org\">www.cutelee.org</a>" << NoError;
 
   dict.clear();
   dict.insert(QStringLiteral("a"), QStringLiteral("JOE\'S CRAB SHACK"));
@@ -978,7 +978,7 @@ void TestFilters::testListFilters_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -1234,7 +1234,7 @@ void TestFilters::testListFilters_data()
   QTest::newRow("join05") << "{{ a|join:var }}" << dict
                           << QStringLiteral("alpha &amp; beta &amp; me")
                           << NoError;
-  dict.insert(QStringLiteral("var"), Grantlee::markSafe(QStringLiteral(" & ")));
+  dict.insert(QStringLiteral("var"), Cutelee::markSafe(QStringLiteral(" & ")));
   QTest::newRow("join06") << "{{ a|join:var }}" << dict
                           << QStringLiteral("alpha & beta &amp; me") << NoError;
   dict.insert(QStringLiteral("a"), QVariantList{QStringLiteral("Alpha"),
@@ -1246,7 +1246,7 @@ void TestFilters::testListFilters_data()
 
   dict.insert(QStringLiteral("a"), QVariantList{QStringLiteral("Alpha"),
                                                 QStringLiteral("Beta & Me")});
-  dict.insert(QStringLiteral("var"), Grantlee::markSafe(QStringLiteral(" & ")));
+  dict.insert(QStringLiteral("var"), Cutelee::markSafe(QStringLiteral(" & ")));
   QTest::newRow("join08") << "{{ a|join:var|lower }}" << dict
                           << QStringLiteral("alpha & beta &amp; me") << NoError;
 
@@ -1364,7 +1364,7 @@ void TestFilters::testLogicFilters_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -1407,7 +1407,7 @@ void TestFilters::testMiscFilters_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 
@@ -1516,7 +1516,7 @@ void TestFilters::testIntegerFilters_data()
   QTest::addColumn<QString>("input");
   QTest::addColumn<Dict>("dict");
   QTest::addColumn<QString>("output");
-  QTest::addColumn<Grantlee::Error>("error");
+  QTest::addColumn<Cutelee::Error>("error");
 
   Dict dict;
 

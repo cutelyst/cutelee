@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -27,7 +27,7 @@
 #include <QtCore/QStringList>
 #include <QtCore/QVariant>
 
-namespace Grantlee
+namespace Cutelee
 {
 
 static QRegularExpression getIsTitleRE()
@@ -46,7 +46,7 @@ static QRegularExpression getTitleRE()
 
 template <>
 QVariant
-TypeAccessor<Grantlee::SafeString &>::lookUp(const Grantlee::SafeString &object,
+TypeAccessor<Cutelee::SafeString &>::lookUp(const Cutelee::SafeString &object,
                                              const QString &property)
 {
   if (property == QStringLiteral("capitalize")) {

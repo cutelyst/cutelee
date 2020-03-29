@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -21,17 +21,17 @@
 #ifndef CUSTOM_TAGS_H
 #define CUSTOM_TAGS_H
 
-#include <grantlee/taglibraryinterface.h>
+#include <cutelee/taglibraryinterface.h>
 
 #include "filters.h"
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 class CustomTagsLibrary : public QObject, public TagLibraryInterface
 {
   Q_OBJECT
-  Q_INTERFACES(Grantlee::TagLibraryInterface)
-  Q_PLUGIN_METADATA(IID "org.grantlee.TagLibraryInterface")
+  Q_INTERFACES(Cutelee::TagLibraryInterface)
+  Q_PLUGIN_METADATA(IID "org.cutelee.TagLibraryInterface")
 public:
   CustomTagsLibrary(QObject *parent = 0) : QObject(parent) {}
 

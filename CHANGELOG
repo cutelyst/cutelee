@@ -1,5 +1,5 @@
 
-The Grantlee Template System
+The Cutelee Template System
 ============================
 
 Version History
@@ -25,18 +25,18 @@ Version History
 * Use 'd' postfix for plugins built in debug mode
 * Use 'd' postfix for libraries built in debug mode by Visual Studio
 * Make it possible to build without QtScript and QtLinguistTools
-* Bump Grantlee CMake requirement to 3.1.
-* Bump Grantlee Qt requirement to 5.3.
+* Bump Cutelee CMake requirement to 3.1.
+* Bump Cutelee Qt requirement to 5.3.
 
 -- Version 5.0.0 --
 -------------------
 * Drop Qt 4 build. Make Qt 5 a hard requirement.
-* Add a porting guide for users of old versions of Grantlee.
+* Add a porting guide for users of old versions of Cutelee.
 * Drop custom handling of QObjects and containers in QVariant.
-* Drop old names 'grantlee_core' and 'grantlee_gui' in favor of 'Templates' and 'Textdocument' respectively.
+* Drop old names 'cutelee_core' and 'cutelee_gui' in favor of 'Templates' and 'Textdocument' respectively.
 * Rely on modern CMake features such as IMPORTED targets and usage requirements.
-* Bump Grantlee CMake requirement to 2.8.12.
-* Make the virtual Grantlee::Node::render method const.
+* Bump Cutelee CMake requirement to 2.8.12.
+* Make the virtual Cutelee::Node::render method const.
 * Merge LocalizedFilesystemTemplateLoader into FilesystemTemplateLoader.
 * Remove typedefs for QSharedPointers from APIs.
 
@@ -49,15 +49,15 @@ Version History
 
 -- Version 0.5.0 --
 -------------------
-* Bump Grantlee CMake requirement to 2.8.11.
+* Bump Cutelee CMake requirement to 2.8.11.
 * Fix parsing of filter expressions in the extends tag.
-* Export CMake targets for grantlee plugins.
-* Add a way to build Grantlee with Qt 5.
+* Export CMake targets for cutelee plugins.
+* Add a way to build Cutelee with Qt 5.
 
 -- Version 0.4.0 --
 -------------------
-* Bump Grantlee CMake requirement to 2.8.9.
-* Use the CMAKE_AUTOMOC feature in Grantlee.
+* Bump Cutelee CMake requirement to 2.8.9.
+* Use the CMAKE_AUTOMOC feature in Cutelee.
 * Clean up all CMake code.
 * Fix memory leak when deleting a localized template loader.
 * Clean up C++ code in preparation for Qt 5.
@@ -92,11 +92,11 @@ Version History
 * Add documentation and convenience functions for QObject and Q_PROPERTY introspection
 * Modernise the CMake build system including creation of EXPORT targets and fixing of various cross-platform issues.
 * Add a componentized CPack packaging system for binary tarballs and windows install wizards.
-* Ability to use COMPONENTS argument to find_package with Grantlee.
+* Ability to use COMPONENTS argument to find_package with Cutelee.
 * Add a build target for generating code coverage information.
 * Platform fixes for MIPS, ARM and MinGW
-* Add more documentation for example applications shipped with the Grantlee source.
-* Add the changelog for prior versions of Grantlee
+* Add more documentation for example applications shipped with the Cutelee source.
+* Add the changelog for prior versions of Cutelee
 
 -- Version 0.1.8 --
 -------------------
@@ -126,14 +126,14 @@ Version History
 * Make it possible for the scripted filters to inject QObjects and arrays to
 scripts.
 * More code maintainability improvements.
-* Build Grantlee properly in release mode on Windows
-* Make Grantlee build against Qt 4.5 (regression since v0.1.4)
+* Build Cutelee properly in release mode on Windows
+* Make Cutelee build against Qt 4.5 (regression since v0.1.4)
 * Several release system improvements
 
 -- Version 0.1.4 --
 -------------------
-* Use explicit latin1 encoding for literals internally in Grantlee
-* Make it possible to compile Grantlee against a Qt built with
+* Use explicit latin1 encoding for literals internally in Cutelee
+* Make it possible to compile Cutelee against a Qt built with
 QT_NO_CAST_FROM_ASCII
 * Support for accessing more QObject properties such as children() and
 objectName()

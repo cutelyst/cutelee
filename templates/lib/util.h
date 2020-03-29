@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,18 +18,18 @@
 
 */
 
-#ifndef GRANTLEE_UTIL_P_H
-#define GRANTLEE_UTIL_P_H
+#ifndef CUTELEE_UTIL_P_H
+#define CUTELEE_UTIL_P_H
 
 #include "context.h"
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 #include "safestring.h"
 
 #include <QtCore/QVariant>
 
-/// @file util.h Utility functions used throughout %Grantlee.
+/// @file util.h Utility functions used throughout %Cutelee.
 
-namespace Grantlee
+namespace Cutelee
 {
 
 /**
@@ -37,7 +37,7 @@ namespace Grantlee
 
   @see @ref truthiness
 */
-GRANTLEE_TEMPLATES_EXPORT bool variantIsTrue(const QVariant &variant);
+CUTELEE_TEMPLATES_EXPORT bool variantIsTrue(const QVariant &variant);
 
 /**
   Converts the @p input into its unescaped form.
@@ -45,30 +45,30 @@ GRANTLEE_TEMPLATES_EXPORT bool variantIsTrue(const QVariant &variant);
   Double slashes are converted to single slashes, \\&quot is converted to &quot
   etc.
 */
-GRANTLEE_TEMPLATES_EXPORT QString unescapeStringLiteral(const QString &input);
+CUTELEE_TEMPLATES_EXPORT QString unescapeStringLiteral(const QString &input);
 
 /**
   Marks the @p input as safe.
 */
-GRANTLEE_TEMPLATES_EXPORT Grantlee::SafeString
-markSafe(const Grantlee::SafeString &input);
+CUTELEE_TEMPLATES_EXPORT Cutelee::SafeString
+markSafe(const Cutelee::SafeString &input);
 
 /**
   Marks the @p input as requiring escaping.
 */
-GRANTLEE_TEMPLATES_EXPORT Grantlee::SafeString
-markForEscaping(const Grantlee::SafeString &input);
+CUTELEE_TEMPLATES_EXPORT Cutelee::SafeString
+markForEscaping(const Cutelee::SafeString &input);
 
 /**
   Retrieves and returns a SafeString from the @p input.
 */
-GRANTLEE_TEMPLATES_EXPORT Grantlee::SafeString
+CUTELEE_TEMPLATES_EXPORT Cutelee::SafeString
 getSafeString(const QVariant &input);
 
 /**
   Returns whether @p input contains a SafeString.
 */
-GRANTLEE_TEMPLATES_EXPORT bool isSafeString(const QVariant &input);
+CUTELEE_TEMPLATES_EXPORT bool isSafeString(const QVariant &input);
 
 /**
   Returns true if the type of @p input can be inserted into a rendered template
@@ -76,7 +76,7 @@ GRANTLEE_TEMPLATES_EXPORT bool isSafeString(const QVariant &input);
 
   Note that lists, hashes and QObject*s can not be.
 */
-GRANTLEE_TEMPLATES_EXPORT bool supportedOutputType(const QVariant &input);
+CUTELEE_TEMPLATES_EXPORT bool supportedOutputType(const QVariant &input);
 
 /**
   Compares @p lhs and @p rhs for equality. SafeStrings are compared as raw
@@ -84,7 +84,7 @@ GRANTLEE_TEMPLATES_EXPORT bool supportedOutputType(const QVariant &input);
 
   @see QVariant::operator==
 */
-GRANTLEE_TEMPLATES_EXPORT bool equals(const QVariant &lhs, const QVariant &rhs);
+CUTELEE_TEMPLATES_EXPORT bool equals(const QVariant &lhs, const QVariant &rhs);
 
 #ifndef Q_QDOC
 /**
@@ -92,7 +92,7 @@ GRANTLEE_TEMPLATES_EXPORT bool equals(const QVariant &lhs, const QVariant &rhs);
   Returns the @p list as a formatted string. This is for debugging purposes
   only.
 */
-GRANTLEE_TEMPLATES_EXPORT Grantlee::SafeString
+CUTELEE_TEMPLATES_EXPORT Cutelee::SafeString
 toString(const QVariantList &list);
 #endif
 }

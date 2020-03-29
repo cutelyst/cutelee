@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -43,7 +43,7 @@
 
 Q_DECLARE_METATYPE(Token)
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 QJSValue ScriptableHelperFunctions::markSafeFunction(QJSValue inputValue)
 {
@@ -135,14 +135,14 @@ ScriptableTagLibrary::ScriptableTagLibrary(QObject *parent)
           new ScriptableHelperFunctions(m_scriptEngine)))
 {
   m_scriptEngine->globalObject().setProperty(
-      QStringLiteral("internalGrantleeFunctions"), m_functions);
+      QStringLiteral("internalCuteleeFunctions"), m_functions);
 
   // Make Node new-able
   m_scriptEngine->globalObject().setProperty(
       QStringLiteral("Node"),
       m_scriptEngine->evaluate(QStringLiteral(R"javascript(
             (function() {
-              return internalGrantleeFunctions.ScriptableNodeConstructor(
+              return internalCuteleeFunctions.ScriptableNodeConstructor(
                 Array.prototype.slice.call(arguments));
             })
           )javascript")));
@@ -197,7 +197,7 @@ bool ScriptableTagLibrary::evaluateScript(const QString &name)
 
   QJSValue result = m_scriptEngine->evaluate(fileContent);
   if (result.isError())
-    throw Grantlee::Exception(TagSyntaxError, result.toString());
+    throw Cutelee::Exception(TagSyntaxError, result.toString());
 
   return true;
 }

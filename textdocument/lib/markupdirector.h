@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2008 Stephen Kelly <steveire@gmail.com>
 
@@ -18,11 +18,11 @@
 
 */
 
-#ifndef GRANTLEE_MARKUPDIRECTOR_H
-#define GRANTLEE_MARKUPDIRECTOR_H
+#ifndef CUTELEE_MARKUPDIRECTOR_H
+#define CUTELEE_MARKUPDIRECTOR_H
 
 #include "abstractmarkupbuilder.h"
-#include "grantlee_textdocument_export.h"
+#include "cutelee_textdocument_export.h"
 
 #include <QtGui/QTextDocument>
 #include <QtGui/QTextFrame>
@@ -32,12 +32,12 @@ class QTextTableCell;
 class QTextList;
 class QTextCharFormat;
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class MarkupDirectorPrivate;
 
-/// @headerfile markupdirector.h grantlee/markupdirector.h
+/// @headerfile markupdirector.h cutelee/markupdirector.h
 
 /**
   @brief Instructs a builder object to create markup output
@@ -89,7 +89,7 @@ class MarkupDirectorPrivate;
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEXTDOCUMENT_EXPORT MarkupDirector
+class CUTELEE_TEXTDOCUMENT_EXPORT MarkupDirector
 {
 public:
   /**

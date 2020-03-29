@@ -1,9 +1,9 @@
-#ifndef GRANTLEE_CONFIG_H
-#define GRANTLEE_CONFIG_H
+#ifndef CUTELEE_CONFIG_H
+#define CUTELEE_CONFIG_H
 
 /**
  * The installation directory for the default plugins
  */
-#define GRANTLEE_PLUGIN_PATH "@Grantlee_PLUGIN_INSTALL_DIR@"
+#define CUTELEE_PLUGIN_PATH "@Cutelee_PLUGIN_INSTALL_DIR@"
 
-#endif // GRANTLEE_CONFIG_H
+#endif // CUTELEE_CONFIG_H

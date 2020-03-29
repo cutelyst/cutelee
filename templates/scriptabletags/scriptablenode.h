@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -27,13 +27,13 @@
 
 class QJSEngine;
 
-namespace Grantlee
+namespace Cutelee
 {
 class Context;
 class Engine;
 }
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 class ScriptableNode : public Node
 {
@@ -63,7 +63,7 @@ public:
   ScriptableNodeFactory(QObject *parent = {});
   void setScriptEngine(QJSEngine *engine);
 
-  void setEngine(Grantlee::Engine *engine) override;
+  void setEngine(Cutelee::Engine *engine) override;
   void setFactory(const QJSValue &factoryMethod);
 
   Node *getNode(const QString &tagContent, Parser *p = {}) const override;

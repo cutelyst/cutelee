@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2008 Stephen Kelly <steveire@gmail.com>
 
@@ -18,23 +18,23 @@
 
 */
 
-#ifndef GRANTLEE_TEXTHTMLBUILDER_H
-#define GRANTLEE_TEXTHTMLBUILDER_H
+#ifndef CUTELEE_TEXTHTMLBUILDER_H
+#define CUTELEE_TEXTHTMLBUILDER_H
 
 #ifdef Q_CC_MSVC
 #pragma warning(disable : 4250)
 #endif
 
 #include "abstractmarkupbuilder.h"
-#include "grantlee_textdocument_export.h"
+#include "cutelee_textdocument_export.h"
 #include "markupdirector.h"
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class TextHTMLBuilderPrivate;
 
-/// @headerfile texthtmlbuilder.h grantlee/texthtmlbuilder.h
+/// @headerfile texthtmlbuilder.h cutelee/texthtmlbuilder.h
 
 /**
   @brief The TextHTMLBuilder creates a clean html markup output.
@@ -108,7 +108,7 @@ class TextHTMLBuilderPrivate;
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEXTDOCUMENT_EXPORT TextHTMLBuilder
+class CUTELEE_TEXTDOCUMENT_EXPORT TextHTMLBuilder
     : virtual public AbstractMarkupBuilder
 {
 public:

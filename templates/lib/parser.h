@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,8 +18,8 @@
 
 */
 
-#ifndef GRANTLEE_PARSER_H
-#define GRANTLEE_PARSER_H
+#ifndef CUTELEE_PARSER_H
+#define CUTELEE_PARSER_H
 
 #include "filter.h"
 #include "node.h"
@@ -27,13 +27,13 @@
 
 #include <QtCore/QStringList>
 
-namespace Grantlee
+namespace Cutelee
 {
 class TemplateImpl;
 
 class ParserPrivate;
 
-/// @headerfile parser.h grantlee/parser.h
+/// @headerfile parser.h cutelee/parser.h
 
 /**
   @brief The **%Parser** class processes a string template into a tree of nodes.
@@ -45,7 +45,7 @@ class ParserPrivate;
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT Parser : public QObject
+class CUTELEE_TEMPLATES_EXPORT Parser : public QObject
 {
   Q_OBJECT
 public:

@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2008 Stephen Kelly <steveire@gmail.com>
 
@@ -20,7 +20,7 @@
 
 #include "mediawikimarkupbuilder.h"
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 MediaWikiMarkupBuilder::MediaWikiMarkupBuilder() {}
 

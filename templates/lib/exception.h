@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,20 +18,20 @@
 
 */
 
-#ifndef GRANTLEE_EXCEPTION_H
-#define GRANTLEE_EXCEPTION_H
+#ifndef CUTELEE_EXCEPTION_H
+#define CUTELEE_EXCEPTION_H
 
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 
 #include <QtCore/QString>
 
 #include <exception>
 
-namespace Grantlee
+namespace Cutelee
 {
 
 /**
-  Types of errors that can occur while using %Grantlee
+  Types of errors that can occur while using %Cutelee
 */
 enum Error {
   NoError,
@@ -48,7 +48,7 @@ enum Error {
   CompileFunctionError
 };
 
-/// @headerfile exception.h grantlee/exception.h
+/// @headerfile exception.h cutelee/exception.h
 
 /**
   @brief An exception for use when implementing template tags.
@@ -72,7 +72,7 @@ enum Error {
     QStringList tagContents = smartSplit( tagContent );
 
     if ( tagContents.size() != 2 )
-      throw Grantlee::Exception( TagSyntaxError,
+      throw Cutelee::Exception( TagSyntaxError,
         "Error: Include tag takes exactly one argument" );
 
     // The item at index 0 in the list is the tag name, "include"
@@ -81,7 +81,7 @@ enum Error {
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT Exception
+class CUTELEE_TEMPLATES_EXPORT Exception
 {
 public:
   /**

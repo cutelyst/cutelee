@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,20 +18,20 @@
 
 */
 
-#ifndef GRANTLEE_TEMPLATELOADER_H
-#define GRANTLEE_TEMPLATELOADER_H
+#ifndef CUTELEE_TEMPLATELOADER_H
+#define CUTELEE_TEMPLATELOADER_H
 
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 #include "template.h"
 
 #include <QtCore/QSharedPointer>
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class AbstractLocalizer;
 
-/// @headerfile templateloader.h grantlee/templateloader.h
+/// @headerfile templateloader.h cutelee/templateloader.h
 
 /**
   @brief An retrieval interface to a storage location for Template objects.
@@ -41,11 +41,11 @@ class AbstractLocalizer;
 
   The interface of this class should not be called directly from applications.
   TemplateLoaders will typically be created, configured and added to the
-  Grantlee::Engine which will call the appropriate API.
+  Cutelee::Engine which will call the appropriate API.
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT AbstractTemplateLoader
+class CUTELEE_TEMPLATES_EXPORT AbstractTemplateLoader
 {
 public:
   /**
@@ -72,7 +72,7 @@ public:
   virtual bool canLoadTemplate(const QString &name) const = 0;
 };
 
-/// @headerfile templateloader.h grantlee/templateloader.h
+/// @headerfile templateloader.h cutelee/templateloader.h
 
 class FileSystemTemplateLoaderPrivate;
 
@@ -134,7 +134,7 @@ class FileSystemTemplateLoaderPrivate;
   @see @ref deploying_templates
 
 */
-class GRANTLEE_TEMPLATES_EXPORT FileSystemTemplateLoader
+class CUTELEE_TEMPLATES_EXPORT FileSystemTemplateLoader
     : public AbstractTemplateLoader
 {
 public:
@@ -180,19 +180,19 @@ private:
   FileSystemTemplateLoaderPrivate *const d_ptr;
 };
 
-/// @headerfile templateloader.h grantlee/templateloader.h
+/// @headerfile templateloader.h cutelee/templateloader.h
 
 /**
   @brief The **%InMemoryTemplateLoader** loads Templates set dynamically in
   memory
 
   This class is mostly used for testing purposes, but can also be used for
-  simple uses of %Grantlee.
+  simple uses of %Cutelee.
 
   Templates can be made available using the @ref setTemplate method, and will
-  then be retrieved by the Grantlee::Engine as appropriate.
+  then be retrieved by the Cutelee::Engine as appropriate.
 */
-class GRANTLEE_TEMPLATES_EXPORT InMemoryTemplateLoader
+class CUTELEE_TEMPLATES_EXPORT InMemoryTemplateLoader
     : public AbstractTemplateLoader
 {
 public:

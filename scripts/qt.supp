@@ -112,10 +112,10 @@
    fun:_ZN15QLibraryPrivate10loadPluginEv
    fun:_ZN13QPluginLoader4loadEv
    fun:_ZN13QPluginLoader8instanceEv
-   fun:_ZN8Grantlee6Parser7loadLibERK7QString
-   fun:_ZN8Grantlee6ParserC1E5QListI5TokenE11QStringListP7QObject
-   fun:_ZN8Grantlee8Template13compileStringERK7QString
-   fun:_ZN8Grantlee8Template10setContentERK7QString
+   fun:_ZN8Cutelee6Parser7loadLibERK7QString
+   fun:_ZN8Cutelee6ParserC1E5QListI5TokenE11QStringListP7QObject
+   fun:_ZN8Cutelee8Template13compileStringERK7QString
+   fun:_ZN8Cutelee8Template10setContentERK7QString
 }
 
 {
@@ -280,10 +280,10 @@
    fun:_ZN15QLibraryPrivate10loadPluginEv
    fun:_ZN13QPluginLoader4loadEv
    fun:_ZN13QPluginLoader8instanceEv
-   fun:_ZN8Grantlee13EnginePrivate14loadCppLibraryERK7QStringx
-   fun:_ZN8Grantlee6Engine11loadLibraryERK7QStringx
-   fun:_ZN8Grantlee6Engine20loadDefaultLibrariesEx
-   fun:_ZN8Grantlee6ParserC1ERK5QListI5TokenEP7QObject
+   fun:_ZN8Cutelee13EnginePrivate14loadCppLibraryERK7QStringx
+   fun:_ZN8Cutelee6Engine11loadLibraryERK7QStringx
+   fun:_ZN8Cutelee6Engine20loadDefaultLibrariesEx
+   fun:_ZN8Cutelee6ParserC1ERK5QListI5TokenEP7QObject
 }
 
 {

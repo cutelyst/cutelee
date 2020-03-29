@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -25,7 +25,7 @@
 
 #include "ui_designwidget.h"
 
-#include <grantlee/context.h>
+#include <cutelee/context.h>
 
 class ArgsModel;
 class MethodModel;
@@ -36,7 +36,7 @@ class DesignWidget : public QWidget
 public:
   DesignWidget(QWidget *parent = 0, Qt::WindowFlags f = 0);
 
-  Grantlee::Context getContext();
+  Cutelee::Context getContext();
 
   QString outputType() const;
 

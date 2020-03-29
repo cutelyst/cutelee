@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,10 +18,10 @@
 
 */
 
-#ifndef GRANTLEE_ABSTRACTLOCALIZER_H
-#define GRANTLEE_ABSTRACTLOCALIZER_H
+#ifndef CUTELEE_ABSTRACTLOCALIZER_H
+#define CUTELEE_ABSTRACTLOCALIZER_H
 
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 
 #include <QtCore/QLocale>
 #include <QtCore/QSharedPointer>
@@ -29,7 +29,7 @@
 
 class QDateTime;
 
-namespace Grantlee
+namespace Cutelee
 {
 
 /**
@@ -40,7 +40,7 @@ namespace Grantlee
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT AbstractLocalizer
+class CUTELEE_TEMPLATES_EXPORT AbstractLocalizer
 {
 public:
   /**

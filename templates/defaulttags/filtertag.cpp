@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -27,8 +27,8 @@
 
 FilterNodeFactory::FilterNodeFactory() {}
 
-Grantlee::Node *FilterNodeFactory::getNode(const QString &tagContent,
-                                           Grantlee::Parser *p) const
+Cutelee::Node *FilterNodeFactory::getNode(const QString &tagContent,
+                                           Cutelee::Parser *p) const
 {
   auto expr = tagContent.split(QLatin1Char(' '), QString::SkipEmptyParts);
 
@@ -40,7 +40,7 @@ Grantlee::Node *FilterNodeFactory::getNode(const QString &tagContent,
   auto filters = fe.filters();
   if (filters.contains(QStringLiteral("safe"))
       || filters.contains(QStringLiteral("escape"))) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError, QStringLiteral("Use the \"autoescape\" tag instead."));
   }
 

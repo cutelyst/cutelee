@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -22,14 +22,14 @@
 
 #include <QtCore/QStringList>
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 SafeString::SafeString()
     : m_nestedString(this), m_safety(IsNotSafe), m_needsescape(false)
 {
 }
 
-SafeString::SafeString(const Grantlee::SafeString &safeString)
+SafeString::SafeString(const Cutelee::SafeString &safeString)
     : m_nestedString(safeString.get(), this), m_safety(safeString.m_safety),
       m_needsescape(safeString.m_needsescape)
 {
@@ -55,7 +55,7 @@ void SafeString::setNeedsEscape(bool needsEscape)
 
 bool SafeString::needsEscape() const { return m_needsescape; }
 
-void SafeString::setSafety(Grantlee::SafeString::Safety safety)
+void SafeString::setSafety(Cutelee::SafeString::Safety safety)
 {
   m_safety = safety;
 }
@@ -117,7 +117,7 @@ SafeString &SafeString::operator+=(const SafeString &str)
   return *this;
 }
 
-bool SafeString::operator==(const Grantlee::SafeString &other) const
+bool SafeString::operator==(const Cutelee::SafeString &other) const
 {
   // Don't compare safety or account for future escaping here.
   // See TestBuiltins testEscaping
@@ -180,7 +180,7 @@ SafeString &SafeString::NestedString::fill(QChar ch, int size)
 }
 
 SafeString &SafeString::NestedString::insert(int position,
-                                             const Grantlee::SafeString &str)
+                                             const Cutelee::SafeString &str)
 {
   QString::insert(position, str.get());
   if (!str.isSafe())
@@ -245,7 +245,7 @@ SafeString::NestedString::normalized(QString::NormalizationForm mode,
   return SafeString(QString::normalized(mode, version), m_safeString->m_safety);
 }
 
-SafeString &SafeString::NestedString::prepend(const Grantlee::SafeString &str)
+SafeString &SafeString::NestedString::prepend(const Cutelee::SafeString &str)
 {
   QString::prepend(str.get());
   if (!str.isSafe())
@@ -275,13 +275,13 @@ SafeString &SafeString::NestedString::prepend(QChar ch)
   return *m_safeString;
 }
 
-void SafeString::NestedString::push_back(const Grantlee::SafeString &other)
+void SafeString::NestedString::push_back(const Cutelee::SafeString &other)
 {
   QString::push_back(other.get());
   m_safeString->m_safety = other.m_safety;
 }
 
-void SafeString::NestedString::push_front(const Grantlee::SafeString &other)
+void SafeString::NestedString::push_front(const Cutelee::SafeString &other)
 {
   QString::push_front(other.get());
   m_safeString->m_safety = other.m_safety;
@@ -301,7 +301,7 @@ SafeString &SafeString::NestedString::remove(QChar ch, Qt::CaseSensitivity cs)
   return *m_safeString;
 }
 
-SafeString &SafeString::NestedString::remove(const Grantlee::SafeString &str,
+SafeString &SafeString::NestedString::remove(const Cutelee::SafeString &str,
                                              Qt::CaseSensitivity cs)
 {
   QString::remove(str, cs);
@@ -330,7 +330,7 @@ SafeString SafeString::NestedString::repeated(int times) const
 }
 
 SafeString &SafeString::NestedString::replace(int position, int n,
-                                              const Grantlee::SafeString &after)
+                                              const Cutelee::SafeString &after)
 {
   QString::replace(position, n, after.get());
   m_safeString->m_safety = after.m_safety;
@@ -361,8 +361,8 @@ SafeString &SafeString::NestedString::replace(int position, int n, QChar after)
 }
 
 SafeString &
-SafeString::NestedString::replace(const Grantlee::SafeString &before,
-                                  const Grantlee::SafeString &after,
+SafeString::NestedString::replace(const Cutelee::SafeString &before,
+                                  const Cutelee::SafeString &after,
                                   Qt::CaseSensitivity cs)
 {
   QString::replace(before.get(), after.get(), cs);
@@ -371,7 +371,7 @@ SafeString::NestedString::replace(const Grantlee::SafeString &before,
 }
 
 SafeString &SafeString::NestedString::replace(const QString &before,
-                                              const Grantlee::SafeString &after,
+                                              const Cutelee::SafeString &after,
                                               Qt::CaseSensitivity cs)
 {
   QString::replace(before, after.get(), cs);
@@ -380,7 +380,7 @@ SafeString &SafeString::NestedString::replace(const QString &before,
 }
 
 SafeString &
-SafeString::NestedString::replace(const Grantlee::SafeString &before,
+SafeString::NestedString::replace(const Cutelee::SafeString &before,
                                   const QString &after, Qt::CaseSensitivity cs)
 {
   QString::replace(before.get(), after, cs);
@@ -440,7 +440,7 @@ SafeString &SafeString::NestedString::replace(const QLatin1String &before,
 }
 
 SafeString &SafeString::NestedString::replace(const QLatin1String &before,
-                                              const Grantlee::SafeString &after,
+                                              const Cutelee::SafeString &after,
                                               Qt::CaseSensitivity cs)
 {
   QString::replace(before, after.get(), cs);
@@ -458,7 +458,7 @@ SafeString &SafeString::NestedString::replace(const QLatin1String &before,
 }
 
 SafeString &
-SafeString::NestedString::replace(const Grantlee::SafeString &before,
+SafeString::NestedString::replace(const Cutelee::SafeString &before,
                                   const QLatin1String &after,
                                   Qt::CaseSensitivity cs)
 {
@@ -486,7 +486,7 @@ SafeString &SafeString::NestedString::replace(QChar c,
 }
 
 SafeString &SafeString::NestedString::replace(const QRegularExpression &rx,
-                                              const Grantlee::SafeString &after)
+                                              const Cutelee::SafeString &after)
 {
   QString::replace(rx, after.get());
   m_safeString->m_safety = after.m_safety;
@@ -528,7 +528,7 @@ SafeString SafeString::NestedString::section(QChar sep, int start, int end,
                     m_safeString->m_safety);
 }
 
-SafeString SafeString::NestedString::section(const Grantlee::SafeString &sep,
+SafeString SafeString::NestedString::section(const Cutelee::SafeString &sep,
                                              int start, int end,
                                              QString::SectionFlags flags) const
 {
@@ -635,7 +635,7 @@ SafeString SafeString::NestedString::simplified() const
   return SafeString(QString::simplified(), m_safeString->m_safety);
 }
 
-QStringList SafeString::NestedString::split(const Grantlee::SafeString &sep,
+QStringList SafeString::NestedString::split(const Cutelee::SafeString &sep,
                                             QString::SplitBehavior behavior,
                                             Qt::CaseSensitivity cs) const
 {

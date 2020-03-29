@@ -1,10 +1,10 @@
 
-namespace Grantlee
+namespace Cutelee
 {
 /**
-  @page using_and_deploying Using %Grantlee in your application
+  @page using_and_deploying Using %Cutelee in your application
 
-  Using %Grantlee in %Qt applications will often not require much code.
+  Using %Cutelee in %Qt applications will often not require much code.
 
   @code
     auto engine = getEngine();
@@ -14,13 +14,13 @@ namespace Grantlee
     browser.setHtml( t->render( c ) );
   @endcode
 
-  Error handling etc is omitted for clarity. In order for the above to work as expected, it is necessary to configure the build system to find %Grantlee, and to configure %Grantlee to find templates and plugins.
+  Error handling etc is omitted for clarity. In order for the above to work as expected, it is necessary to configure the build system to find %Cutelee, and to configure %Cutelee to find templates and plugins.
 
-  @section finding_with_cmake Finding Grantlee with CMake
+  @section finding_with_cmake Finding Cutelee with CMake
 
-  %Grantlee uses the <a href="http://www.cmake.org/">CMake</a> cross platform build system, and installs a cmake file called <tt>Grantlee5Config.cmake</tt>. This config file is automatically searched for by CMake and contains the information needed for other CMake based applications to find headers and link against %Grantlee libraries. See https://cmake.org/cmake/help/latest/manual/cmake-packages.7.html for more.
+  %Cutelee uses the <a href="http://www.cmake.org/">CMake</a> cross platform build system, and installs a cmake file called <tt>Cutelee5Config.cmake</tt>. This config file is automatically searched for by CMake and contains the information needed for other CMake based applications to find headers and link against %Cutelee libraries. See https://cmake.org/cmake/help/latest/manual/cmake-packages.7.html for more.
 
-  When creating an application using CMake that depends on %Grantlee, first issue the <tt>find_package</tt> command, and then use the CMake <tt>target_link_libraries</tt> command link to and use the libraries.
+  When creating an application using CMake that depends on %Cutelee, first issue the <tt>find_package</tt> command, and then use the CMake <tt>target_link_libraries</tt> command link to and use the libraries.
 
   @code
     project(my_application)
@@ -30,20 +30,20 @@ namespace Grantlee
     set(CMAKE_AUTOMOC ON)
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-    find_package(Grantlee5 REQUIRED)
+    find_package(Cutelee5 REQUIRED)
 
     # ... Application sources etc.
 
     target_link_libraries(my_application 
       PRIVATE
         Qt5::Widgets
-        Grantlee5::Templates
+        Cutelee5::Templates
     )
   @endcode
 
   @section deploying_templates Deploying Templates
 
-  %Template files can be installed by your application and must later be found by %Grantlee so they can be used. If the files are installed on the filesystem, the path they were installed to can be specified when creating a AbstractTemplateLoader instance.
+  %Template files can be installed by your application and must later be found by %Cutelee so they can be used. If the files are installed on the filesystem, the path they were installed to can be specified when creating a AbstractTemplateLoader instance.
 
   @code
     Engine* getEngine()
@@ -93,7 +93,7 @@ namespace Grantlee
 
   @section finding_user_templates Finding user defined templates
 
-  If users are able to define their own templates in an application that uses %Grantlee for theming for example, the path to the location of such potential templates must also be set through the AbstractTemplateLoader instance. Paths to user defined templates should be defined before default/installed templates so that the user templates are found first. If there is a reason to disallow user overriding of certain templates, they can be specified in a separate AbstractTemplateLoader instance.
+  If users are able to define their own templates in an application that uses %Cutelee for theming for example, the path to the location of such potential templates must also be set through the AbstractTemplateLoader instance. Paths to user defined templates should be defined before default/installed templates so that the user templates are found first. If there is a reason to disallow user overriding of certain templates, they can be specified in a separate AbstractTemplateLoader instance.
 
   @code
     auto no_override_loader = QSharedPointer<FileSystemTemplateLoader>::create();
@@ -115,18 +115,18 @@ namespace Grantlee
 
   @section finding_plugins Finding tags and filters
 
-  %Grantlee looks for plugins in the paths from the Engine::pluginPaths property. It does so
+  %Cutelee looks for plugins in the paths from the Engine::pluginPaths property. It does so
   in the same order they appear there.
 
   The property defaults to the following directories
     - The default plugin directory of your %Qt installation (<tt>qmake -query QT_INSTALL_PLUGINS</tt>).
     - The directories specified in the environment variable <tt>QT_PLUGIN_DIR</tt>.
-    - The default plugin directory of your %Grantlee installation.
+    - The default plugin directory of your %Cutelee installation.
 
-  Each path has <tt>&quot;grantlee/$version/&quot;</tt> appended to it, and the resulting
-  directory is searched for plugins. For example, if the version of %Grantlee is 5.0 and
+  Each path has <tt>&quot;cutelee/$version/&quot;</tt> appended to it, and the resulting
+  directory is searched for plugins. For example, if the version of %Cutelee is 5.0 and
   QCoreApplication::libraryPaths() contains <tt>&quot;/usr/lib/plugins/&quot;</tt>, the directory
-  <tt>&quot;/usr/lib/plugins/grantlee/5.0&quot;</tt> would be searched for plugins. The search
+  <tt>&quot;/usr/lib/plugins/cutelee/5.0&quot;</tt> would be searched for plugins. The search
   stops when a plugin matching a particular name is found.
 
   The paths used to search for plugins can be overriden by using Engine::setPluginPaths. If you
@@ -156,21 +156,21 @@ namespace Grantlee
 
   In this case, <tt>my_custom_plugin</tt> is a name used for the plugin in the CMake environment. It is used to install the custom library in the CMake <tt>install</tt> command.
 
-  <tt>custom_plugin_library.cpp</tt> is the C++ file where you implement the Grantlee::TagLibraryInterface to return custom tags and filters.
+  <tt>custom_plugin_library.cpp</tt> is the C++ file where you implement the Cutelee::TagLibraryInterface to return custom tags and filters.
 
-  Note that the <tt>PLUGIN_INSTALL_DIR</tt> given to the install command should contain the version number of %Grantlee used to create the custom library. For example, <tt>/usr/share/my_app/plugins/grantlee/5.0/</tt>.
+  Note that the <tt>PLUGIN_INSTALL_DIR</tt> given to the install command should contain the version number of %Cutelee used to create the custom library. For example, <tt>/usr/share/my_app/plugins/cutelee/5.0/</tt>.
 
-  In C++ code, it is necessary to either instruct the Grantlee::Engine about the location of the plugins or to configure your QCoreApplication::libraryPaths by another standard method. Note that it is possible to define custom versions of built in tags and filters by putting your own plugin library in the path before the path to the default %Grantlee plugins.
+  In C++ code, it is necessary to either instruct the Cutelee::Engine about the location of the plugins or to configure your QCoreApplication::libraryPaths by another standard method. Note that it is possible to define custom versions of built in tags and filters by putting your own plugin library in the path before the path to the default %Cutelee plugins.
 
   For example, if your custom plugin library contained a custom implementation of the @gr_tag{for} tag:
   @code
     auto engine = new Engine( this );
     engine->setPluginPaths( 
-        QStringList{ path_to_custom_plugins, path_to_grantlee_defaults } 
+        QStringList{ path_to_custom_plugins, path_to_cutelee_defaults } 
         );
   @endcode
 
-  Note that neither the path to the custom libarary nor the path to the %Grantlee default library should contain the version number when specified in C++ code with the Engine. The version is only specified when installing the plugin in CMake.
+  Note that neither the path to the custom libarary nor the path to the %Cutelee default library should contain the version number when specified in C++ code with the Engine. The version is only specified when installing the plugin in CMake.
 
   Custom tags and filters implemented in Javascript can also be deployed on the file system, or, like template files, can also be deployed in %Qt Resource files. In that case, the version should be specified in the -root argument in CMake.
 
@@ -179,7 +179,7 @@ namespace Grantlee
     set (_rcc_file "my_qtscript_library.qrc")
     qt5_add_resources(_scripted_rcc_src 
         ${_rcc_file} 
-        OPTIONS -root "/plugins/grantlee/${Grantlee5_VERSION_MAJOR}.${Grantlee5_VERSION_MINOR}" 
+        OPTIONS -root "/plugins/cutelee/${Cutelee5_VERSION_MAJOR}.${Cutelee5_VERSION_MINOR}" 
     )
 
     add_executable(my_app, ${my_app_srcs} ${_scripted_rcc_src})
@@ -190,9 +190,9 @@ namespace Grantlee
 
   Note again that when specifying the path in the virtual filesystem, the version is omitted. User defined filter written in Javascript can also be located similiarly to templates from either the filesystem or the %Qt Resource virtual filesystem.
 
-  @section building_grantlee Building Grantlee
+  @section building_cutelee Building Cutelee
 
-  It is possible to build only parts of %Grantlee if your application is a QCoreApplication that depends only on QtCore
+  It is possible to build only parts of %Cutelee if your application is a QCoreApplication that depends only on QtCore
 
   The appropriate options may be specified in the cmake gui, or on the command line using the <tt>BUILD_TEXTDOCUMENT</tt> or <tt>BUILD_TEMPLATES</tt> CMake options.
 
@@ -201,18 +201,18 @@ namespace Grantlee
     cmake .. -DBUILD_TEXTDOCUMENT=OFF -DBUILD_TESTS=OFF
   @endcode
 
-  Similarly, it is possible to build only the core of the %Grantlee Template library without the plugins. This may be useful for specialized applications, but as the unit tests depend on the plugins, the tests would need to be deactivated in this case too:
+  Similarly, it is possible to build only the core of the %Cutelee Template library without the plugins. This may be useful for specialized applications, but as the unit tests depend on the plugins, the tests would need to be deactivated in this case too:
 
   @code
     mkdir build && cd build
     cmake .. -DBUILD_TEXTDOCUMENT=OFF -DBUILD_TESTS=OFF -DBUILD_MAIN_PLUGINS=OFF
   @endcode
 
-  By default, %Grantlee depends on the QtQml library in order to implement Javascript support. This support is only enabled if the QtQml library is found.
+  By default, %Cutelee depends on the QtQml library in order to implement Javascript support. This support is only enabled if the QtQml library is found.
 
   <center>
   <b>
-  @dotfile "moduledeps.dot" "Dependency Graph for Grantlee"
+  @dotfile "moduledeps.dot" "Dependency Graph for Cutelee"
   </b>
   </center>
 
@@ -220,7 +220,7 @@ namespace Grantlee
 
   <center>
   <b>
-  @dotfile "moduledeps_no_qml.dot" "Dependency Graph for Grantlee without QtQml"
+  @dotfile "moduledeps_no_qml.dot" "Dependency Graph for Cutelee without QtQml"
   </b>
   </center>
 

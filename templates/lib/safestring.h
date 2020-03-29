@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,18 +18,18 @@
 
 */
 
-#ifndef GRANTLEE_SAFESTRING_H
-#define GRANTLEE_SAFESTRING_H
+#ifndef CUTELEE_SAFESTRING_H
+#define CUTELEE_SAFESTRING_H
 
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 
 #include <QtCore/QString>
 #include <QtCore/QVariant>
 
-namespace Grantlee
+namespace Cutelee
 {
 
-/// @headerfile safestring.h grantlee/safestring.h
+/// @headerfile safestring.h cutelee/safestring.h
 
 /**
   @brief A QString wrapper class for containing whether a string is safe or
@@ -88,7 +88,7 @@ namespace Grantlee
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT SafeString
+class CUTELEE_TEMPLATES_EXPORT SafeString
 {
 public:
   /**
@@ -160,7 +160,7 @@ public:
     This class is largely an implementation detail. See the SafeString
     documentation for details.
   */
-  class GRANTLEE_TEMPLATES_EXPORT NestedString : public QString
+  class CUTELEE_TEMPLATES_EXPORT NestedString : public QString
   {
 #ifndef Q_QDOC
     friend class SafeString;
@@ -395,6 +395,6 @@ private:
 };
 }
 
-Q_DECLARE_METATYPE(Grantlee::SafeString)
+Q_DECLARE_METATYPE(Cutelee::SafeString)
 
 #endif

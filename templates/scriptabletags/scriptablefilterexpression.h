@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -35,7 +35,7 @@ public:
   ScriptableFilterExpression(QObject *parent = {});
   ScriptableFilterExpression(QJSEngine *engine, QObject *parent = {});
 
-  void init(const QString &content, Grantlee::Parser *parser);
+  void init(const QString &content, Cutelee::Parser *parser);
 
 public Q_SLOTS:
   QVariant resolve(ScriptableContext *c);
@@ -46,7 +46,7 @@ public Q_SLOTS:
               ScriptableContext *scriptableC);
 
 private:
-  Grantlee::FilterExpression m_filterExpression;
+  Cutelee::FilterExpression m_filterExpression;
   QJSEngine *m_engine;
 };
 

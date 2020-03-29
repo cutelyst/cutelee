@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -32,7 +32,7 @@ Node *IfEqualNodeFactory::do_getNode(const QString &tagContent, Parser *p,
   auto expr = smartSplit(tagContent);
 
   if (expr.size() != 3) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral("%1 tag takes two arguments.").arg(expr.first()));
   }

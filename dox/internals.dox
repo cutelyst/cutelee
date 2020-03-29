@@ -1,13 +1,13 @@
 
-namespace Grantlee
+namespace Cutelee
 {
 
 /**
   @page internals Internals
 
-  @note This page is intended only to be informative for new contributors to %Grantlee or people who are really interested in this kind of thing. These are implementation details and are likely to change without notice.
+  @note This page is intended only to be informative for new contributors to %Cutelee or people who are really interested in this kind of thing. These are implementation details and are likely to change without notice.
 
-  @section how_works How Grantlee works.
+  @section how_works How Cutelee works.
 
   A template string is first tokenized by the Lexer class. The result is a list of tokens with content which can be of type <tt>TextToken</tt>, <tt>CommentToken</tt>, <tt>VariableToken</tt> or <tt>TagToken</tt>.
 

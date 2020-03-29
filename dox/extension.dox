@@ -1,5 +1,5 @@
 
-namespace Grantlee
+namespace Cutelee
 {
 
 /**
@@ -14,11 +14,11 @@ namespace Grantlee
 
   @subsection filters Filters
 
-  A filter takes an object and an optional argument and returns a string. To create your own filter, create a concrete subclass of Grantlee::Filter and implement the Filter::doFilter method.
+  A filter takes an object and an optional argument and returns a string. To create your own filter, create a concrete subclass of Cutelee::Filter and implement the Filter::doFilter method.
 
   @code
     /// Outputs its input string twice.
-    class TwiceFilter : public Grantlee::Filter
+    class TwiceFilter : public Cutelee::Filter
     {
       QVariant dofilter(const QVariant &input, const QVariant &arg = QVariant(), bool autoescape = false) const override
       {
@@ -37,11 +37,11 @@ namespace Grantlee
     // Renders: Seeing double MikeMike?
   @endcode
 
-  The argument to doFilter is a QVariant, so it may contain any of the types supported by %Grantlee.
+  The argument to doFilter is a QVariant, so it may contain any of the types supported by %Cutelee.
 
   @code
     /// Outputs its input n times.
-    class RepeatFilter : public Grantlee::Filter
+    class RepeatFilter : public Cutelee::Filter
     {
       QVariant dofilter(const QVariant &input, const QVariant &arg = QVariant(), bool autoescape = false) const override
       {
@@ -76,7 +76,7 @@ namespace Grantlee
 
   @section autoescaping Autoescaping and safe-ness
 
-  When implementing filters, it is necessary to consider whether string output from the template should be escaped by %Grantlee when rendering the template. %Grantlee features an autoescaping feature which ensures that a string which should only be escaped once is not escaped two or more times.
+  When implementing filters, it is necessary to consider whether string output from the template should be escaped by %Cutelee when rendering the template. %Cutelee features an autoescaping feature which ensures that a string which should only be escaped once is not escaped two or more times.
 
   @see @ref templates_safestring
 
@@ -87,26 +87,26 @@ namespace Grantlee
 
   @subsection tags Tags
 
-  A tag can really do anything with a template. To create your own tag, create a concrete subclass of Grantlee::AbstractNodeFactory and implement the AbstractNodeFactory::getNode method, and create a concrete subclass of Grantlee::Node and implement the Node::render method.
+  A tag can really do anything with a template. To create your own tag, create a concrete subclass of Cutelee::AbstractNodeFactory and implement the AbstractNodeFactory::getNode method, and create a concrete subclass of Cutelee::Node and implement the Node::render method.
 
-  @note If you are familiar with Django you will recognise that defining a tag in Django involves creating a Node subclass (like %Grantlee), and a factory function where %Grantlee requires a factory class. This is because functions in python are objects, just like classes are, and dynamic typing allows easy creation of lists of those factory functions. In %Grantlee with statically-typed C++, we need to group the factories by interface (i.e, the Grantlee::AbstractNodeFactory interface).
+  @note If you are familiar with Django you will recognise that defining a tag in Django involves creating a Node subclass (like %Cutelee), and a factory function where %Cutelee requires a factory class. This is because functions in python are objects, just like classes are, and dynamic typing allows easy creation of lists of those factory functions. In %Cutelee with statically-typed C++, we need to group the factories by interface (i.e, the Cutelee::AbstractNodeFactory interface).
 
   Tags can take arguments, advance the parser, create nodes, and generally have broad control over the parsing and rendering stages.
 
   Here is an example of a @gr_tag{current_time} tag which displays the current time.
 
   @code
-    class CurrentTimeNode : public Grantlee::Node
+    class CurrentTimeNode : public Cutelee::Node
     {
           Q_OBJECT
 
        public:
           CurrentTimeNode( QObject *parent = {} )
-             : Grantlee::Node( parent )
+             : Cutelee::Node( parent )
           {
           }
 
-          void render( Grantlee::OutputStream *stream, Grantlee::Context *c) const override
+          void render( Cutelee::OutputStream *stream, Cutelee::Context *c) const override
           {
              Q_UNUSED(c);
              
@@ -114,9 +114,9 @@ namespace Grantlee
           }
     };
 
-    class CurrentTimeTagFactory : public Grantlee::AbstractNodeFactory
+    class CurrentTimeTagFactory : public Cutelee::AbstractNodeFactory
     {
-          Grantlee::Node *getNode(const QString &tagContent, Grantlee::Parser *p) const override
+          Cutelee::Node *getNode(const QString &tagContent, Cutelee::Parser *p) const override
           {
              Q_UNUSED(p);
 
@@ -127,7 +127,7 @@ namespace Grantlee
              if (!parts.isEmpty())
                 // The remaining parts are the arguments to the tag. If an incorrect number of arguments
                 // is supplied, and exception should be thrown.
-                throw Grantlee::Exception( Grantlee::TagSyntaxError, "current_time does not take any arguments" );
+                throw Cutelee::Exception( Cutelee::TagSyntaxError, "current_time does not take any arguments" );
 
              return new CurrentTimeNode();
           }
@@ -205,18 +205,18 @@ namespace Grantlee
 
   @section cpp_libraries C++ Libraries
 
-  As already mentioned, it is neccessary to create a QtPlugin library to make your tags and filters available to %Grantlee. You need to implement TagLibraryInterface to return your custom node factories and filters. See the existing libraries in your %Grantlee distribution for full examples.
+  As already mentioned, it is neccessary to create a QtPlugin library to make your tags and filters available to %Cutelee. You need to implement TagLibraryInterface to return your custom node factories and filters. See the existing libraries in your %Cutelee distribution for full examples.
 
   @code
-    #include <grantlee/taglibraryinterface.h>
+    #include <cutelee/taglibraryinterface.h>
 
     #include "mytag.h"
     #include "myfilter.h"
 
-    class MyLibrary : public QObject, public Grantlee::TagLibraryInterface
+    class MyLibrary : public QObject, public Cutelee::TagLibraryInterface
     {
       Q_OBJECT
-      Q_INTERFACES( Grantlee::TagLibraryInterface )
+      Q_INTERFACES( Cutelee::TagLibraryInterface )
     public:
       MyLibrary(QObject *parent = 0)
         : QObject (parent)
@@ -226,13 +226,13 @@ namespace Grantlee
         m_filters.insert("myfilter", new MyFilter());
       }
 
-      QHash<QString, Grantlee::AbstractNodeFactory*> nodeFactories(const QString &name = QString())
+      QHash<QString, Cutelee::AbstractNodeFactory*> nodeFactories(const QString &name = QString())
       {
         Q_UNUSED(name);
         return m_nodeFactories;
       }
 
-      QHash<QString, Grantlee::Filter*> filters(const QString &name = QString())
+      QHash<QString, Cutelee::Filter*> filters(const QString &name = QString())
       {
         Q_UNUSED(name);
         return m_filters;
@@ -242,7 +242,7 @@ namespace Grantlee
 
   @section javascript_libraries Javascript Libraries
 
-  If you configure your application to use the grantlee_scriptabletags_library, it will be possible for you and theme writers to write tags and filters in Javascript instead of C++. Themers would have as much control as a C++ plugin writer over those steps of processing and rendering the template.
+  If you configure your application to use the cutelee_scriptabletags_library, it will be possible for you and theme writers to write tags and filters in Javascript instead of C++. Themers would have as much control as a C++ plugin writer over those steps of processing and rendering the template.
 
   Writing Javascript plugins is slightly different from writing C++ plugins, and is a bit more like writing Django plugins. Namely, in Javascript like python, functions are first-class objects, and Javascript is dynamically typed. Additionally Javascript plugins are just text files, so they can easily be dynamically loaded at runtime. Javascript files must be UTF-8 encoded.
 
@@ -280,7 +280,7 @@ namespace Grantlee
 
   As noted in @ref creating_templates, you will usually not create a Template directly, but retrieve it from an Engine instance. The Engine allows you to define where the templates are retrieved from when you request them by name.
 
-  You can redefine the order of places in the filesystem which are searched for templates, and even define new ways to retrieve templates (i.e, not from the filesystem) by subclassing Grantlee::AbstractTemplateLoader and implementing the AbstractTemplateLoader::loadByName method. For existing loaders, see FileSystemTemplateLoader, InMemoryTemplateLoader, and AkonadiTemplateLoader.
+  You can redefine the order of places in the filesystem which are searched for templates, and even define new ways to retrieve templates (i.e, not from the filesystem) by subclassing Cutelee::AbstractTemplateLoader and implementing the AbstractTemplateLoader::loadByName method. For existing loaders, see FileSystemTemplateLoader, InMemoryTemplateLoader, and AkonadiTemplateLoader.
 
 */
 

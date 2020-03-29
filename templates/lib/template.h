@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,17 +18,17 @@
 
 */
 
-#ifndef GRANTLEE_TEMPLATE_H
-#define GRANTLEE_TEMPLATE_H
+#ifndef CUTELEE_TEMPLATE_H
+#define CUTELEE_TEMPLATE_H
 
 #include "exception.h"
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 #include "node.h"
 
 #include <QtCore/QSharedPointer>
 #include <QtCore/QStringList>
 
-namespace Grantlee
+namespace Cutelee
 {
 class Context;
 class Engine;
@@ -43,12 +43,12 @@ typedef QSharedPointer<TemplateImpl> Template;
 
 class TemplatePrivate;
 
-/// @headerfile template.h grantlee/template.h
+/// @headerfile template.h cutelee/template.h
 
 /**
   @brief The **%Template** class is a tree of nodes which may be rendered.
 
-  All Templates are created through the Grantlee::Engine class.
+  All Templates are created through the Cutelee::Engine class.
   A **%Template** is created by parsing some text markup passed into the Engine,
   or by reading it from a file.
 
@@ -92,7 +92,7 @@ class TemplatePrivate;
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT TemplateImpl : public QObject
+class CUTELEE_TEMPLATES_EXPORT TemplateImpl : public QObject
 {
   Q_OBJECT
 public:

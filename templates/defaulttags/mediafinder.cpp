@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -29,13 +29,13 @@
 
 MediaFinderNodeFactory::MediaFinderNodeFactory() {}
 
-Grantlee::Node *MediaFinderNodeFactory::getNode(const QString &tagContent,
+Cutelee::Node *MediaFinderNodeFactory::getNode(const QString &tagContent,
                                                 Parser *p) const
 {
   auto expr = smartSplit(tagContent);
 
   if (expr.size() <= 1) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral("'media_finder' tag requires at least one argument"));
   }

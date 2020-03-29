@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,20 +18,20 @@
 
 */
 
-#ifndef GRANTLEE_VARIABLE_H
-#define GRANTLEE_VARIABLE_H
+#ifndef CUTELEE_VARIABLE_H
+#define CUTELEE_VARIABLE_H
 
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 
 #include <QtCore/QVariant>
 
-namespace Grantlee
+namespace Cutelee
 {
 class Context;
 
 class VariablePrivate;
 
-/// @headerfile variable.h grantlee/variable.h
+/// @headerfile variable.h cutelee/variable.h
 
 /**
   @brief A container for static variables defined in Templates.
@@ -40,7 +40,7 @@ class VariablePrivate;
 
   When processing a template tag in a AbstractNodeFactory implementation, it
   will sometimes make sense to process arguments to the tag as
-  Grantlee::Variables. Note that usually they should be processed as
+  Cutelee::Variables. Note that usually they should be processed as
   FilterExpression objects instead.
 
   Arguments to the tag can be used to construct Variables, which may then be
@@ -49,7 +49,7 @@ class VariablePrivate;
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT Variable
+class CUTELEE_TEMPLATES_EXPORT Variable
 {
 public:
   /**

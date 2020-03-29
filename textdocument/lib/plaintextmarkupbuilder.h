@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2008 Stephen Kelly <steveire@gmail.com>
 
@@ -18,8 +18,8 @@
 
 */
 
-#ifndef GRANTLEE_PLAINTEXTMARKUPBUILDER_H
-#define GRANTLEE_PLAINTEXTMARKUPBUILDER_H
+#ifndef CUTELEE_PLAINTEXTMARKUPBUILDER_H
+#define CUTELEE_PLAINTEXTMARKUPBUILDER_H
 
 #ifdef Q_OS_WIN
 #pragma warning(disable : 4250)
@@ -29,17 +29,17 @@
 #define DIGITSOFFSET 10
 
 #include "abstractmarkupbuilder.h"
-#include "grantlee_textdocument_export.h"
+#include "cutelee_textdocument_export.h"
 #include "markupdirector.h"
 
 class QBrush;
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class PlainTextMarkupBuilderPrivate;
 
-/// @headerfile plaintextmarkupbuilder.h grantlee/plaintextmarkupbuilder.h
+/// @headerfile plaintextmarkupbuilder.h cutelee/plaintextmarkupbuilder.h
 
 /**
   @brief Creates a simple marked up plain text document
@@ -101,7 +101,7 @@ class PlainTextMarkupBuilderPrivate;
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEXTDOCUMENT_EXPORT PlainTextMarkupBuilder
+class CUTELEE_TEXTDOCUMENT_EXPORT PlainTextMarkupBuilder
     : virtual public AbstractMarkupBuilder
 {
 public:

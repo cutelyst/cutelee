@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2008 Stephen Kelly <steveire@gmail.com>
 
@@ -31,7 +31,7 @@
 #include "plaintextmarkupbuilder.h"
 #include "texthtmlbuilder.h"
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 class TestPlainMarkupOutput : public CoverageObject
 {
@@ -629,7 +629,7 @@ void TestPlainMarkupOutput::testLongDocument()
   auto result = hb->getResult();
   QVERIFY2(
       result.startsWith(QLatin1String("Hello,\nThis is some text\nIt shows how "
-                                      "grantlee is used from kmail\n")),
+                                      "cutelee is used from kmail\n")),
       qPrintable(result));
   QVERIFY2(result.endsWith(QLatin1String("This is the end of the signature\n")),
            qPrintable(result));

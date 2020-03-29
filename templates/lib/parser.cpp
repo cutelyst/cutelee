@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -23,15 +23,15 @@
 #include "engine.h"
 #include "exception.h"
 #include "filter.h"
-#include "grantlee_version.h"
+#include "cutelee_version.h"
 #include "nodebuiltins_p.h"
 #include "taglibraryinterface.h"
 #include "template.h"
 #include "template_p.h"
 
-using namespace Grantlee;
+using namespace Cutelee;
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class ParserPrivate
@@ -131,7 +131,7 @@ void Parser::loadLib(const QString &name)
 NodeList ParserPrivate::extendNodeList(NodeList list, Node *node)
 {
   if (node->mustBeFirst() && list.containsNonText()) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral("Node appeared twice in template: %1")
             .arg(QLatin1String(node->metaObject()->className())));
@@ -148,7 +148,7 @@ void Parser::skipPast(const QString &tag)
     if (token.tokenType == BlockToken && token.content == tag)
       return;
   }
-  throw Grantlee::Exception(
+  throw Cutelee::Exception(
       UnclosedBlockTagError,
       QStringLiteral("No closing tag found for %1").arg(tag));
 }
@@ -157,7 +157,7 @@ QSharedPointer<Filter> Parser::getFilter(const QString &name) const
 {
   Q_D(const Parser);
   if (!d->m_filters.contains(name))
-    throw Grantlee::Exception(UnknownFilterError,
+    throw Cutelee::Exception(UnknownFilterError,
                               QStringLiteral("Unknown filter: %1").arg(name));
   return d->m_filters.value(name);
 }
@@ -198,14 +198,14 @@ NodeList ParserPrivate::parse(QObject *parent, const QStringList &stopAt)
                       .arg(q->takeNextToken().content.left(20))
                       .arg(token.linenumber)
                       .arg(q->parent()->objectName());
-        throw Grantlee::Exception(EmptyVariableError, message);
+        throw Cutelee::Exception(EmptyVariableError, message);
       }
 
       FilterExpression filterExpression;
       try {
         filterExpression = FilterExpression(token.content, q);
-      } catch (const Grantlee::Exception &e) {
-        throw Grantlee::Exception(e.errorCode(),
+      } catch (const Cutelee::Exception &e) {
+        throw Cutelee::Exception(e.errorCode(),
                                   QStringLiteral("%1, line %2, %3")
                                       .arg(e.what())
                                       .arg(token.linenumber)
@@ -232,7 +232,7 @@ NodeList ParserPrivate::parse(QObject *parent, const QStringList &stopAt)
                       .arg(token.content.left(20))
                       .arg(token.linenumber)
                       .arg(q->parent()->objectName());
-        throw Grantlee::Exception(EmptyBlockTagError, message);
+        throw Cutelee::Exception(EmptyBlockTagError, message);
       }
 
       auto nodeFactory = m_nodeFactories[command];
@@ -246,15 +246,15 @@ NodeList ParserPrivate::parse(QObject *parent, const QStringList &stopAt)
       Node *n;
       try {
         n = nodeFactory->getNode(token.content, q);
-      } catch (const Grantlee::Exception &e) {
-        throw Grantlee::Exception(e.errorCode(),
+      } catch (const Cutelee::Exception &e) {
+        throw Cutelee::Exception(e.errorCode(),
                                   QStringLiteral("%1, line %2, %3")
                                       .arg(e.what())
                                       .arg(token.linenumber)
                                       .arg(q->parent()->objectName()));
       }
       if (!n) {
-        throw Grantlee::Exception(
+        throw Cutelee::Exception(
             EmptyBlockTagError,
             QStringLiteral("Failed to get node from %1, line %2, %3")
                 .arg(command)
@@ -273,7 +273,7 @@ NodeList ParserPrivate::parse(QObject *parent, const QStringList &stopAt)
         = QStringLiteral("Unclosed tag in template %1. Expected one of: (%2)")
               .arg(q->parent()->objectName(),
                    stopAt.join(QChar::fromLatin1(' ')));
-    throw Grantlee::Exception(UnclosedBlockTagError, message);
+    throw Cutelee::Exception(UnclosedBlockTagError, message);
   }
 
   return nodeList;
@@ -301,13 +301,13 @@ void Parser::invalidBlockTag(const Token &token, const QString &command,
                              const QStringList &stopAt)
 {
   if (!stopAt.empty()) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         InvalidBlockTagError,
         QStringLiteral("Invalid block tag on line %1: '%2', expected '%3'")
             .arg(token.linenumber)
             .arg(command, stopAt.join(QStringLiteral("', '"))));
   } else {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         InvalidBlockTagError,
         QStringLiteral("Invalid block tag on line %1: '%2\''. Did you forget "
                        "to register or load this tag?")

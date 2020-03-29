@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -24,7 +24,7 @@
 
 #include <QtQml/QJSEngine>
 
-ScriptableParser::ScriptableParser(Grantlee::Parser *p, QJSEngine *engine)
+ScriptableParser::ScriptableParser(Cutelee::Parser *p, QJSEngine *engine)
     : QObject(engine), m_p(p), m_engine(engine)
 {
 }

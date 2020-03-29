@@ -1,5 +1,5 @@
 ﻿/*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -19,7 +19,7 @@
 */
 
 #include "engine.h"
-#include "grantlee_paths.h"
+#include "cutelee_paths.h"
 #include "nulllocalizer_p.h"
 #include "qtlocalizer.h"
 #include "util.h"
@@ -29,7 +29,7 @@
 #include <QtCore/QTranslator>
 #include <QtTest/QTest>
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 12, 0)
 #define FR_THOUSAND_SEPARATOR "\u00A0"
@@ -59,7 +59,7 @@ public:
     auto cLocale = QLocale::c();
     cLocale.setNumberOptions(QLocale::OmitGroupSeparator);
     cLocalizer.reset(new QtLocalizer(cLocale));
-    m_engine->setPluginPaths({QStringLiteral(GRANTLEE_PLUGIN_PATH)});
+    m_engine->setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
     INIT_LOCALIZER(cLocalizer)
     INIT_LOCALIZER(deLocalizer)
     INIT_LOCALIZER(frLocalizer)
@@ -80,7 +80,7 @@ public:
       Q_ASSERT(result);
       frLocalizer->installTranslator(frTranslator, QStringLiteral("fr_FR"));
     }
-    m_engine->addDefaultLibrary(QStringLiteral("grantlee_i18ntags"));
+    m_engine->addDefaultLibrary(QStringLiteral("cutelee_i18ntags"));
   }
 
 private Q_SLOTS:
@@ -115,7 +115,7 @@ private:
   const QSharedPointer<QtLocalizer> en_GBLocalizer;
   const QSharedPointer<QtLocalizer> en_USLocalizer;
 
-  Grantlee::Engine *m_engine;
+  Cutelee::Engine *m_engine;
 };
 
 void TestInternationalization::initTestCase() { Q_INIT_RESOURCE(testresource); }
@@ -126,7 +126,7 @@ void TestInternationalization::testContext()
   QVERIFY(c.localizer());
   c.setLocalizer(cLocalizer);
   QVERIFY(c.localizer());
-  c.setLocalizer(QSharedPointer<Grantlee::AbstractLocalizer>());
+  c.setLocalizer(QSharedPointer<Cutelee::AbstractLocalizer>());
   QVERIFY(c.localizer());
 }
 

@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
 
@@ -129,9 +129,9 @@ void DesignWidget::setArgsRootIndex(const QModelIndex &index)
       m_argsModel->mapFromSource(index.sibling(index.row(), 0)));
 }
 
-Grantlee::Context DesignWidget::getContext()
+Cutelee::Context DesignWidget::getContext()
 {
-  Grantlee::Context c;
+  Cutelee::Context c;
   c.insert("pimpl", ui.pimpl_check->isChecked());
   c.insert("className", ui.className_edit->text());
   c.insert("author", ui.author_edit->text());

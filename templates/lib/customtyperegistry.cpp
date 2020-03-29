@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2010 Michael Jansen <kde@michael-jansen.biz>
   Copyright (c) 2010 Stephen Kelly <steveire@gmail.com>
@@ -29,13 +29,13 @@
 #include <QtCore/QStack>
 #include <QtCore/QStringList>
 
-Q_LOGGING_CATEGORY(GRANTLEE_CUSTOMTYPE, "grantlee.customtype")
+Q_LOGGING_CATEGORY(CUTELEE_CUSTOMTYPE, "cutelee.customtype")
 
-using namespace Grantlee;
+using namespace Cutelee;
 
 CustomTypeRegistry::CustomTypeRegistry()
 {
-  // Grantlee Types
+  // Cutelee Types
   registerBuiltInMetatype<SafeString>();
   registerBuiltInMetatype<MetaEnumVariable>();
 }
@@ -57,7 +57,7 @@ QVariant CustomTypeRegistry::lookup(const QVariant &object,
 
   {
     if (!types.contains(id)) {
-      qCWarning(GRANTLEE_CUSTOMTYPE)
+      qCWarning(CUTELEE_CUSTOMTYPE)
           << "Don't know how to handle metatype" << QMetaType::typeName(id);
       // :TODO: Print out error message
       return QVariant();
@@ -65,7 +65,7 @@ QVariant CustomTypeRegistry::lookup(const QVariant &object,
 
     const CustomTypeInfo &info = types[id];
     if (!info.lookupFunction) {
-      qCWarning(GRANTLEE_CUSTOMTYPE)
+      qCWarning(CUTELEE_CUSTOMTYPE)
           << "No lookup function for metatype" << QMetaType::typeName(id);
       lf = 0;
       // :TODO: Print out error message

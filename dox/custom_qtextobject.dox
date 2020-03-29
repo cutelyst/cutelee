@@ -1,5 +1,5 @@
 
-namespace Grantlee
+namespace Cutelee
 {
 
 /**
@@ -7,13 +7,13 @@ namespace Grantlee
 
   It is possible using the QTextObjectInterface API to construct QTextDocument instances containing custom text objects. If processing a QTextDocument
   containing custom objects through the MarkupDirector and AbstractMarkupBuilder classes, it is necessary to implement support for the custom types
-  in %Grantlee.
+  in %Cutelee.
 
   In this example, we create a builder with a new method <tt>addAudioTag</tt>. As it may be desired to implement multiple builders
   with support for the <tt>addAudioTag</tt> method, it makes sense to put that call into an interface.
 
   @code
-    class AbstractAudioBuilder : virtual public Grantlee::AbstractMarkupBuilder
+    class AbstractAudioBuilder : virtual public Cutelee::AbstractMarkupBuilder
     {
     public:
       virtual void addAudioTag( const QString &source ) = 0;
@@ -26,7 +26,7 @@ namespace Grantlee
   Customized builders inheriting from an existing builder and the new interface can then be created.
 
   @code
-    class AudioTextHtmlBuilder : public Grantlee::TextHTMLBuilder, public AbstractAudioBuilder
+    class AudioTextHtmlBuilder : public Cutelee::TextHTMLBuilder, public AbstractAudioBuilder
     {
     public:
       AudioTextHtmlBuilder();
@@ -34,7 +34,7 @@ namespace Grantlee
       void addAudioTag( const QString &source ) override;
     };
 
-    class AudioPlainTextBuilder : public Grantlee::PlainTextMarkupBuilder, public AbstractAudioBuilder
+    class AudioPlainTextBuilder : public Cutelee::PlainTextMarkupBuilder, public AbstractAudioBuilder
     {
     public:
       AudioPlainTextBuilder();
@@ -63,7 +63,7 @@ namespace Grantlee
   to instruct the builder to create appropriate output for the type.
 
   @code
-    class AudioTextDocumentDirector : public Grantlee::MarkupDirector
+    class AudioTextDocumentDirector : public Cutelee::MarkupDirector
     {
     public:
 
@@ -76,7 +76,7 @@ namespace Grantlee
     };
   @endcode
 
-  We create a subclass of Grantlee::MarkupDirector to take our new <tt>AbstractAudioBuilder</tt> interface and implement the <tt>processCustomFragment</tt> method to handle QTextFragments with our custom format type. The name of the audio file referenced in the document is then extracted and used as a parameter in the <tt>addAudioTag</tt> method.
+  We create a subclass of Cutelee::MarkupDirector to take our new <tt>AbstractAudioBuilder</tt> interface and implement the <tt>processCustomFragment</tt> method to handle QTextFragments with our custom format type. The name of the audio file referenced in the document is then extracted and used as a parameter in the <tt>addAudioTag</tt> method.
 
   @code
     AudioTextDocumentDirector::AudioTextDocumentDirector(AbstractAudioBuilder* builder)
@@ -88,7 +88,7 @@ namespace Grantlee
     void AudioTextDocumentDirector::processCustomFragment(const QTextFragment& fragment, const QTextDocument* doc)
     {
       if ( fragment.charFormat().objectType() != AudioType )
-        return Grantlee::MarkupDirector::processCustomFragment( fragment, doc );
+        return Cutelee::MarkupDirector::processCustomFragment( fragment, doc );
 
       QString name = fragment.charFormat().property( AudioProperty ).toString();
 
@@ -125,7 +125,7 @@ namespace Grantlee
     [1] http://www.example.com/mysound.ogg
   @endverbatim
 
-  The textedit example in the %Grantlee source distribution implements this feature.
+  The textedit example in the %Cutelee source distribution implements this feature.
 */
 
 }

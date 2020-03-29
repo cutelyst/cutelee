@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -18,14 +18,14 @@
 
 */
 
-#ifndef GRANTLEE_NODE_H
-#define GRANTLEE_NODE_H
+#ifndef CUTELEE_NODE_H
+#define CUTELEE_NODE_H
 
 // krazy:excludeall=dpointer
 
 #include "context.h"
 #include "filterexpression.h"
-#include "grantlee_templates_export.h"
+#include "cutelee_templates_export.h"
 #include "outputstream.h"
 #include "safestring.h"
 
@@ -36,7 +36,7 @@
 #include <QtCore/QSet>
 #include <QtCore/QVector>
 
-namespace Grantlee
+namespace Cutelee
 {
 
 class Engine;
@@ -45,7 +45,7 @@ class TemplateImpl;
 
 class NodePrivate;
 
-/// @headerfile node.h grantlee/node.h
+/// @headerfile node.h cutelee/node.h
 
 /**
   @brief Base class for all nodes.
@@ -79,7 +79,7 @@ class NodePrivate;
 
   @author Stephen Kelly <steveire@gmail.com>
 */
-class GRANTLEE_TEMPLATES_EXPORT Node : public QObject
+class CUTELEE_TEMPLATES_EXPORT Node : public QObject
 {
   Q_OBJECT
 public:
@@ -120,7 +120,7 @@ protected:
     This is only relevant to developing template tags.
   */
   void streamValueInContext(OutputStream *stream, const QVariant &input,
-                            Grantlee::Context *c) const;
+                            Cutelee::Context *c) const;
 
   /**
     Returns a raw pointer to the Template this **%Node** is in.
@@ -132,7 +132,7 @@ private:
   NodePrivate *const d_ptr;
 };
 
-/// @headerfile node.h grantlee/node.h
+/// @headerfile node.h cutelee/node.h
 
 /**
   @brief A list of Nodes with some convenience API for rendering them.
@@ -149,7 +149,7 @@ private:
 
   @see @ref tags_with_end_tags
 */
-class GRANTLEE_TEMPLATES_EXPORT NodeList : public QList<Grantlee::Node *>
+class CUTELEE_TEMPLATES_EXPORT NodeList : public QList<Cutelee::Node *>
 {
 public:
   /**
@@ -167,7 +167,7 @@ public:
   /**
     Convenience constructor
   */
-  /* implicit */ NodeList(const QList<Grantlee::Node *> &list);
+  /* implicit */ NodeList(const QList<Cutelee::Node *> &list);
 
   /**
     Destructor.
@@ -177,12 +177,12 @@ public:
   /**
     Appends @p node to the end of this **%NodeList**.
   */
-  void append(Grantlee::Node *node);
+  void append(Cutelee::Node *node);
 
   /**
     Appends @p nodeList to the end of this **%NodeList**.
   */
-  void append(QList<Grantlee::Node *> nodeList);
+  void append(QList<Cutelee::Node *> nodeList);
 
   /**
     Returns true if this **%NodeList** contains non-text nodes.
@@ -195,9 +195,9 @@ public:
   template <typename T> QList<T> findChildren()
   {
     QList<T> children;
-    QList<Grantlee::Node *>::const_iterator it;
-    const QList<Grantlee::Node *>::const_iterator first = constBegin();
-    const QList<Grantlee::Node *>::const_iterator last = constEnd();
+    QList<Cutelee::Node *>::const_iterator it;
+    const QList<Cutelee::Node *>::const_iterator first = constBegin();
+    const QList<Cutelee::Node *>::const_iterator last = constEnd();
     for (it = first; it != last; ++it) {
       T object = qobject_cast<T>(*it);
       if (object) {
@@ -219,7 +219,7 @@ private:
 
 class AbstractNodeFactoryPrivate;
 
-/// @headerfile node.h grantlee/node.h
+/// @headerfile node.h cutelee/node.h
 
 /**
   @brief Base class for all NodeFactories
@@ -301,7 +301,7 @@ class AbstractNodeFactoryPrivate;
 
   @see Parser::parse
 */
-class GRANTLEE_TEMPLATES_EXPORT AbstractNodeFactory : public QObject
+class CUTELEE_TEMPLATES_EXPORT AbstractNodeFactory : public QObject
 {
   Q_OBJECT
 public:

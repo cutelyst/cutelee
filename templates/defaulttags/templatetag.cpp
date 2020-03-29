@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -21,7 +21,7 @@
 #include "templatetag.h"
 
 #include "../lib/exception.h"
-#include "grantlee_tags_p.h"
+#include "cutelee_tags_p.h"
 #include "parser.h"
 
 TemplateTagNodeFactory::TemplateTagNodeFactory() {}
@@ -32,7 +32,7 @@ Node *TemplateTagNodeFactory::getNode(const QString &tagContent,
   auto expr = tagContent.split(QLatin1Char(' '), QString::SkipEmptyParts);
   expr.takeAt(0);
   if (expr.isEmpty()) {
-    throw Grantlee::Exception(
+    throw Cutelee::Exception(
         TagSyntaxError,
         QStringLiteral("'templatetag' statement takes one argument"));
   }
@@ -40,7 +40,7 @@ Node *TemplateTagNodeFactory::getNode(const QString &tagContent,
   auto name = expr.first();
 
   if (!TemplateTagNode::isKeyword(name)) {
-    throw Grantlee::Exception(TagSyntaxError,
+    throw Cutelee::Exception(TagSyntaxError,
                               QStringLiteral("Not a template tag"));
   }
 

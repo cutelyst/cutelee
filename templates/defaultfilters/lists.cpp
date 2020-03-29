@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010,2011 Stephen Kelly <steveire@gmail.com>
 
@@ -279,16 +279,16 @@ struct DictSortLessThan {
     case QMetaType::QObjectStar:
       return l.value<QObject *>() < r.value<QObject *>();
     }
-    if (l.userType() == qMetaTypeId<Grantlee::SafeString>()) {
-      if (r.userType() == qMetaTypeId<Grantlee::SafeString>()) {
-        return l.value<Grantlee::SafeString>().get()
-               < r.value<Grantlee::SafeString>().get();
+    if (l.userType() == qMetaTypeId<Cutelee::SafeString>()) {
+      if (r.userType() == qMetaTypeId<Cutelee::SafeString>()) {
+        return l.value<Cutelee::SafeString>().get()
+               < r.value<Cutelee::SafeString>().get();
       } else if (r.userType() == qMetaTypeId<QString>()) {
-        return l.value<Grantlee::SafeString>().get() < r.value<QString>();
+        return l.value<Cutelee::SafeString>().get() < r.value<QString>();
       }
-    } else if (r.userType() == qMetaTypeId<Grantlee::SafeString>()) {
+    } else if (r.userType() == qMetaTypeId<Cutelee::SafeString>()) {
       if (l.userType() == qMetaTypeId<QString>()) {
-        return l.value<QString>() < r.value<Grantlee::SafeString>().get();
+        return l.value<QString>() < r.value<Cutelee::SafeString>().get();
       }
     } else if (l.userType() == qMetaTypeId<QString>()) {
       if (r.userType() == qMetaTypeId<QString>()) {

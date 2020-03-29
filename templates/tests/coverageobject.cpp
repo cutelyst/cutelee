@@ -7,7 +7,7 @@
 #include <QTest>
 #include <QtDebug>
 
-#include "grantlee_paths.h"
+#include "cutelee_paths.h"
 
 void CoverageObject::init() { initTest(); }
 

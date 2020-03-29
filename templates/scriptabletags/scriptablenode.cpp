@@ -1,5 +1,5 @@
 /*
-  This file is part of the Grantlee template system.
+  This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
 
@@ -95,7 +95,7 @@ Node *ScriptableNodeFactory::getNode(const QString &tagContent, Parser *p) const
 
   auto scriptNode = factory.callWithInstance(factory, args);
   if (scriptNode.isError())
-    throw Grantlee::Exception(TagSyntaxError, scriptNode.toString());
+    throw Cutelee::Exception(TagSyntaxError, scriptNode.toString());
 
   auto node = qjsvalue_cast<Node *>(scriptNode);
   node->setParent(p);

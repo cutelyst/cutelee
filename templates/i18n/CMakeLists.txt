@@ -5,6 +5,7 @@ add_library(cutelee_i18ntags MODULE
   i18np.cpp
   i18ncp.cpp
   l10n_money.cpp
+  l10n_filesize.cpp
   with_locale.cpp
 )
 set_property(TARGET cutelee_i18ntags PROPERTY

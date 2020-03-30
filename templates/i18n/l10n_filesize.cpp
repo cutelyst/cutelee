@@ -26,6 +26,8 @@
 #include "template.h"
 #include "util.h"
 
+#include <limits>
+
 L10nFileSizeNodeFactory::L10nFileSizeNodeFactory() {}
 
 Node *L10nFileSizeNodeFactory::getNode(const QString &tagContent, Parser *p) const
@@ -135,7 +137,7 @@ void L10nFileSizeNode::render(OutputStream *stream, Context *c) const
         multiplier = 1.0f;
     }
 
-    const double sizeMult = size * multiplier;
+    const qreal sizeMult = size * multiplier;
 
     if (unitSystem == 10) {
         if ((sizeMult > -1000) && (sizeMult < 1000)) {
@@ -147,16 +149,31 @@ void L10nFileSizeNode::render(OutputStream *stream, Context *c) const
         }
     }
 
-    const std::pair<qreal,QString> fspair = calcFileSize(size, unitSystem, multiplier);
-
     QString resultString;
 
-    if (precision == 2) {
-        resultString = c->localizer()->localizeNumber(fspair.first) + QChar(QChar::Space) + fspair.second;
-    } else {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+    if (sizeMult > static_cast<qreal>(std::numeric_limits<qint64>::min()) && sizeMult < static_cast<qreal>(std::numeric_limits<qint64>::max())) {
+
         QLocale l(c->localizer()->currentLocale());
-        resultString = l.toString(fspair.first, 'f', precision) + QChar(QChar::Space) + fspair.second;
+        QLocale::DataSizeFormats format = unitSystem == 10 ? QLocale::DataSizeSIFormat : QLocale::DataSizeIecFormat;
+
+        resultString = l.formattedDataSize(static_cast<qint64>(sizeMult), precision, format);
+
+    } else {
+#endif
+
+        const std::pair<qreal,QString> fspair = calcFileSize(size, unitSystem, multiplier);
+
+        if (precision == 2) {
+            resultString = c->localizer()->localizeNumber(fspair.first) + QChar(QChar::Space) + fspair.second;
+        } else {
+            QLocale l(c->localizer()->currentLocale());
+            resultString = l.toString(fspair.first, 'f', precision) + QChar(QChar::Space) + fspair.second;
+        }
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
     }
+#endif
 
     streamValueInContext(stream, resultString, c);
 }
@@ -222,16 +239,31 @@ void L10nFileSizeVarNode::render(OutputStream *stream, Context *c) const
         }
     }
 
-    const std::pair<qreal,QString> fspair = calcFileSize(size, unitSystem, multiplier);
+     QString resultString;
 
-    QString resultString;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+    if (sizeMult > static_cast<qreal>(std::numeric_limits<qint64>::min()) && sizeMult < static_cast<qreal>(std::numeric_limits<qint64>::max())) {
 
-    if (precision == 2) {
-        resultString = c->localizer()->localizeNumber(fspair.first) + QChar(QChar::Space) + fspair.second;
-    } else {
         QLocale l(c->localizer()->currentLocale());
-        resultString = l.toString(fspair.first, 'f', precision) + QChar(QChar::Space) + fspair.second;
+        QLocale::DataSizeFormats format = unitSystem == 10 ? QLocale::DataSizeSIFormat : QLocale::DataSizeIecFormat;
+
+        resultString = l.formattedDataSize(static_cast<qint64>(sizeMult), precision, format);
+
+    } else {
+#endif
+
+        const std::pair<qreal,QString> fspair = calcFileSize(size, unitSystem, multiplier);
+
+        if (precision == 2) {
+            resultString = c->localizer()->localizeNumber(fspair.first) + QChar(QChar::Space) + fspair.second;
+        } else {
+            QLocale l(c->localizer()->currentLocale());
+            resultString = l.toString(fspair.first, 'f', precision) + QChar(QChar::Space) + fspair.second;
+        }
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
     }
+#endif
 
     c->insert(m_resultName, resultString);
 }

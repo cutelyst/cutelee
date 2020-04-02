@@ -46,6 +46,7 @@ private Q_SLOTS:
     void cleanupTestCase();
 
     void testInsertedLibraryTag();
+    void testLoadInsertedLibraryTag();
 
 private:
     QSharedPointer<InMemoryTemplateLoader> m_loader;
@@ -95,6 +96,23 @@ public:
     }
 };
 
+class TestLoadLibrary : public QObject, public TagLibraryInterface
+{
+    Q_OBJECT
+    Q_INTERFACES(Cutelee::TagLibraryInterface)
+public:
+    explicit TestLoadLibrary(QObject *parent = nullptr) : QObject(parent) {}
+
+    virtual QHash<QString, AbstractNodeFactory*> nodeFactories(const QString &name = QString()) override
+    {
+        Q_UNUSED(name);
+        QHash<QString, AbstractNodeFactory*> ret{
+            {QStringLiteral("test_load_library_tag"), new TestLibraryTagFactory()}
+        };
+        return ret;
+    }
+};
+
 void TestInsertLibrary::initTestCase()
 {
     m_engine = new Engine(this);
@@ -105,7 +123,9 @@ void TestInsertLibrary::initTestCase()
 
     m_engine->setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
-    m_engine->insertLibrary(QStringLiteral("test_library"), new TestLibrary(m_engine));
+    m_engine->insertDefaultLibrary(QStringLiteral("test_library"), new TestLibrary(m_engine));
+
+    m_engine->insertLibrary(QStringLiteral("test_load_library"), new TestLoadLibrary(m_engine));
 }
 
 void TestInsertLibrary::cleanupTestCase()
@@ -121,12 +141,24 @@ void TestInsertLibrary::testInsertedLibraryTag()
 
     const QString result = t->render(&context);
 
-    if (t->error() != NoError) {
-        qDebug() << t->errorString();
-    }
-
-    QCOMPARE(t->error(), NoError);
     QCOMPARE(result, QStringLiteral(TESTLIBRARYTAG_RENDER_VALUE));
+}
+
+void TestInsertLibrary::testLoadInsertedLibraryTag()
+{
+    Context context;
+
+    auto t1 = m_engine->newTemplate(QStringLiteral("{% test_load_library_tag %}"), QStringLiteral("testLoadInsertedLibraryTag1"));
+
+    const QString result1 = t1->render(&context);
+
+    QVERIFY(result1.isEmpty());
+
+    auto t2 = m_engine->newTemplate(QStringLiteral("{% load test_load_library %}{% test_load_library_tag %}"), QStringLiteral("testLoadInsertedLibraryTag2"));
+
+    const QString result2 = t2->render(&context);
+
+    QCOMPARE(result2, QStringLiteral(TESTLIBRARYTAG_RENDER_VALUE));
 }
 
 QTEST_MAIN(TestInsertLibrary)

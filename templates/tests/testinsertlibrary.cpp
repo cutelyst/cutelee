@@ -106,8 +106,6 @@ void TestInsertLibrary::initTestCase()
     m_engine->setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
     m_engine->insertLibrary(QStringLiteral("test_library"), new TestLibrary(m_engine));
-
-    qDebug() << m_engine->defaultLibraries();
 }
 
 void TestInsertLibrary::cleanupTestCase()

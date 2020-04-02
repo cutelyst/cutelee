@@ -22,6 +22,7 @@
 #define INSERTLIBRARYTEST_H
 
 #include <QTest>
+#include <QDebug>
 
 #include "coverageobject.h"
 #include "engine.h"

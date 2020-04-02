@@ -232,9 +232,22 @@ public:
   void setSmartTrimEnabled(bool enabled);
 
   /**
-   * Inserts the tag library without requiring to load a plugin
+   * Inserts the tag library @p lib without requiring to load a plugin.
+   *
+   * In your template you need to use {% load name %} to make the tags and
+   * filters of this library available.
+   *
+   * @sa insertDefaultLibrary
    */
   void insertLibrary(const QString &name, TagLibraryInterface *lib);
+
+  /**
+   * Inserts the tag library @p lib without requiring to load a plugin and adds it to
+   * the list of libraries available by default to new Templates.
+   *
+   * @sa insertLibrary
+   */
+  void insertDefaultLibrary(const QString &name, TagLibraryInterface *lib);
 
 #ifndef Q_QDOC
   /**

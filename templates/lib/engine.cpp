@@ -225,8 +225,14 @@ void Engine::insertLibrary(const QString &name, TagLibraryInterface *lib)
 {
     Q_D(Engine);
     auto ptr = PluginPointer<TagLibraryInterface>(lib);
-    d->m_defaultLibraries << name;
     d->m_libraries.insert(name, ptr);
+}
+
+void Engine::insertDefaultLibrary(const QString &name, TagLibraryInterface *lib)
+{
+    Q_D(Engine);
+    insertLibrary(name, lib);
+    d->m_defaultLibraries << name;
 }
 
 TagLibraryInterface *EnginePrivate::loadLibrary(const QString &name,

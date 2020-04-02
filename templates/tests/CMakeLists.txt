@@ -80,6 +80,7 @@ cutelee_templates_unit_tests(
   testfilters
   testgenerictypes
   testgenericcontainers
+  testinsertlibrary
 )
 
 if (Qt5Qml_FOUND)

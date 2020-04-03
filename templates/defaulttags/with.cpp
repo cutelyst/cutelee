@@ -27,31 +27,45 @@ WithNodeFactory::WithNodeFactory() {}
 
 Node *WithNodeFactory::getNode(const QString &tagContent, Parser *p) const
 {
-  auto expr = smartSplit(tagContent);
+    const QStringList expr = smartSplit(tagContent);
+    std::vector<std::pair<QString, FilterExpression> > namedExpressions;
 
-  if (expr.size() != 4 || expr.at(2) != QStringLiteral("as")) {
-    throw Cutelee::Exception(
-        TagSyntaxError, QStringLiteral("%1 expected format is 'value as name'")
-                            .arg(expr.first()));
-  }
+    if (expr.size() != 4 || expr.at(2) != QStringLiteral("as")) {
+        bool newSyntax = false;
+        for (int i = 1; i < expr.size(); ++i) {
+            const auto parts = expr.at(i).splitRef(QLatin1Char('='));
+            if (parts.size() == 2) {
+                namedExpressions.push_back({ parts.at(0).toString(), FilterExpression(parts.at(1).toString(), p) });
+                newSyntax = true;
+            } else {
+                newSyntax = false;
+                break;
+            }
+        }
 
-  FilterExpression fe(expr.at(1), p);
-  QString name(expr.at(3));
+        if (!newSyntax) {
+            throw Cutelee::Exception(
+                        TagSyntaxError, QStringLiteral("%1 expected format is 'name=value' or 'value as name'")
+                        .arg(expr.first()));
+        }
+    } else {
+        namedExpressions.push_back({ expr.at(3), FilterExpression(expr.at(1), p) });
+    }
 
-  auto n = new WithNode(fe, name, p);
-  auto nodeList = p->parse(n, QStringLiteral("endwith"));
-  n->setNodeList(nodeList);
-  p->removeNextToken();
+    auto n = new WithNode(namedExpressions, p);
+    auto nodeList = p->parse(n, QStringLiteral("endwith"));
+    n->setNodeList(nodeList);
+    p->removeNextToken();
 
-  return n;
+    return n;
 }
 
-WithNode::WithNode(const FilterExpression &fe, const QString &name,
+WithNode::WithNode(const std::vector<std::pair<QString, FilterExpression> > &namedExpressions,
                    QObject *parent)
     : Node(parent)
+    , m_namedExpressions(namedExpressions)
 {
-  m_filterExpression = fe;
-  m_name = name;
+
 }
 
 void WithNode::setNodeList(const NodeList &nodeList) { m_list = nodeList; }
@@ -59,7 +73,9 @@ void WithNode::setNodeList(const NodeList &nodeList) { m_list = nodeList; }
 void WithNode::render(OutputStream *stream, Context *c) const
 {
   c->push();
-  c->insert(m_name, m_filterExpression.resolve(c));
+  for (const auto &pair : m_namedExpressions) {
+      c->insert(pair.first, pair.second.resolve(c));
+  }
   m_list.render(stream, c);
   c->pop();
 }

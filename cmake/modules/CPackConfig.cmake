@@ -1,0 +1,44 @@
+set(CPACK_PACKAGE_VENDOR "Daniel Nicoletti")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A Qt Template Engine based on Django templates")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
+set(CPACK_PACKAGE_CONTACT "Daniel Nicoletti <dantti12@gmail.com>")
+
+
+# http://www.vtk.org/Wiki/CMake:Component_Install_With_CPack
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/COPYING.LIB")
+
+set(CPACK_COMPONENT_COMMON_DISPLAY_NAME "Cutelee Common files")
+set(CPACK_COMPONENT_TEMPLATES_DISPLAY_NAME "Cutelee String Templates")
+set(CPACK_COMPONENT_TEXTDOCUMENT_DISPLAY_NAME "Cutelee TextDocument framework")
+
+set(CPACK_COMPONENT_COMMON_DESCRIPTION
+  "Files needed by all Cutelee frameworks")
+set(CPACK_COMPONENT_TEMPLATES_DESCRIPTION
+  "A string template system for Qt based on Django syntax")
+set(CPACK_COMPONENT_TEXTDOCUMENT_DESCRIPTION
+  "A framework for QTextDocument related tasks")
+
+set(CPACK_COMPONENT_TEMPLATES_DEPENDS Common)
+set(CPACK_COMPONENT_TEXTDOCUMENT_DEPENDS Common)
+set(CPACK_COMPONENT_COMMON_REQUIRED ON)
+
+set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
+
+if (WIN32)
+  set(CPACK_NSIS_MODIFY_PATH ON)
+  set(CPACK_GENERATOR ${CPACK_GENERATOR} "NSIS" )
+endif()
+
+if(UNIX)
+  if(NOT CPACK_GENERATOR)
+    set(CPACK_GENERATOR "DEB")
+  endif()
+
+  set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+  set(CPACK_STRIP_FILES 1)
+  if(${CMAKE_VERSION} VERSION_GREATER "3.5")
+    set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
+  endif()
+endif()
+
+include(CPack)

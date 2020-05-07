@@ -275,37 +275,4 @@ if (CCCC_FOUND)
   )
 endif()
 
-# http://www.vtk.org/Wiki/CMake:Component_Install_With_CPack
-set(CPACK_PACKAGE_NAME "cutelee")
-set(CPACK_PACKAGE_VERSION_MAJOR ${Cutelee5_VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${Cutelee5_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${Cutelee5_VERSION_PATCH})
-set(CPACK_PACKAGE_CONTACT "Stephen Kelly <steveire@gmail.com>")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A set of frameworks for use with Qt")
-set(CPACK_GENERATOR "TGZ" )
-set(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/COPYING.LIB")
-
-set(CPACK_COMPONENT_COMMON_DISPLAY_NAME "Cutelee Common files")
-set(CPACK_COMPONENT_TEMPLATES_DISPLAY_NAME "Cutelee String Templates")
-set(CPACK_COMPONENT_TEXTDOCUMENT_DISPLAY_NAME "Cutelee TextDocument framework")
-
-set(CPACK_COMPONENT_COMMON_DESCRIPTION
-  "Files needed by all Cutelee frameworks")
-set(CPACK_COMPONENT_TEMPLATES_DESCRIPTION
-  "A string template system for Qt based on Django syntax")
-set(CPACK_COMPONENT_TEXTDOCUMENT_DESCRIPTION
-  "A framework for QTextDocument related tasks")
-
-set(CPACK_COMPONENT_TEMPLATES_DEPENDS Common)
-set(CPACK_COMPONENT_TEXTDOCUMENT_DEPENDS Common)
-set(CPACK_COMPONENT_COMMON_REQUIRED ON)
-
-set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
-
-if (WIN32)
-  set(CPACK_NSIS_MODIFY_PATH ON)
-  set(CPACK_GENERATOR ${CPACK_GENERATOR} "NSIS" )
-endif()
-
-include(CPack)
+include(CPackConfig)

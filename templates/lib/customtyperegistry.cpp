@@ -38,6 +38,7 @@ CustomTypeRegistry::CustomTypeRegistry()
   // Cutelee Types
   registerBuiltInMetatype<SafeString>();
   registerBuiltInMetatype<MetaEnumVariable>();
+  QMetaType::registerComparators<MetaEnumVariable>();
 }
 
 void CustomTypeRegistry::registerLookupOperator(int id,

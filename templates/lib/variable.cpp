@@ -233,10 +233,8 @@ QVariant Variable::resolve(Context *c) const
               var = jsonVal.toString();
               break;
           case QJsonValue::Array:
-              var = jsonVal.toArray().toVariantList();
-              break;
           case QJsonValue::Object:
-              var = jsonVal.toObject().toVariantHash();
+              var = jsonVal.toVariant();
               break;
           default:
               return QVariant();

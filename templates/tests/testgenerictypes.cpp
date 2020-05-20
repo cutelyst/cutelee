@@ -31,6 +31,10 @@
 #include <QtCore/QStack>
 #include <QtCore/QVariant>
 #include <QtCore/QVariantHash>
+#include <QJsonValue>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonDocument>
 #include <QtTest/QTest>
 
 #include "coverageobject.h"
@@ -72,6 +76,8 @@ private Q_SLOTS:
   void testPointerNonQObject();
   void testQGadget();
   void testGadgetMetaType();
+
+  void testJsonTypes();
 
 }; // class TestGenericTypes
 
@@ -925,6 +931,346 @@ void TestGenericTypes::propertyMacroTypes()
 
     QCOMPARE(result, expectedResult);
   }
+}
+
+void TestGenericTypes::testJsonTypes()
+{
+    Cutelee::Engine engine;
+    engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
+
+    Cutelee::Context c;
+
+    QJsonArray arr;
+    arr.push_back(QJsonObject({
+                                  {QStringLiteral("name"), QStringLiteral("Joe")},
+                                  {QStringLiteral("age"), 20}
+                              }));
+    QJsonObject obj({
+                        {QStringLiteral("name"), QStringLiteral("Mike")},
+                        {QStringLiteral("age"), 22}
+                    });
+    arr.push_back(obj);
+
+    c.insert(QStringLiteral("arr"), arr);
+    c.insert(QStringLiteral("obj"), obj);
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ arr.count }}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("2");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ arr.1.name }}({{ arr.1.age }})"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("Mike(22)");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{% for person in arr %}{{ person.name }}({{ person.age }})\n{% endfor %}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("Joe(20)\nMike(22)\n");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{% for name,age in arr %}{{ name }}({{ age }})\n{% endfor %}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("Joe(20)\nMike(22)\n");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ obj.count }}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("2");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ obj.name }}({{ obj.age }})"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("Mike(22)");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{% for key in obj.keys %}{{ key }}\n{% endfor %}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+
+        QVERIFY(result == QStringLiteral("name\nage\n") || result == QStringLiteral("age\nname\n"));
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{% for val in obj.values %}{{ val }}\n{% endfor %}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+
+        QVERIFY(result == QStringLiteral("Mike\n22\n") || result == QStringLiteral("22\nMike\n"));
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{% for item in obj.items %}{{ item.0 }}:{{ item.1 }}\n{% endfor %}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+
+        QVERIFY(result == QStringLiteral("age:22\nname:Mike\n") || result == QStringLiteral("name:Mike\nage:22\n"));
+    }
+
+    QJsonDocument arrDoc(arr);
+    c.insert(QStringLiteral("arrDoc"), arrDoc);
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ arrDoc.count }}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("2");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ arrDoc.1.name }}({{ arrDoc.1.age }})"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("Mike(22)");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{% for person in arrDoc %}{{ person.name }}({{ person.age }})\n{% endfor %}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("Joe(20)\nMike(22)\n");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{% for name,age in arrDoc %}{{ name }}({{ age }})\n{% endfor %}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("Joe(20)\nMike(22)\n");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    QJsonDocument objDoc(obj);
+    c.insert(QStringLiteral("objDoc"), objDoc);
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ objDoc.count }}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("2");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ objDoc.name }}({{ objDoc.age }})"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("Mike(22)");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{% for key in objDoc.keys %}{{ key }}\n{% endfor %}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+
+        QVERIFY(result == QStringLiteral("name\nage\n") || result == QStringLiteral("age\nname\n"));
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{% for val in objDoc.values %}{{ val }}\n{% endfor %}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+
+        QVERIFY(result == QStringLiteral("Mike\n22\n") || result == QStringLiteral("22\nMike\n"));
+    }
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{% for item in objDoc.items %}{{ item.0 }}:{{ item.1 }}\n{% endfor %}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+
+        QVERIFY(result == QStringLiteral("age:22\nname:Mike\n") || result == QStringLiteral("name:Mike\nage:22\n"));
+    }
+
+    QJsonObject emptyObj;
+    c.insert(QStringLiteral("emptyObj"), emptyObj);
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ emptyObj.name }}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    QJsonArray emptyArr;
+    c.insert(QStringLiteral("emptyArr"), emptyArr);
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ emptyArr.1 }}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    QJsonDocument emptyDoc;
+    c.insert(QStringLiteral("emptyDoc"), emptyDoc);
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ emptyDoc }}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    c.insert(QStringLiteral("valBool"), QJsonValue(true));
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ valBool }}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("true");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    c.insert(QStringLiteral("valDouble"), QJsonValue(15));
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ valDouble }}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("15");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    c.insert(QStringLiteral("valString"), QJsonValue(QStringLiteral("Sapere aude")));
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ valString }}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("Sapere aude");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    c.insert(QStringLiteral("valArray"), QJsonValue(arr));
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{% for person in valArray %}{{ person.name }}({{ person.age }})\n{% endfor %}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("Joe(20)\nMike(22)\n");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    c.insert(QStringLiteral("valObj"), QJsonValue(obj));
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ valObj.name }}({{ valObj.age }})"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("Mike(22)");
+
+        QCOMPARE(result, expectedResult);
+    }
+
+    c.insert(QStringLiteral("valNull"), QJsonValue());
+
+    {
+        auto t = engine.newTemplate(
+                    QStringLiteral("{{ valNull }}"),
+                    QStringLiteral("template"));
+
+        auto result = t->render(&c);
+        auto expectedResult = QStringLiteral("");
+
+        QCOMPARE(result, expectedResult);
+    }
 }
 
 QTEST_MAIN(TestGenericTypes)

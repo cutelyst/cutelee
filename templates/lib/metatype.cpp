@@ -25,6 +25,10 @@
 #include "metaenumvariable_p.h"
 
 #include <QtCore/QDebug>
+#include <QJsonValue>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 using namespace Cutelee;
 
@@ -106,11 +110,88 @@ static QVariant doQobjectLookUp(const QObject *const object,
   return object->property(property.toUtf8().constData());
 }
 
+static QVariant doVariantListLookUp(const QVariantList &list,
+                                    const QString &property)
+{
+    if (property == QLatin1String("count") || property == QLatin1String("size")) {
+        return list.size();
+    }
+
+    bool ok = false;
+    const int listIndex = property.toInt(&ok);
+    if (!ok || listIndex >= list.size()) {
+        return QVariant();
+    }
+
+    return list.at(listIndex);
+}
+
+static QVariant doVariantHashLookUp(const QVariantHash &hash,
+                                    const QString &property)
+{
+    if (property == QLatin1String("count") || property == QLatin1String("size")) {
+        return hash.size();
+    }
+
+    if (property == QLatin1String("items")) {
+        QVariantList list;
+        list.reserve(hash.size());
+        for (auto it = hash.cbegin(); it != hash.cend(); ++it) {
+            list.push_back(QVariantList{it.key(), it.value()});
+        }
+        return list;
+    }
+
+    if (property == QLatin1String("keys")) {
+        return QStringList(hash.keys());
+    }
+
+    if (property == QLatin1String("values")) {
+        return hash.values();
+    }
+
+    return hash.value(property);
+}
+
 QVariant Cutelee::MetaType::lookup(const QVariant &object,
                                     const QString &property)
 {
   if (object.canConvert<QObject *>()) {
     return doQobjectLookUp(object.value<QObject *>(), property);
+  }
+  if (object.userType() == QMetaType::QJsonDocument) {
+      const auto doc = object.toJsonDocument();
+      if (doc.isObject()) {
+          return doVariantHashLookUp(doc.object().toVariantHash(), property);
+      }
+      if (doc.isArray()) {
+          return doVariantListLookUp(doc.array().toVariantList(), property);
+      }
+      return QVariant();
+  }
+  if (object.userType() == QMetaType::QJsonValue) {
+      const auto val = object.toJsonValue();
+
+      switch (val.type()) {
+      case QJsonValue::Bool:
+          return val.toBool();
+      case QJsonValue::Double:
+          return val.toDouble();
+      case QJsonValue::String:
+          return val.toString();
+      case QJsonValue::Array:
+          return doVariantListLookUp(val.toArray().toVariantList(), property);
+      case QJsonValue::Object:
+          return doVariantHashLookUp(val.toObject().toVariantHash(), property);
+      default:
+          return QVariant();
+      }
+  }
+  if (object.userType() == QMetaType::QJsonArray) {
+      return doVariantListLookUp(object.toJsonArray().toVariantList(), property);
+  }
+  if (object.userType() == QMetaType::QJsonObject) {
+      return doVariantHashLookUp(object.toJsonObject().toVariantHash(), property);
   }
   if (object.canConvert<QVariantList>()) {
     auto iter = object.value<QSequentialIterable>();

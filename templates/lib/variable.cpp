@@ -29,6 +29,10 @@
 
 #include <QtCore/QMetaEnum>
 #include <QtCore/QStringList>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
 
 using namespace Cutelee;
 
@@ -206,6 +210,40 @@ QVariant Variable::resolve(Context *c) const
 
     } else {
       var = c->lookup(d->m_lookups.at(i++));
+      if (var.userType() == QMetaType::QJsonDocument) {
+          const auto jsonDoc = var.toJsonDocument();
+          if (jsonDoc.isArray()) {
+              var = jsonDoc.array().toVariantList();
+          } else if (jsonDoc.isObject()) {
+              var = jsonDoc.object().toVariantHash();
+          } else {
+              // JSON document is eather empty or null
+              return QVariant();
+          }
+      } else if (var.userType() == QMetaType::QJsonValue) {
+          const auto jsonVal = var.toJsonValue();
+          switch(jsonVal.type()) {
+          case QJsonValue::Bool:
+              var = jsonVal.toBool();
+              break;
+          case QJsonValue::Double:
+              var = jsonVal.toDouble();
+              break;
+          case QJsonValue::String:
+              var = jsonVal.toString();
+              break;
+          case QJsonValue::Array:
+          case QJsonValue::Object:
+              var = jsonVal.toVariant();
+              break;
+          default:
+              return QVariant();
+          }
+      } else if (var.userType() == QMetaType::QJsonArray) {
+          var = var.toJsonArray().toVariantList();
+      } else if (var.userType() == QMetaType::QJsonObject) {
+          var = var.toJsonObject().toVariantHash();
+      }
     }
     while (i < d->m_lookups.size()) {
       var = MetaType::lookup(var, d->m_lookups.at(i++));

@@ -3,8 +3,11 @@ cmake_minimum_required(VERSION 3.5)
 if (POLICY CMP0071)
   cmake_policy(SET CMP0071 NEW)
 endif()
+if (POLICY CMP0069)
+  cmake_policy(SET CMP0069 NEW)
+endif()
 
-project(Cutelee5 VERSION 5.2.0 LANGUAGES CXX)
+project(Cutelee5 VERSION 5.3.0 LANGUAGES CXX)
 
 # Workaround for http://public.kitware.com/Bug/view.php?id=12301
 if (MINGW)
@@ -15,6 +18,9 @@ if (MINGW)
   endif()
 endif()
 
+include(GNUInstallDirs)
+
+option(BUILD_SHARED_LIBS "Build in shared lib mode" ON)
 option( BUILD_TEMPLATES "Build the Cutelee template library" TRUE )
 option( BUILD_TEXTDOCUMENT "Build the Cutelee textdocument library" TRUE )
 option( BUILD_MAIN_PLUGINS "Build the Cutelee Templates plugins" TRUE )

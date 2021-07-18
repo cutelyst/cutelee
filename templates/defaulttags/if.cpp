@@ -30,7 +30,7 @@ Node *IfNodeFactory::getNode(const QString &tagContent, Parser *p) const
 {
   auto expr = smartSplit(tagContent);
 
-  QVector<QPair<QSharedPointer<IfToken>, NodeList>> nodelistConditions;
+  QVector<std::pair<std::shared_ptr<IfToken>, NodeList>> nodelistConditions;
 
   auto n = new IfNode(p);
 
@@ -38,7 +38,7 @@ Node *IfNodeFactory::getNode(const QString &tagContent, Parser *p) const
   auto cond = ip.parse();
   auto nodelist = p->parse(n, {QStringLiteral("elif"), QStringLiteral("else"),
                                QStringLiteral("endif")});
-  nodelistConditions.push_back(qMakePair(cond, nodelist));
+  nodelistConditions.push_back({cond, nodelist});
 
   auto token = p->takeNextToken();
 
@@ -49,13 +49,13 @@ Node *IfNodeFactory::getNode(const QString &tagContent, Parser *p) const
     cond = ep.parse();
     nodelist = p->parse(n, {QStringLiteral("elif"), QStringLiteral("else"),
                             QStringLiteral("endif")});
-    nodelistConditions.push_back(qMakePair(cond, nodelist));
+    nodelistConditions.push_back({cond, nodelist});
 
     token = p->takeNextToken();
   }
   if (token.content == QLatin1String("else")) {
     nodelist = p->parse(n, QStringLiteral("endif"));
-    nodelistConditions.push_back(qMakePair(nullptr, nodelist));
+    nodelistConditions.push_back({nullptr, nodelist});
     p->takeNextToken();
   }
 
@@ -75,7 +75,7 @@ Node *IfNodeFactory::getNode(const QString &tagContent, Parser *p) const
 IfNode::IfNode(QObject *parent) : Node(parent) {}
 
 void IfNode::setNodelistConditions(
-    const QVector<QPair<QSharedPointer<IfToken>, NodeList>> &conditionNodelists)
+    const QVector<std::pair<std::shared_ptr<IfToken>, NodeList>> &conditionNodelists)
 {
   mConditionNodelists = conditionNodelists;
 }

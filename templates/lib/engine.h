@@ -44,7 +44,7 @@ class EnginePrivate;
   @code
     auto engine = new Engine();
 
-    auto loader = QSharedPointer<FileSystemTemplateLoader>::create();
+    auto loader = std::shared_ptr<FileSystemTemplateLoader>::create();
     loader->setTemplateDirs( {"/usr/share/myapp/templates"} );
     engine->addTemplateLoader( loader );
 
@@ -134,13 +134,13 @@ public:
   /**
     Returns the TemplateLoaders currently configured on the **%Engine**.
   */
-  QList<QSharedPointer<AbstractTemplateLoader>> templateLoaders();
+  QList<std::shared_ptr<AbstractTemplateLoader> > templateLoaders();
 
   /**
     Adds @p loader to the TemplateLoaders currently configured on
     the **%Engine**.
   */
-  void addTemplateLoader(QSharedPointer<AbstractTemplateLoader> loader);
+  void addTemplateLoader(std::shared_ptr<AbstractTemplateLoader> loader);
 
   /**
     Sets the plugin dirs currently configured on the **%Engine** to @p dirs.
@@ -179,7 +179,7 @@ public:
     This method will not usually be called by application code.  To load media
     in a template, use the @gr_tag{media_finder} template tag.
   */
-  QPair<QString, QString> mediaUri(const QString &fileName) const;
+  std::pair<QString, QString> mediaUri(const QString &fileName) const;
 
   /**
     Load the Template identified by @p name.

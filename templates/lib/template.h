@@ -25,7 +25,6 @@
 #include "cutelee_templates_export.h"
 #include "node.h"
 
-#include <QtCore/QSharedPointer>
 #include <QtCore/QStringList>
 
 namespace Cutelee
@@ -38,7 +37,7 @@ class OutputStream;
 #ifdef Q_QDOC
 #define TemplateImpl Template
 #else
-typedef QSharedPointer<TemplateImpl> Template;
+typedef std::shared_ptr<TemplateImpl> Template;
 #endif
 
 class TemplatePrivate;
@@ -53,7 +52,7 @@ class TemplatePrivate;
   or by reading it from a file.
 
   Note that **%Template** is actually a typedef for a
-  <tt>QSharedPointer&lt;TemplateImpl&gt;</tt>, so all of its members should be
+  <tt>std::shared_ptr&lt;TemplateImpl&gt;</tt>, so all of its members should be
   accessed with <tt>operator-&gt;()</tt>.
 
   The result of parsing is a **%Template** object which can be rendered multiple
@@ -145,7 +144,7 @@ protected:
 
 private:
   // Don't allow setting the parent on a Template, which is memory managed as
-  // a QSharedPointer.
+  // a std::shared_ptr.
   using QObject::setParent;
 
 private:
@@ -157,5 +156,7 @@ private:
 #endif
 };
 }
+
+Q_DECLARE_METATYPE(Cutelee::Template)
 
 #endif

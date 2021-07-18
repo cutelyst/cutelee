@@ -48,11 +48,11 @@ public:
                     << QStringLiteral("this&that.png");
   }
 
-  QPair<QString, QString> getMediaUri(const QString &fileName) const override
+  std::pair<QString, QString> getMediaUri(const QString &fileName) const override
   {
     if (m_existingMedia.contains(fileName))
-      return qMakePair(QStringLiteral("/path/to/"), fileName);
-    return QPair<QString, QString>();
+      return {QStringLiteral("/path/to/"), fileName};
+    return {};
   }
 
 private:
@@ -156,7 +156,7 @@ void TestDefaultTags::initTestCase()
   m_engine = new Engine(this);
   m_engine->setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
-  auto loader1 = QSharedPointer<FakeTemplateLoader>(new FakeTemplateLoader());
+  auto loader1 = std::shared_ptr<FakeTemplateLoader>(new FakeTemplateLoader());
 
   m_engine->addTemplateLoader(loader1);
 }
@@ -955,7 +955,7 @@ void TestDefaultTags::testIfTag_data()
   // Short circuit
   dict.clear();
   {
-    auto bio = QSharedPointer<BadIfObject>::create();
+    auto bio = QSharedPointer<BadIfObject>(new BadIfObject);
     dict.insert(QStringLiteral("x"), QVariant::fromValue(bio));
     QTest::newRow("if-tag-shortcircuit01")
         << QStringLiteral(

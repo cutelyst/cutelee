@@ -498,7 +498,7 @@ void TextEdit::exportThemedHtml()
   engine->addDefaultLibrary("customtags");
   engine->addDefaultLibrary("cutelee_scriptabletags");
 
-  QSharedPointer<Cutelee::FileSystemTemplateLoader> loader(
+  std::shared_ptr<Cutelee::FileSystemTemplateLoader> loader(
       new Cutelee::FileSystemTemplateLoader());
   qDebug() << CUTELEE_TEMPLATE_PATH;
   loader->setTemplateDirs(QStringList() << CUTELEE_TEMPLATE_PATH);
@@ -525,7 +525,7 @@ void TextEdit::exportPlainText()
   Cutelee::Engine *engine = new Cutelee::Engine();
   engine->addDefaultLibrary("customtags");
 
-  QSharedPointer<Cutelee::FileSystemTemplateLoader> loader(
+  std::shared_ptr<Cutelee::FileSystemTemplateLoader> loader(
       new Cutelee::FileSystemTemplateLoader());
   loader->setTemplateDirs(QStringList() << CUTELEE_TEMPLATE_PATH);
   engine->addTemplateLoader(loader);

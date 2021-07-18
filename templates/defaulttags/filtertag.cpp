@@ -72,7 +72,7 @@ void FilterNode::render(OutputStream *stream, Context *c) const
   QString output;
   QTextStream textStream(&output);
   auto temp = stream->clone(&textStream);
-  m_filterList.render(temp.data(), c);
+  m_filterList.render(temp.get(), c);
   c->push();
   c->insert(QStringLiteral("var"), output);
   m_fe.resolve(stream, c);

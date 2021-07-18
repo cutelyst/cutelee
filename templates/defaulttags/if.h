@@ -23,8 +23,6 @@
 
 #include "node.h"
 
-#include <QtCore/QSharedPointer>
-
 using namespace Cutelee;
 
 class IfNodeFactory : public AbstractNodeFactory
@@ -45,13 +43,12 @@ public:
   IfNode(QObject *parent = {});
 
   void
-  setNodelistConditions(const QVector<QPair<QSharedPointer<IfToken>, NodeList>>
-                            &conditionNodelists);
+  setNodelistConditions(const QVector<std::pair<std::shared_ptr<IfToken>, NodeList> > &conditionNodelists);
 
   void render(OutputStream *stream, Context *c) const override;
 
 private:
-  QVector<QPair<QSharedPointer<IfToken>, NodeList>> mConditionNodelists;
+  QVector<std::pair<std::shared_ptr<IfToken>, NodeList>> mConditionNodelists;
 };
 
 #endif

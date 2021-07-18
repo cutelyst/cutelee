@@ -55,6 +55,6 @@ void SpacelessNode::render(OutputStream *stream, Context *c) const
   QString output;
   QTextStream textStream(&output);
   auto temp = stream->clone(&textStream);
-  m_nodeList.render(temp.data(), c);
+  m_nodeList.render(temp.get(), c);
   (*stream) << markSafe(stripSpacesBetweenTags(output.trimmed()));
 }

@@ -254,8 +254,8 @@ SafeString UnorderedListFilter::processList(const QVariantList &list, int tabs,
 }
 
 struct DictSortLessThan {
-  bool operator()(const QPair<QVariant, QVariant> &lp,
-                  const QPair<QVariant, QVariant> &rp) const
+  bool operator()(const std::pair<QVariant, QVariant> &lp,
+                  const std::pair<QVariant, QVariant> &rp) const
   {
     const auto l = lp.first;
     const auto r = rp.first;
@@ -314,7 +314,7 @@ QVariant DictSortFilter::doFilter(const QVariant &input,
   if (!input.canConvert<QVariantList>())
     return QVariant();
 
-  QList<QPair<QVariant, QVariant>> keyList;
+  QList<std::pair<QVariant, QVariant>> keyList;
   const auto inList = input.value<QSequentialIterable>();
   for (const QVariant &item : inList) {
     auto var = item;
@@ -329,7 +329,7 @@ QVariant DictSortFilter::doFilter(const QVariant &input,
         var = MetaType::lookup(var, lookup);
       }
     }
-    keyList << qMakePair(var, item);
+    keyList.push_back({var, item});
   }
 
   DictSortLessThan lt;

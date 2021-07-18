@@ -133,8 +133,8 @@ BookWindow::BookWindow()
   connect(ui.exportButton, SIGNAL(pressed()), SLOT(renderBooks()));
 
   m_engine = new Cutelee::Engine();
-  QSharedPointer<Cutelee::FileSystemTemplateLoader> loader
-      = QSharedPointer<Cutelee::FileSystemTemplateLoader>(
+  std::shared_ptr<Cutelee::FileSystemTemplateLoader> loader
+      = std::shared_ptr<Cutelee::FileSystemTemplateLoader>(
           new Cutelee::FileSystemTemplateLoader());
   loader->setTemplateDirs(QStringList() << CUTELEE_TEMPLATE_PATH);
   m_engine->addTemplateLoader(loader);

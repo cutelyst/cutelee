@@ -23,6 +23,7 @@
 
 #include "outputstream.h"
 
+#include <QtPlugin>
 #include <QtCore/QHash>
 
 namespace Cutelee

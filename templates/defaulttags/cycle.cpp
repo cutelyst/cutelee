@@ -109,7 +109,7 @@ void CycleNode::render(OutputStream *stream, Context *c) const
   QTextStream textStream(&value);
   auto temp = stream->clone(&textStream);
 
-  rotator.next().resolve(temp.data(), c).toString();
+  rotator.next().resolve(temp.get(), c).toString();
 
   variant.setValue(rotator);
 

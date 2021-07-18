@@ -30,10 +30,10 @@
 
 #define TEMPLATE_DIR CUTELEE_TEMPLATE_PATH "/linguist/"
 
-static QSharedPointer<Cutelee::AbstractLocalizer> getLocalizer()
+static std::shared_ptr<Cutelee::AbstractLocalizer> getLocalizer()
 {
-  QSharedPointer<Cutelee::QtLocalizer> localizer
-      = QSharedPointer<Cutelee::QtLocalizer>(new Cutelee::QtLocalizer);
+  std::shared_ptr<Cutelee::QtLocalizer> localizer
+      = std::shared_ptr<Cutelee::QtLocalizer>(new Cutelee::QtLocalizer);
   localizer->setAppTranslatorPrefix("contacts_");
   localizer->setAppTranslatorPath(qApp->applicationDirPath());
 

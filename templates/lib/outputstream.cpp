@@ -68,9 +68,9 @@ QString OutputStream::conditionalEscape(const Cutelee::SafeString &input) const
   return input;
 }
 
-QSharedPointer<OutputStream> OutputStream::clone(QTextStream *stream) const
+std::shared_ptr<OutputStream> OutputStream::clone(QTextStream *stream) const
 {
-  return QSharedPointer<OutputStream>(new OutputStream(stream));
+  return std::shared_ptr<OutputStream>(new OutputStream(stream));
 }
 
 OutputStream &OutputStream::operator<<(const QString &input)

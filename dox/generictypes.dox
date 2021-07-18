@@ -332,14 +332,14 @@ namespace Cutelee
   Shared pointer types containing a custom type should be introspected as normal using <tt>CUTELEE_BEGIN_LOOKUP</tt> and <tt>CUTELEE_END_LOOKUP</tt>
 
   @code
-    Q_DECLARE_METATYPE(QSharedPointer<Person>)
+    Q_DECLARE_METATYPE(std::shared_ptr<Person>)
 
     void someInitializer()
     {
-      Cutelee::registerMetaType<QSharedPointer<Person> >();
+      Cutelee::registerMetaType<std::shared_ptr<Person> >();
     }
 
-    CUTELEE_BEGIN_LOOKUP(QSharedPointer<Person>)
+    CUTELEE_BEGIN_LOOKUP(std::shared_ptr<Person>)
       if (property == "name")
         return object->name();
     CUTELEE_END_LOOKUP
@@ -359,11 +359,11 @@ namespace Cutelee
     CUTELEE_END_LOOKUP
   @endcode
 
-  QSharedPointers containing QObject derived types get special treatment.
+  std::shared_ptrs containing QObject derived types get special treatment.
 
   QObjects are automatically introspected for their <tt>Q_PROPERTY</tt>s (See @ref custom_objects).
 
-  If you have QSharedPointer&lt;PersonObject&gt; where <tt>PersonObject</tt> is derived from QObject it will be automatically
+  If you have std::shared_ptr&lt;PersonObject&gt; where <tt>PersonObject</tt> is derived from QObject it will be automatically
   introspected just like a QObject* is without requiring the <tt>CUTELEE_BEGIN_LOOKUP</tt> and <tt>CUTELEE_END_LOOKUP</tt> macros,
   the <tt>Q_DECLARE_METATYPE</tt> macro, or registration with the %Cutelee metatype system. All of the access registration
   is handled by %Qt.
@@ -372,7 +372,7 @@ namespace Cutelee
     void getContext()
     {
       Cutelee::Context c;
-      auto p = QSharedPointer<PersonObject>::create();
+      auto p = std::shared_ptr<PersonObject>::create();
       c.insert("person", QVariant::fromValue(p));
       return c;
     }

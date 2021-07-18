@@ -106,13 +106,13 @@ namespace Cutelee
     auto c = getContext();
 
     QLocale deLocale(QLocale::German, QLocale::Germany);
-    auto deLocalizer = QSharedPointer<QtLocalizer>::create(deLocale);
+    auto deLocalizer = std::shared_ptr<QtLocalizer>::create(deLocale);
 
     c.setLocalizer(deLocalizer);
     t->render(&c); // Render the template with the de locale.
 
     QLocale frLocale(QLocale::French, QLocale::France);
-    auto frLocalizer = QSharedPointer<QtLocalizer>::create(frLocale);
+    auto frLocalizer = std::shared_ptr<QtLocalizer>::create(frLocale);
 
     c.setLocalizer(frLocalizer);
     t->render(&c); // Render the same template with the fr locale.

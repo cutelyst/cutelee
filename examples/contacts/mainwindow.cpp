@@ -136,7 +136,7 @@ void MainWindow::delayedInit()
 
   initLocalizer();
 
-  m_templateLoader = QSharedPointer<Cutelee::FileSystemTemplateLoader>(
+  m_templateLoader = std::shared_ptr<Cutelee::FileSystemTemplateLoader>(
       new Cutelee::FileSystemTemplateLoader(m_localizer));
   m_templateLoader->setTemplateDirs(QStringList() << m_templateDir);
 

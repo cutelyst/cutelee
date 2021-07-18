@@ -22,7 +22,6 @@
 #define CUTELEE_PLUGINPOINTER_H
 
 #include <QtCore/QPluginLoader>
-#include <QtCore/QSharedPointer>
 
 namespace Cutelee
 {
@@ -55,7 +54,7 @@ public:
     m_plugin = qobject_cast<PluginType *>(object);
   }
 
-  QString errorString() { return m_pluginLoader.isNull() ? QString() : m_pluginLoader->errorString(); }
+  QString errorString() { return m_pluginLoader ? QString() : m_pluginLoader->errorString(); }
 
   PluginType *operator->() { return m_plugin; }
 
@@ -65,7 +64,7 @@ public:
 
 private:
   PluginType *m_plugin = nullptr;
-  QSharedPointer<QPluginLoader> m_pluginLoader;
+  std::shared_ptr<QPluginLoader> m_pluginLoader;
 };
 }
 

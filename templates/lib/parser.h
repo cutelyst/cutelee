@@ -88,7 +88,7 @@ public:
     Returns the filter object called @p name or an invalid object if no filter
     with that name is loaded.
   */
-  QSharedPointer<Filter> getFilter(const QString &name) const;
+  std::shared_ptr<Filter> getFilter(const QString &name) const;
 
   /**
     Advances the parser to the tag @p tag. This method is similar to @ref parse,

@@ -24,6 +24,7 @@
 #include "abstractlocalizer.h"
 #include "cutelee_templates_export.h"
 
+#include <memory>
 #include <QtCore/QVariantHash>
 
 namespace Cutelee
@@ -223,17 +224,17 @@ public:
 
     The **%Context** takes ownerwhip of the localizer.
   */
-  void setLocalizer(QSharedPointer<AbstractLocalizer> localizer);
+  void setLocalizer(std::shared_ptr<AbstractLocalizer> localizer);
 
   /**
     Returns the localizer currently in use.
   */
-  QSharedPointer<AbstractLocalizer> localizer() const;
+  std::shared_ptr<AbstractLocalizer> localizer() const;
 
   /**
     Returns the external media encountered in the Template while rendering.
   */
-  QList<QPair<QString, QString>> externalMedia() const;
+  QList<std::pair<QString, QString>> externalMedia() const;
 
   /**
     The type of urls to external media that should be put in the template.

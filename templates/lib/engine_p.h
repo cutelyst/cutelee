@@ -101,7 +101,7 @@ class EnginePrivate
   QHash<QString, ScriptableLibraryContainer *> m_scriptableLibraries;
 #endif
 
-  QList<QSharedPointer<AbstractTemplateLoader>> m_loaders;
+  QList<std::shared_ptr<AbstractTemplateLoader>> m_loaders;
   QStringList m_pluginDirs;
   QStringList m_defaultLibraries;
 #ifdef QT_QML_LIB

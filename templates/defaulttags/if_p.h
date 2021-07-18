@@ -21,7 +21,6 @@
 #ifndef IF_P_H
 #define IF_P_H
 
-#include <QtCore/QPair>
 #include <QtCore/QStringList>
 #include <QtCore/QVector>
 
@@ -42,20 +41,20 @@ class IfParser
 public:
   IfParser(Cutelee::Parser *parser, const QStringList &args);
 
-  QSharedPointer<IfToken> parse();
+  std::shared_ptr<IfToken> parse();
 
-  QSharedPointer<IfToken> expression(int rbp = {});
+  std::shared_ptr<IfToken> expression(int rbp = {});
 
 private:
-  QSharedPointer<IfToken> createNode(const QString &content) const;
+  std::shared_ptr<IfToken> createNode(const QString &content) const;
 
-  QSharedPointer<IfToken> consumeToken();
+  std::shared_ptr<IfToken> consumeToken();
 
 private:
   Cutelee::Parser *mParser;
-  QVector<QSharedPointer<IfToken>> mParseNodes;
+  QVector<std::shared_ptr<IfToken>> mParseNodes;
   int mPos = 0;
-  QSharedPointer<IfToken> mCurrentToken;
+  std::shared_ptr<IfToken> mCurrentToken;
 };
 
 static bool contains(const QVariant &needle, const QVariant &var)
@@ -99,12 +98,12 @@ public:
     Sentinal
   };
 
-  static QSharedPointer<IfToken> makeSentinal()
+  static std::shared_ptr<IfToken> makeSentinal()
   {
-    return QSharedPointer<IfToken>::create(0, QString(), Sentinal);
+    return std::shared_ptr<IfToken>(new IfToken{0, QString(), Sentinal});
   }
 
-  using ArgsType = std::pair<QSharedPointer<IfToken>, QSharedPointer<IfToken>>;
+  using ArgsType = std::pair<std::shared_ptr<IfToken>, std::shared_ptr<IfToken>>;
 
   IfToken(int lbp, const QString &tokenName, OpCode opCode) : mArgs()
   {
@@ -121,7 +120,7 @@ public:
   }
 
   void nud(IfParser *parser);
-  void led(QSharedPointer<IfToken> left, IfParser *parser);
+  void led(std::shared_ptr<IfToken> left, IfParser *parser);
 
   QVariant evaluate(Cutelee::Context *c) const;
 
@@ -147,7 +146,7 @@ void IfToken::nud(IfParser *parser)
     return;
   case IfToken::NotCode:
     mArgs.first = parser->expression(mLbp);
-    mArgs.second.clear();
+    mArgs.second = {};
     return;
   }
 
@@ -157,7 +156,7 @@ void IfToken::nud(IfParser *parser)
           .arg(mTokenName));
 }
 
-void IfToken::led(QSharedPointer<IfToken> left, IfParser *parser)
+void IfToken::led(std::shared_ptr<IfToken> left, IfParser *parser)
 {
   switch (mOpCode) {
   default:
@@ -207,7 +206,7 @@ IfParser::IfParser(Cutelee::Parser *parser, const QStringList &args)
   mCurrentToken = consumeToken();
 }
 
-QSharedPointer<IfToken> IfParser::consumeToken()
+std::shared_ptr<IfToken> IfParser::consumeToken()
 {
   if (mPos >= mParseNodes.size()) {
     return IfToken::makeSentinal();
@@ -217,7 +216,7 @@ QSharedPointer<IfToken> IfParser::consumeToken()
   return t;
 }
 
-QSharedPointer<IfToken> IfParser::expression(int rbp)
+std::shared_ptr<IfToken> IfParser::expression(int rbp)
 {
   auto t = mCurrentToken;
   mCurrentToken = consumeToken();
@@ -232,7 +231,7 @@ QSharedPointer<IfToken> IfParser::expression(int rbp)
   return left;
 }
 
-QSharedPointer<IfToken> IfParser::parse()
+std::shared_ptr<IfToken> IfParser::parse()
 {
   auto r = expression();
 
@@ -246,43 +245,43 @@ QSharedPointer<IfToken> IfParser::parse()
   return r;
 }
 
-QSharedPointer<IfToken> IfParser::createNode(const QString &content) const
+std::shared_ptr<IfToken> IfParser::createNode(const QString &content) const
 {
   if (content == QLatin1String("or")) {
-    return QSharedPointer<IfToken>::create(6, content, IfToken::OrCode);
+    return std::shared_ptr<IfToken>(new IfToken{6, content, IfToken::OrCode});
   }
   if (content == QLatin1String("and")) {
-    return QSharedPointer<IfToken>::create(7, content, IfToken::AndCode);
+    return std::shared_ptr<IfToken>(new IfToken{7, content, IfToken::AndCode});
   }
   if (content == QLatin1String("in")) {
-    return QSharedPointer<IfToken>::create(9, content, IfToken::InCode);
+    return std::shared_ptr<IfToken>(new IfToken{9, content, IfToken::InCode});
   }
   if (content == QLatin1String("not in")) {
-    return QSharedPointer<IfToken>::create(9, content, IfToken::NotInCode);
+    return std::shared_ptr<IfToken>(new IfToken{9, content, IfToken::NotInCode});
   }
   if (content == QLatin1String("==")) {
-    return QSharedPointer<IfToken>::create(10, content, IfToken::EqCode);
+    return std::shared_ptr<IfToken>(new IfToken{10, content, IfToken::EqCode});
   }
   if (content == QLatin1String("!=")) {
-    return QSharedPointer<IfToken>::create(10, content, IfToken::NeqCode);
+    return std::shared_ptr<IfToken>(new IfToken{10, content, IfToken::NeqCode});
   }
   if (content == QLatin1String(">")) {
-    return QSharedPointer<IfToken>::create(10, content, IfToken::GtCode);
+    return std::shared_ptr<IfToken>(new IfToken{10, content, IfToken::GtCode});
   }
   if (content == QLatin1String(">=")) {
-    return QSharedPointer<IfToken>::create(10, content, IfToken::GteCode);
+    return std::shared_ptr<IfToken>(new IfToken{10, content, IfToken::GteCode});
   }
   if (content == QLatin1String("<")) {
-    return QSharedPointer<IfToken>::create(10, content, IfToken::LtCode);
+    return std::shared_ptr<IfToken>(new IfToken{10, content, IfToken::LtCode});
   }
   if (content == QLatin1String("<=")) {
-    return QSharedPointer<IfToken>::create(10, content, IfToken::LteCode);
+    return std::shared_ptr<IfToken>(new IfToken{10, content, IfToken::LteCode});
   }
   if (content == QStringLiteral("not")) {
-    return QSharedPointer<IfToken>::create(8, content, IfToken::NotCode);
+    return std::shared_ptr<IfToken>(new IfToken{8, content, IfToken::NotCode});
   }
-  return QSharedPointer<IfToken>::create(
-      Cutelee::FilterExpression(content, mParser));
+  return std::shared_ptr<IfToken>(new IfToken{
+      Cutelee::FilterExpression(content, mParser)});
 }
 
 QVariant IfToken::evaluate(Cutelee::Context *c) const

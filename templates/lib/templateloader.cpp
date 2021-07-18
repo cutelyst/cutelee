@@ -37,11 +37,11 @@ namespace Cutelee
 class FileSystemTemplateLoaderPrivate
 {
   FileSystemTemplateLoaderPrivate(FileSystemTemplateLoader *loader,
-                                  QSharedPointer<AbstractLocalizer> localizer)
+                                  std::shared_ptr<AbstractLocalizer> localizer)
       : q_ptr(loader),
         m_localizer(localizer
                         ? localizer
-                        : QSharedPointer<AbstractLocalizer>(new NullLocalizer))
+                        : std::shared_ptr<AbstractLocalizer>(new NullLocalizer))
   {
   }
   Q_DECLARE_PUBLIC(FileSystemTemplateLoader)
@@ -49,12 +49,12 @@ class FileSystemTemplateLoaderPrivate
 
   QString m_themeName;
   QStringList m_templateDirs;
-  const QSharedPointer<AbstractLocalizer> m_localizer;
+  const std::shared_ptr<AbstractLocalizer> m_localizer;
 };
 }
 
 FileSystemTemplateLoader::FileSystemTemplateLoader(
-    const QSharedPointer<AbstractLocalizer> localizer)
+    const std::shared_ptr<AbstractLocalizer> localizer)
     : AbstractTemplateLoader(),
       d_ptr(new FileSystemTemplateLoaderPrivate(this, localizer))
 {
@@ -164,7 +164,7 @@ Template FileSystemTemplateLoader::loadByName(const QString &fileName,
   return engine->newTemplate(fileContent, fileName);
 }
 
-QPair<QString, QString>
+std::pair<QString, QString>
 FileSystemTemplateLoader::getMediaUri(const QString &fileName) const
 {
   Q_D(const FileSystemTemplateLoader);
@@ -187,11 +187,11 @@ FileSystemTemplateLoader::getMediaUri(const QString &fileName) const
     if (file.exists()) {
       auto path = fi.absoluteFilePath();
       path.chop(fileName.size());
-      return qMakePair(path, fileName);
+      return {path, fileName};
     }
     ++i;
   }
-  return QPair<QString, QString>();
+  return {};
 }
 
 void InMemoryTemplateLoader::setTemplate(const QString &name,
@@ -218,10 +218,10 @@ Template InMemoryTemplateLoader::loadByName(const QString &name,
                 .arg(name));
 }
 
-QPair<QString, QString>
+std::pair<QString, QString>
 InMemoryTemplateLoader::getMediaUri(const QString &fileName) const
 {
   Q_UNUSED(fileName)
   // This loader doesn't make any media available yet.
-  return QPair<QString, QString>();
+  return std::pair<QString, QString>();
 }

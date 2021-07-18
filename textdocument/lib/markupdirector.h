@@ -140,7 +140,7 @@ public:
 
     The block @p block is the first block in the @p textBlockGroup.
   */
-  virtual QPair<QTextFrame::iterator, QTextBlock>
+  virtual std::pair<QTextFrame::iterator, QTextBlock>
   processBlockGroup(QTextFrame::iterator it, const QTextBlock &block,
                     QTextBlockGroup *textBlockGroup);
 
@@ -150,7 +150,7 @@ public:
 
     The block @p block is the first block in the @p textList.
   */
-  virtual QPair<QTextFrame::iterator, QTextBlock>
+  virtual std::pair<QTextFrame::iterator, QTextBlock>
   processList(QTextFrame::iterator it, const QTextBlock &block,
               QTextList *textList);
 
@@ -232,7 +232,7 @@ protected:
     The return pair is the iterator pointing after the end of @p blockGroup
     and the first block after @p blockGroup.
   */
-  QPair<QTextFrame::iterator, QTextBlock>
+  std::pair<QTextFrame::iterator, QTextBlock>
   skipBlockGroup(QTextFrame::iterator it, const QTextBlock &_block,
                  QTextBlockGroup *blockGroup);
 

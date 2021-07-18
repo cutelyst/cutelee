@@ -39,11 +39,11 @@ class CachingLoaderDecoratorPrivate;
   Cutelee::AbstractTemplateLoader.
 
   @code
-    auto loader = QSharedPointer<Cutelee::FileSystemTemplateLoader>::create();
+    auto loader = std::shared_ptr<Cutelee::FileSystemTemplateLoader>::create();
     loader->setTemplateDirs({"/path/one", "/path/two"});
 
     auto cache =
-        QSharedPointer<Cutelee::CachingLoaderDecorator>::create( loader );
+        std::shared_ptr<Cutelee::CachingLoaderDecorator>::create( loader );
     m_engine->addTemplateLoader( cache );
   @endcode
 
@@ -74,7 +74,7 @@ public:
   /**
     Constructor
   */
-  CachingLoaderDecorator(QSharedPointer<AbstractTemplateLoader> loader);
+  CachingLoaderDecorator(std::shared_ptr<AbstractTemplateLoader> loader);
 
   /**
     Destructor
@@ -83,7 +83,7 @@ public:
 
   bool canLoadTemplate(const QString &name) const override;
 
-  QPair<QString, QString> getMediaUri(const QString &fileName) const override;
+  std::pair<QString, QString> getMediaUri(const QString &fileName) const override;
 
   Template loadByName(const QString &name,
                       const Cutelee::Engine *engine) const override;

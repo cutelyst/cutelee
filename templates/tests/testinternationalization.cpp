@@ -108,12 +108,12 @@ private Q_SLOTS:
   void testFailure_data();
 
 private:
-  QSharedPointer<QtLocalizer> cLocalizer;
-  const QSharedPointer<AbstractLocalizer> nullLocalizer;
-  const QSharedPointer<QtLocalizer> deLocalizer;
-  const QSharedPointer<QtLocalizer> frLocalizer;
-  const QSharedPointer<QtLocalizer> en_GBLocalizer;
-  const QSharedPointer<QtLocalizer> en_USLocalizer;
+  std::shared_ptr<QtLocalizer> cLocalizer;
+  const std::shared_ptr<AbstractLocalizer> nullLocalizer;
+  const std::shared_ptr<QtLocalizer> deLocalizer;
+  const std::shared_ptr<QtLocalizer> frLocalizer;
+  const std::shared_ptr<QtLocalizer> en_GBLocalizer;
+  const std::shared_ptr<QtLocalizer> en_USLocalizer;
 
   Cutelee::Engine *m_engine;
 };
@@ -126,7 +126,7 @@ void TestInternationalization::testContext()
   QVERIFY(c.localizer());
   c.setLocalizer(cLocalizer);
   QVERIFY(c.localizer());
-  c.setLocalizer(QSharedPointer<Cutelee::AbstractLocalizer>());
+  c.setLocalizer(std::shared_ptr<Cutelee::AbstractLocalizer>());
   QVERIFY(c.localizer());
 }
 

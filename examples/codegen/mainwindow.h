@@ -50,7 +50,7 @@ private:
 private:
   DesignWidget *m_designWidget;
   Cutelee::Engine *m_engine;
-  QSharedPointer<Cutelee::FileSystemTemplateLoader> m_loader;
+  std::shared_ptr<Cutelee::FileSystemTemplateLoader> m_loader;
   QTabWidget *m_tabWidget;
 };
 

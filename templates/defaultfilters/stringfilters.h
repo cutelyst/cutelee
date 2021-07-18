@@ -54,7 +54,7 @@ public:
                     bool autoescape = {}) const override;
 
 private:
-  QList<QPair<QString, QString>> m_jsEscapes;
+  QList<std::pair<QString, QString>> m_jsEscapes;
 };
 
 class FixAmpersandsFilter : public Filter

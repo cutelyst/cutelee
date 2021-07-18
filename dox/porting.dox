@@ -80,9 +80,9 @@ namespace Cutelee
 
   Users of <tt>LocalizedFileSystemTemplateLoader</tt> can now use FileSystemTemplateLoader instead.
 
-  @subsection ptr_typedefs QSharedPointer typedefs named "Ptr" have been removed.
+  @subsection ptr_typedefs std::shared_ptr typedefs named "Ptr" have been removed.
 
-  Replace uses of <tt>FileSystemTemplateLoader::Ptr</tt> with QSharedPointer<FileSystemTemplateLoader> for example.
+  Replace uses of <tt>FileSystemTemplateLoader::Ptr</tt> with std::shared_ptr<FileSystemTemplateLoader> for example.
 
 */
 

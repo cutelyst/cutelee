@@ -152,7 +152,7 @@ SafeString BlockNode::getSuper() const
       QString superContent;
       QTextStream superTextStream(&superContent);
       auto superStream = m_stream->clone(&superTextStream);
-      const_cast<BlockNode *>(this)->render(superStream.data(), m_context);
+      const_cast<BlockNode *>(this)->render(superStream.get(), m_context);
       return markSafe(superContent);
     }
   }

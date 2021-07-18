@@ -30,7 +30,7 @@ LocalRequestManager::createRequest(QNetworkAccessManager::Operation op,
     qDebug() << t->errorString();
   }
 
-  QList<QPair<QString, QString>> query = requestUrl.queryItems();
+  QList<std::pair<QString, QString>> query = requestUrl.queryItems();
   if (outgoingData) {
     QUrl postData;
     postData.setEncodedQuery(outgoingData->readAll());

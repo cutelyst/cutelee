@@ -24,7 +24,6 @@
 #include "cutelee_templates_export.h"
 
 #include <QtCore/QLocale>
-#include <QtCore/QSharedPointer>
 #include <QtCore/QVariantList>
 
 class QDateTime;

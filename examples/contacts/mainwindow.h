@@ -49,7 +49,7 @@ private Q_SLOTS:
   void delayedInit();
 
 protected:
-  QSharedPointer<Cutelee::AbstractLocalizer> m_localizer;
+  std::shared_ptr<Cutelee::AbstractLocalizer> m_localizer;
 
 private:
   QListWidget *m_list;
@@ -58,7 +58,7 @@ private:
   QString m_templateDir;
 
   Cutelee::Engine *m_engine;
-  QSharedPointer<Cutelee::FileSystemTemplateLoader> m_templateLoader;
+  std::shared_ptr<Cutelee::FileSystemTemplateLoader> m_templateLoader;
 };
 
 template <typename T> class AppMainWindow : public MainWindow
@@ -73,7 +73,7 @@ public:
 protected:
   virtual void initLocalizer()
   {
-    m_localizer = QSharedPointer<Cutelee::AbstractLocalizer>(new T);
+    m_localizer = std::shared_ptr<Cutelee::AbstractLocalizer>(new T);
   }
 };
 

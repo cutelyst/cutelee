@@ -563,7 +563,7 @@ void TestGenericTypes::testSharedPointer()
 
   // Check it
   QVariantHash h;
-  QSharedPointer<PersonObject> p(
+  std::shared_ptr<PersonObject> p(
       new PersonObject(QStringLiteral("Grant Lee"), 2));
   h.insert(QStringLiteral("p"), QVariant::fromValue(p));
   Cutelee::Context c(h);
@@ -864,9 +864,9 @@ public:
     m_personList.push_back(new PersonObject{QStringLiteral("Joe"), 20});
     m_personList.push_back(new PersonObject{QStringLiteral("Mike"), 22});
     m_personPtrList.push_back(
-        QSharedPointer<PersonObject>::create(QStringLiteral("Niall"), 23));
+        QSharedPointer<PersonObject>(new PersonObject{QStringLiteral("Niall"), 23}));
     m_personPtrList.push_back(
-        QSharedPointer<PersonObject>::create(QStringLiteral("Dave"), 24));
+        QSharedPointer<PersonObject>(new PersonObject{QStringLiteral("Dave"), 24}));
   }
 
   QList<int> numberList() { return m_numberList; }

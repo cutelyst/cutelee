@@ -26,7 +26,7 @@ namespace Cutelee
 class CachingLoaderDecoratorPrivate
 {
 public:
-  CachingLoaderDecoratorPrivate(QSharedPointer<AbstractTemplateLoader> loader,
+  CachingLoaderDecoratorPrivate(std::shared_ptr<AbstractTemplateLoader> loader,
                                 CachingLoaderDecorator *qq)
       : q_ptr(qq), m_wrappedLoader(loader)
   {
@@ -35,7 +35,7 @@ public:
   Q_DECLARE_PUBLIC(CachingLoaderDecorator)
   CachingLoaderDecorator *const q_ptr;
 
-  const QSharedPointer<AbstractTemplateLoader> m_wrappedLoader;
+  const std::shared_ptr<AbstractTemplateLoader> m_wrappedLoader;
 
   mutable QHash<QString, Template> m_cache;
 };
@@ -43,8 +43,7 @@ public:
 
 using namespace Cutelee;
 
-CachingLoaderDecorator::CachingLoaderDecorator(
-    QSharedPointer<AbstractTemplateLoader> loader)
+CachingLoaderDecorator::CachingLoaderDecorator(std::shared_ptr<AbstractTemplateLoader> loader)
     : d_ptr(new CachingLoaderDecoratorPrivate(loader, this))
 {
 }
@@ -75,7 +74,7 @@ bool CachingLoaderDecorator::isEmpty() const
   return d->m_cache.isEmpty();
 }
 
-QPair<QString, QString>
+std::pair<QString, QString>
 CachingLoaderDecorator::getMediaUri(const QString &fileName) const
 {
   Q_D(const CachingLoaderDecorator);

@@ -23,7 +23,7 @@
 
 #include "cutelee_templates_export.h"
 
-#include <QtCore/QSharedPointer>
+#include <memory>
 #include <QtCore/QTextStream>
 
 namespace Cutelee
@@ -68,9 +68,9 @@ class SafeString;
         return input;
       }
 
-      QSharedPointer<OutputStream> clone( QTextStream *stream ) const
+      std::shared_ptr<OutputStream> clone( QTextStream *stream ) const
       {
-        return QSharedPointer<NoEscapeStream>::create( stream );
+        return std::shared_ptr<NoEscapeStream>::create( stream );
       }
     };
   @endcode
@@ -112,7 +112,7 @@ public:
   /**
     Returns a cloned **%OutputStream** with the same filtering behaviour.
   */
-  virtual QSharedPointer<OutputStream> clone(QTextStream *stream) const;
+  virtual std::shared_ptr<OutputStream> clone(QTextStream *stream) const;
 
   /**
     Returns @p after escaping it, unless @p input is "safe", in which case,

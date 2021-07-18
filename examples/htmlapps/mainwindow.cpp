@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
   Cutelee::Engine *engine = new Cutelee::Engine(this);
   engine->addDefaultLibrary("customplugin");
 
-  QSharedPointer<Cutelee::FileSystemTemplateLoader> loader(
+  std::shared_ptr<Cutelee::FileSystemTemplateLoader> loader(
       new Cutelee::FileSystemTemplateLoader);
   loader->setTemplateDirs(QStringList() << CUTELEE_TEMPLATE_PATH);
   engine->addTemplateLoader(loader);

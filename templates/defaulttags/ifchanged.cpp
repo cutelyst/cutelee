@@ -85,7 +85,7 @@ void IfChangedNode::render(OutputStream *stream, Context *c) const
   QTextStream watchedTextStream(&watchedString);
   auto watchedStream = stream->clone(&watchedTextStream);
   if (m_filterExpressions.isEmpty()) {
-    m_trueList.render(watchedStream.data(), c);
+    m_trueList.render(watchedStream.get(), c);
   }
   QVariantList watchedVars;
   for (auto &i : m_filterExpressions) {

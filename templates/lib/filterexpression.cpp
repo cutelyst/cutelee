@@ -20,7 +20,6 @@
 
 #include "filterexpression.h"
 
-#include <QPair>
 #include <QtCore/QRegularExpression>
 
 #include "exception.h"
@@ -29,7 +28,7 @@
 #include "parser.h"
 #include "util.h"
 
-using ArgFilter = std::pair<QSharedPointer<Cutelee::Filter>, Cutelee::Variable>;
+using ArgFilter = std::pair<std::shared_ptr<Cutelee::Filter>, Cutelee::Variable>;
 
 namespace Cutelee
 {
@@ -131,7 +130,7 @@ FilterExpression::FilterExpression(const QString &varString, Parser *parser)
         Q_ASSERT(f);
 
         d->m_filterNames << subString;
-        d->m_filters << std::pair<QSharedPointer<Filter>, Variable>(f,
+        d->m_filters << std::pair<std::shared_ptr<Filter>, Variable>(f,
                                                                     Variable());
 
       } else if (subString.startsWith(QLatin1Char(FILTER_ARGUMENT_SEPARATOR))) {

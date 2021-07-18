@@ -57,7 +57,7 @@ public:
   QList<Token> m_tokenList;
 
   QHash<QString, AbstractNodeFactory *> m_nodeFactories;
-  QHash<QString, QSharedPointer<Filter>> m_filters;
+  QHash<QString, std::shared_ptr<Filter>> m_filters;
 
   NodeList m_nodeList;
 };
@@ -82,7 +82,7 @@ void ParserPrivate::openLibrary(TagLibraryInterface *library)
   auto filters = library->filters();
   for (auto filterIt = filters.begin(), filterEnd = filters.end();
        filterIt != filterEnd; ++filterIt) {
-    auto f = QSharedPointer<Filter>(filterIt.value());
+    auto f = std::shared_ptr<Filter>(filterIt.value());
     m_filters.insert(filterIt.key(), f);
   }
 }
@@ -154,7 +154,7 @@ void Parser::skipPast(const QString &tag)
       QStringLiteral("No closing tag found for %1").arg(tag));
 }
 
-QSharedPointer<Filter> Parser::getFilter(const QString &name) const
+std::shared_ptr<Filter> Parser::getFilter(const QString &name) const
 {
     Q_D(const Parser);
     const auto it = d->m_filters.constFind(name);

@@ -49,7 +49,7 @@ private Q_SLOTS:
     void testLoadInsertedLibraryTag();
 
 private:
-    QSharedPointer<InMemoryTemplateLoader> m_loader;
+    std::shared_ptr<InMemoryTemplateLoader> m_loader;
     Engine *m_engine = nullptr;
 };
 
@@ -118,7 +118,7 @@ void TestInsertLibrary::initTestCase()
     m_engine = new Engine(this);
     QVERIFY(m_engine);
 
-    m_loader = QSharedPointer<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
+    m_loader = std::shared_ptr<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
     m_engine->addTemplateLoader(m_loader);
 
     m_engine->setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});

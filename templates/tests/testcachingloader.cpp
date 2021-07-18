@@ -50,14 +50,14 @@ void TestCachingLoader::testRenderAfterError()
   Engine engine;
   engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
-  QSharedPointer<InMemoryTemplateLoader> loader(new InMemoryTemplateLoader);
+  std::shared_ptr<InMemoryTemplateLoader> loader(new InMemoryTemplateLoader);
   loader->setTemplate(QStringLiteral("template1"),
                       QStringLiteral("This template has an error {{ va>r }}"));
   loader->setTemplate(QStringLiteral("template2"), QStringLiteral("Ok"));
   loader->setTemplate(QStringLiteral("main"),
                       QStringLiteral("{% include template_var %}"));
 
-  QSharedPointer<Cutelee::CachingLoaderDecorator> cache(
+  std::shared_ptr<Cutelee::CachingLoaderDecorator> cache(
       new Cutelee::CachingLoaderDecorator(loader));
 
   engine.addTemplateLoader(cache);

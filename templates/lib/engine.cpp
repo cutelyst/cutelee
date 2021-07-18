@@ -59,23 +59,23 @@ Engine::~Engine()
   delete d_ptr;
 }
 
-QList<QSharedPointer<AbstractTemplateLoader>> Engine::templateLoaders()
+QList<std::shared_ptr<AbstractTemplateLoader>> Engine::templateLoaders()
 {
   Q_D(Engine);
   return d->m_loaders;
 }
 
-void Engine::addTemplateLoader(QSharedPointer<AbstractTemplateLoader> loader)
+void Engine::addTemplateLoader(std::shared_ptr<AbstractTemplateLoader> loader)
 {
   Q_D(Engine);
   d->m_loaders << loader;
 }
 
-QPair<QString, QString> Engine::mediaUri(const QString &fileName) const
+std::pair<QString, QString> Engine::mediaUri(const QString &fileName) const
 {
   Q_D(const Engine);
 
-  QPair<QString, QString> uri;
+  std::pair<QString, QString> uri;
   for (const auto &loader : d->m_loaders) {
     uri = loader->getMediaUri(fileName);
     if (!uri.second.isEmpty())
@@ -277,7 +277,7 @@ QString EnginePrivate::getScriptLibraryName(const QString &name,
     return libFileName;
   }
 
-  for (const QSharedPointer<AbstractTemplateLoader> &loader : m_loaders) {
+  for (const auto &loader : m_loaders) {
       const auto pair = loader->getMediaUri(prefix + name + QStringLiteral(".qs"));
 
       if (!pair.first.isEmpty() && !pair.second.isEmpty()) {

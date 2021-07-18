@@ -27,7 +27,6 @@
 #include "outputstream.h"
 #include "safestring.h"
 
-#include <QtCore/QSharedPointer>
 #include <QtCore/QStringList>
 #include <QtCore/QVariant>
 

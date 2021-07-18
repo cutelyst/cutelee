@@ -24,6 +24,7 @@
 #include "rendercontext.h"
 #include "util.h"
 
+#include <memory>
 #include <QtCore/QStringList>
 
 using namespace Cutelee;
@@ -48,11 +49,11 @@ class ContextPrivate
   QList<QVariantHash> m_variantHashStack;
   bool m_autoescape;
   bool m_mutating;
-  QList<QPair<QString, QString>> m_externalMedia;
+  QList<std::pair<QString, QString>> m_externalMedia;
   Context::UrlType m_urlType;
   QString m_relativeMediaPath;
   RenderContext *const m_renderContext;
-  QSharedPointer<AbstractLocalizer> m_localizer;
+  std::shared_ptr<AbstractLocalizer> m_localizer;
 };
 }
 
@@ -171,10 +172,10 @@ void Context::addExternalMedia(const QString &absolutePart,
                                const QString &relativePart)
 {
   Q_D(Context);
-  d->m_externalMedia.append(qMakePair(absolutePart, relativePart));
+  d->m_externalMedia.append({absolutePart, relativePart});
 }
 
-QList<QPair<QString, QString>> Context::externalMedia() const
+QList<std::pair<QString, QString> > Context::externalMedia() const
 {
   Q_D(const Context);
   return d->m_externalMedia;
@@ -216,17 +217,17 @@ RenderContext *Context::renderContext() const
   return d->m_renderContext;
 }
 
-void Context::setLocalizer(QSharedPointer<AbstractLocalizer> localizer)
+void Context::setLocalizer(std::shared_ptr<AbstractLocalizer> localizer)
 {
   Q_D(Context);
   if (!localizer) {
-    d->m_localizer = QSharedPointer<AbstractLocalizer>(new NullLocalizer);
+    d->m_localizer = std::shared_ptr<AbstractLocalizer>(new NullLocalizer);
     return;
   }
   d->m_localizer = localizer;
 }
 
-QSharedPointer<AbstractLocalizer> Context::localizer() const
+std::shared_ptr<AbstractLocalizer> Context::localizer() const
 {
   Q_D(const Context);
   return d->m_localizer;

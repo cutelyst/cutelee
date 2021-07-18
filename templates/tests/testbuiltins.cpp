@@ -122,9 +122,9 @@ public:
 
   NoEscapeOutputStream(QTextStream *stream) : OutputStream(stream) {}
 
-  QSharedPointer<OutputStream> clone(QTextStream *stream) const override
+  std::shared_ptr<OutputStream> clone(QTextStream *stream) const override
   {
-    return QSharedPointer<NoEscapeOutputStream>::create(stream);
+    return std::shared_ptr<NoEscapeOutputStream>(new NoEscapeOutputStream{stream});
   }
 
   QString escape(const QString &input) const override { return input; }
@@ -137,46 +137,46 @@ public:
 
   JSOutputStream(QTextStream *stream) : OutputStream(stream) {}
 
-  QSharedPointer<OutputStream> clone(QTextStream *stream) const override
+  std::shared_ptr<OutputStream> clone(QTextStream *stream) const override
   {
-    return QSharedPointer<JSOutputStream>::create(stream);
+    return std::shared_ptr<JSOutputStream>(new JSOutputStream{stream});
   }
 
   QString escape(const QString &input) const override
   {
-    QList<QPair<QString, QString>> jsEscapes;
-    jsEscapes << QPair<QString, QString>(QChar::fromLatin1('\\'),
+    QList<std::pair<QString, QString>> jsEscapes;
+    jsEscapes << std::pair<QString, QString>(QChar::fromLatin1('\\'),
                                          QStringLiteral("\\u005C"))
-              << QPair<QString, QString>(QChar::fromLatin1('\''),
+              << std::pair<QString, QString>(QChar::fromLatin1('\''),
                                          QStringLiteral("\\u0027"))
-              << QPair<QString, QString>(QChar::fromLatin1('\"'),
+              << std::pair<QString, QString>(QChar::fromLatin1('\"'),
                                          QStringLiteral("\\u0022"))
-              << QPair<QString, QString>(QChar::fromLatin1('>'),
+              << std::pair<QString, QString>(QChar::fromLatin1('>'),
                                          QStringLiteral("\\u003E"))
-              << QPair<QString, QString>(QChar::fromLatin1('<'),
+              << std::pair<QString, QString>(QChar::fromLatin1('<'),
                                          QStringLiteral("\\u003C"))
-              << QPair<QString, QString>(QChar::fromLatin1('&'),
+              << std::pair<QString, QString>(QChar::fromLatin1('&'),
                                          QStringLiteral("\\u0026"))
-              << QPair<QString, QString>(QChar::fromLatin1('='),
+              << std::pair<QString, QString>(QChar::fromLatin1('='),
                                          QStringLiteral("\\u003D"))
-              << QPair<QString, QString>(QChar::fromLatin1('-'),
+              << std::pair<QString, QString>(QChar::fromLatin1('-'),
                                          QStringLiteral("\\u002D"))
-              << QPair<QString, QString>(QChar::fromLatin1(';'),
+              << std::pair<QString, QString>(QChar::fromLatin1(';'),
                                          QStringLiteral("\\u003B"))
-              << QPair<QString, QString>(QChar(0x2028),
+              << std::pair<QString, QString>(QChar(0x2028),
                                          QStringLiteral("\\u2028"))
-              << QPair<QString, QString>(QChar(0x2029),
+              << std::pair<QString, QString>(QChar(0x2029),
                                          QStringLiteral("\\u2029"));
 
     for (auto i = 0; i < 32; ++i) {
-      jsEscapes << QPair<QString, QString>(
+      jsEscapes << std::pair<QString, QString>(
           QChar(i),
           QStringLiteral("\\u00")
               + QStringLiteral("%1").arg(i, 2, 16, QLatin1Char('0')).toUpper());
     }
 
     auto retString = input;
-    for (const QPair<QString, QString> &escape : jsEscapes) {
+    for (const std::pair<QString, QString> &escape : jsEscapes) {
       retString = retString.replace(escape.first, escape.second);
     }
     return retString;
@@ -246,7 +246,7 @@ private Q_SLOTS:
 private:
   Engine *m_engine;
 
-  QSharedPointer<InMemoryTemplateLoader> m_loader;
+  std::shared_ptr<InMemoryTemplateLoader> m_loader;
 
   Engine *getEngine();
 
@@ -256,12 +256,12 @@ private:
 void TestBuiltinSyntax::testObjects()
 {
   {
-    auto loader = QSharedPointer<Cutelee::FileSystemTemplateLoader>::create();
+    auto loader = std::shared_ptr<Cutelee::FileSystemTemplateLoader>(new Cutelee::FileSystemTemplateLoader);
     loader->setTemplateDirs(
         {QStringLiteral("/path/one"), QStringLiteral("/path/two")});
 
     auto cache
-        = QSharedPointer<Cutelee::CachingLoaderDecorator>::create(loader);
+            = std::shared_ptr<Cutelee::CachingLoaderDecorator>(new Cutelee::CachingLoaderDecorator{loader});
   }
 
   Context c1, c2;
@@ -402,7 +402,7 @@ void TestBuiltinSyntax::testRenderAfterError()
   Engine engine;
   engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
 
-  QSharedPointer<InMemoryTemplateLoader> loader(new InMemoryTemplateLoader);
+  std::shared_ptr<InMemoryTemplateLoader> loader(new InMemoryTemplateLoader);
   loader->setTemplate(QStringLiteral("template1"),
                       QStringLiteral("This template has an error {{ va>r }}"));
   loader->setTemplate(QStringLiteral("template2"), QStringLiteral("Ok"));
@@ -430,7 +430,7 @@ void TestBuiltinSyntax::initTestCase()
 {
   m_engine = getEngine();
   m_loader
-      = QSharedPointer<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
+      = std::shared_ptr<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
   m_engine->addTemplateLoader(m_loader);
   QVERIFY(m_engine->templateLoaders().contains(m_loader));
 }
@@ -1383,7 +1383,7 @@ void TestBuiltinSyntax::testMultipleStates()
   auto engine1 = getEngine();
 
   auto loader1
-      = QSharedPointer<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
+      = std::shared_ptr<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
 
   loader1->setTemplate(QStringLiteral("template1"),
                        QStringLiteral("Template 1"));
@@ -1395,7 +1395,7 @@ void TestBuiltinSyntax::testMultipleStates()
   auto engine2 = getEngine();
 
   auto loader2
-      = QSharedPointer<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
+      = std::shared_ptr<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
 
   loader2->setTemplate(QStringLiteral("template2"),
                        QStringLiteral("Template 2"));
@@ -1408,7 +1408,7 @@ void TestBuiltinSyntax::testMultipleStates()
   auto engine3 = getEngine();
 
   auto loader3
-      = QSharedPointer<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
+      = std::shared_ptr<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
 
   loader3->setTemplate(QStringLiteral("template3"),
                        QStringLiteral("Template 3"));

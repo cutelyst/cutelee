@@ -43,9 +43,9 @@ public:
 
   NoEscapeOutputStream(QTextStream *stream) : OutputStream(stream) {}
 
-  virtual QSharedPointer<Cutelee::OutputStream> clone() const
+  virtual std::shared_ptr<Cutelee::OutputStream> clone() const
   {
-    return QSharedPointer<Cutelee::OutputStream>(new NoEscapeOutputStream);
+    return std::shared_ptr<Cutelee::OutputStream>(new NoEscapeOutputStream);
   }
 
   virtual QString escape(const QString &input) const { return input; }
@@ -75,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
   m_engine->addDefaultLibrary("cutelee_scriptabletags");
   m_engine->setSmartTrimEnabled(true);
 
-  m_loader = QSharedPointer<Cutelee::FileSystemTemplateLoader>(
+  m_loader = std::shared_ptr<Cutelee::FileSystemTemplateLoader>(
       new Cutelee::FileSystemTemplateLoader);
   m_loader->setTemplateDirs(QStringList() << ":/templates");
   m_engine->addTemplateLoader(m_loader);

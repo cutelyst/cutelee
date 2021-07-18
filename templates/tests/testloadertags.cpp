@@ -63,7 +63,7 @@ private Q_SLOTS:
 private:
   void doTest();
 
-  QSharedPointer<InMemoryTemplateLoader> loader;
+  std::shared_ptr<InMemoryTemplateLoader> loader;
   Engine *m_engine;
 };
 
@@ -73,7 +73,7 @@ void TestLoaderTags::initTestCase()
 
   m_engine = new Engine(this);
 
-  loader = QSharedPointer<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
+  loader = std::shared_ptr<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
   m_engine->addTemplateLoader(loader);
 
   m_engine->setPluginPaths({
@@ -91,7 +91,7 @@ void TestLoaderTags::testTemplateFromQrc()
 {
   Engine engine;
 
-  auto loader = QSharedPointer<Cutelee::FileSystemTemplateLoader>::create();
+  auto loader = std::shared_ptr<Cutelee::FileSystemTemplateLoader>(new Cutelee::FileSystemTemplateLoader);
   loader->setTemplateDirs({QStringLiteral(":/templates/")});
   engine.addTemplateLoader(loader);
   engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});

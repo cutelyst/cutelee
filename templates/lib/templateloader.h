@@ -24,8 +24,6 @@
 #include "cutelee_templates_export.h"
 #include "template.h"
 
-#include <QtCore/QSharedPointer>
-
 namespace Cutelee
 {
 
@@ -63,7 +61,7 @@ public:
   /**
     Return a complete URI for media identified by fileName.
   */
-  virtual QPair<QString, QString>
+  virtual std::pair<QString, QString>
   getMediaUri(const QString &fileName) const = 0;
 
   /**
@@ -141,7 +139,7 @@ public:
   /**
     Constructor
   */
-  FileSystemTemplateLoader(const QSharedPointer<AbstractLocalizer> localizer
+  FileSystemTemplateLoader(const std::shared_ptr<AbstractLocalizer> localizer
                            = {});
 
   /**
@@ -153,7 +151,7 @@ public:
 
   bool canLoadTemplate(const QString &name) const override;
 
-  QPair<QString, QString> getMediaUri(const QString &fileName) const override;
+  std::pair<QString, QString> getMediaUri(const QString &fileName) const override;
 
   /**
     Sets the theme of this loader to @p themeName
@@ -203,7 +201,7 @@ public:
 
   bool canLoadTemplate(const QString &name) const override;
 
-  QPair<QString, QString> getMediaUri(const QString &fileName) const override;
+  std::pair<QString, QString> getMediaUri(const QString &fileName) const override;
 
   /**
     Add a template content to this Loader.
@@ -211,7 +209,7 @@ public:
     Example:
 
     @code
-      auto loader = QSharedPointer<InMemoryTemplateLoader::create();
+      auto loader = std::shared_ptr<InMemoryTemplateLoader::create();
       loader->setTemplate( "name_template", "My name is {{ name }}" );
       loader->setTemplate( "age_template", "My age is {{ age }}" );
       engine->addTemplateLoader( loader );

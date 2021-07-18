@@ -191,7 +191,7 @@ void MarkupDirector::processTableCell(const QTextTableCell &tableCell,
   processDocumentContents(tableCell.begin(), tableCell.end());
 }
 
-QPair<QTextFrame::iterator, QTextBlock>
+std::pair<QTextFrame::iterator, QTextBlock>
 MarkupDirector::processList(QTextFrame::iterator it, const QTextBlock &_block,
                             QTextList *list)
 {
@@ -217,7 +217,7 @@ MarkupDirector::processList(QTextFrame::iterator it, const QTextBlock &_block,
     }
   }
   m_builder->endList();
-  return qMakePair(it, block);
+  return {it, block};
 }
 
 QTextFrame::iterator
@@ -397,7 +397,7 @@ QTextFrame::iterator MarkupDirector::processObject(QTextFrame::iterator it,
   return it;
 }
 
-QPair<QTextFrame::iterator, QTextBlock>
+std::pair<QTextFrame::iterator, QTextBlock>
 MarkupDirector::skipBlockGroup(QTextFrame::iterator it,
                                const QTextBlock &_block,
                                QTextBlockGroup *blockGroup)
@@ -409,11 +409,11 @@ MarkupDirector::skipBlockGroup(QTextFrame::iterator it,
   QTextBlockGroup *nextGroup;
 
   if (!obj)
-    return qMakePair(lastIt, lastBlock);
+    return {lastIt, lastBlock};
 
   auto group = qobject_cast<QTextBlockGroup *>(obj);
   if (!group)
-    return qMakePair(lastIt, lastBlock);
+    return {lastIt, lastBlock};
 
   while (block.isValid()) {
     if (!group)
@@ -435,10 +435,10 @@ MarkupDirector::skipBlockGroup(QTextFrame::iterator it,
     }
     group = nextGroup;
   }
-  return qMakePair(lastIt, lastBlock);
+  return {lastIt, lastBlock};
 }
 
-QPair<QTextFrame::iterator, QTextBlock>
+std::pair<QTextFrame::iterator, QTextBlock>
 MarkupDirector::processBlockGroup(QTextFrame::iterator it,
                                   const QTextBlock &block,
                                   QTextBlockGroup *blockGroup)

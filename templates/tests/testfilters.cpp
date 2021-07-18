@@ -69,7 +69,7 @@ private Q_SLOTS:
 private:
   void doTest();
 
-  QSharedPointer<InMemoryTemplateLoader> loader;
+  std::shared_ptr<InMemoryTemplateLoader> loader;
   Engine *m_engine;
 };
 
@@ -77,7 +77,7 @@ void TestFilters::initTestCase()
 {
   m_engine = new Engine(this);
 
-  loader = QSharedPointer<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
+  loader = std::shared_ptr<InMemoryTemplateLoader>(new InMemoryTemplateLoader());
   m_engine->addTemplateLoader(loader);
 
   auto appDirPath

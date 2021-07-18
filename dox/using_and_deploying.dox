@@ -50,7 +50,7 @@ namespace Cutelee
     {
       auto engine = new Engine( this );
 
-      auto loader = QSharedPointer<FileSystemTemplateLoader>::create();
+      auto loader = std::shared_ptr<FileSystemTemplateLoader>::create();
       loader->setTemplateDirs( QStringList{ path_to_installed_templates } );
 
       engine->addTemplateLoader( loader );
@@ -83,7 +83,7 @@ namespace Cutelee
   Application code:
   
   @code
-    auto loader = QSharedPointer<FileSystemTemplateLoader>::create();
+    auto loader = std::shared_ptr<FileSystemTemplateLoader>::create();
     loader->setTemplateDirs( QStringList{ ":/templates/" } );
 
     engine->addTemplateLoader( loader );
@@ -96,14 +96,14 @@ namespace Cutelee
   If users are able to define their own templates in an application that uses %Cutelee for theming for example, the path to the location of such potential templates must also be set through the AbstractTemplateLoader instance. Paths to user defined templates should be defined before default/installed templates so that the user templates are found first. If there is a reason to disallow user overriding of certain templates, they can be specified in a separate AbstractTemplateLoader instance.
 
   @code
-    auto no_override_loader = QSharedPointer<FileSystemTemplateLoader>::create();
+    auto no_override_loader = std::shared_ptr<FileSystemTemplateLoader>::create();
     no_override_loader->setTemplateDirs( 
         QStringList{ path_to_non_overridable_templates } 
         );
 
     engine->addTemplateLoader( no_override_loader );
 
-    auto override_loader = QSharedPointer<FileSystemTemplateLoader>::create();
+    auto override_loader = std::shared_ptr<FileSystemTemplateLoader>::create();
     override_loader->setTemplateDirs( 
         QStringList{ path_to_user_templates, path_to_default_templates } 
         );

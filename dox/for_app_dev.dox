@@ -173,7 +173,7 @@ namespace Cutelee
     Street: {{ person.home.streetName }}
   @endcode
 
-  Using containers such as QList and QSharedPointer with the <tt>Q_PROPERTY</tt> macro is also possible.
+  Using containers such as QList and std::shared_ptr with the <tt>Q_PROPERTY</tt> macro is also possible.
 
   @code
     class PersonWrapper : public QObject

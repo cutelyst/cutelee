@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = Cutelee
-PROJECT_NUMBER         = @Cutelee5_VERSION@
+PROJECT_NUMBER         = @Cutelee_VERSION@
 OUTPUT_DIRECTORY       = @DOCS_OUTPUT_DIRECTORY@
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
@@ -161,9 +161,9 @@ FORMULA_FONTSIZE       = 10
 # configuration options related to the Qt Docs output
 #---------------------------------------------------------------------------
 GENERATE_QHP       = @GENERATE_QHP@
-QHP_NAMESPACE      = "org.cutelee.@Cutelee5_VERSION_MAJOR@@Cutelee5_VERSION_MINOR@@Cutelee5_VERSION_PATCH@"
-QHP_VIRTUAL_FOLDER = "cutelee-@Cutelee5_MAJOR_MINOR_VERSION_STRING@"
-QCH_FILE           = @CMAKE_BINARY_DIR@/"cutelee-@Cutelee5_VERSION_MAJOR@@Cutelee5_VERSION_MINOR@@Cutelee5_VERSION_PATCH@.qch"
+QHP_NAMESPACE      = "org.cutelee.@Cutelee_VERSION_MAJOR@@Cutelee_VERSION_MINOR@@Cutelee_VERSION_PATCH@"
+QHP_VIRTUAL_FOLDER = "cutelee-@Cutelee_MAJOR_MINOR_VERSION_STRING@"
+QCH_FILE           = @CMAKE_BINARY_DIR@/"cutelee-@Cutelee_VERSION_MAJOR@@Cutelee_VERSION_MINOR@@Cutelee_VERSION_PATCH@.qch"
 QHG_LOCATION       = "qhelpgenerator"
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output

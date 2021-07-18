@@ -1,13 +1,6 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
-if (POLICY CMP0071)
-  cmake_policy(SET CMP0071 NEW)
-endif()
-if (POLICY CMP0069)
-  cmake_policy(SET CMP0069 NEW)
-endif()
-
-project(Cutelee5 VERSION 5.3.0 LANGUAGES CXX)
+project(Cutelee VERSION 6.0.0 LANGUAGES CXX)
 
 # Workaround for http://public.kitware.com/Bug/view.php?id=12301
 if (MINGW)
@@ -83,14 +76,14 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE ON)
 set(CMAKE_AUTOMOC ON)
 
-set(Cutelee5_MIN_PLUGIN_VERSION 0)
+set(Cutelee_MIN_PLUGIN_VERSION 0)
 
-set(Cutelee5_MAJOR_MINOR_VERSION_STRING "${Cutelee5_VERSION_MAJOR}.${Cutelee5_VERSION_MINOR}" )
+set(Cutelee_MAJOR_MINOR_VERSION_STRING "${Cutelee_VERSION_MAJOR}.${Cutelee_VERSION_MINOR}" )
 
 set (LIB_SUFFIX "" CACHE STRING "Define suffix of library directory name (eg. '64')")
 
 set( LIB_INSTALL_DIR lib${LIB_SUFFIX} )
-set( PLUGIN_INSTALL_DIR ${LIB_INSTALL_DIR}/cutelee/${Cutelee5_MAJOR_MINOR_VERSION_STRING} )
+set( PLUGIN_INSTALL_DIR ${LIB_INSTALL_DIR}/cutelee/${Cutelee_MAJOR_MINOR_VERSION_STRING} )
 
 # set up RPATH/install_name_dir
 set( CMAKE_INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})
@@ -106,23 +99,23 @@ if (BUILD_TEXTDOCUMENT)
   add_subdirectory(textdocument)
 endif()
 
-set(CMAKECONFIG_INSTALL_DIR "${LIB_INSTALL_DIR}/cmake/Cutelee${Cutelee5_VERSION_MAJOR}" )
+set(CMAKECONFIG_INSTALL_DIR "${LIB_INSTALL_DIR}/cmake/Cutelee${Cutelee_VERSION_MAJOR}" )
 
 configure_file(
-  "${Cutelee_MODULE_DIR}/Cutelee${Cutelee5_VERSION_MAJOR}Config.cmake.in"
-  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee5_VERSION_MAJOR}Config.cmake"
+  "${Cutelee_MODULE_DIR}/CuteleeConfig.cmake.in"
+  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee_VERSION_MAJOR}Config.cmake"
   @ONLY
 )
 
 include(CMakePackageConfigHelpers)
-write_basic_package_version_file("${CMAKE_BINARY_DIR}/Cutelee${Cutelee5_VERSION_MAJOR}ConfigVersion.cmake"
-  VERSION ${Cutelee5_VERSION}
+write_basic_package_version_file("${CMAKE_BINARY_DIR}/Cutelee${Cutelee_VERSION_MAJOR}ConfigVersion.cmake"
+  VERSION ${Cutelee_VERSION}
   COMPATIBILITY AnyNewerVersion
 )
 
 install(FILES
-  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee5_VERSION_MAJOR}Config.cmake"
-  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee5_VERSION_MAJOR}ConfigVersion.cmake"
+  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee_VERSION_MAJOR}Config.cmake"
+  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee_VERSION_MAJOR}ConfigVersion.cmake"
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
   COMPONENT Common
 )
@@ -135,7 +128,7 @@ install(FILES
 
 install(EXPORT cutelee_targets
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-  NAMESPACE Cutelee${Cutelee5_VERSION_MAJOR}::
+  NAMESPACE Cutelee${Cutelee_VERSION_MAJOR}::
   FILE CuteleeTargets.cmake
   COMPONENT Common
 )

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project(contacts_cutelee)
 
-find_package(Cutelee5 REQUIRED)
+find_package(Cutelee REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -20,7 +20,7 @@ find_package(Qt5LinguistTools REQUIRED)
 
 target_link_libraries(
   contacts_linguist
-  Cutelee5::Templates
+  Cutelee::Templates
   Qt5::WebKitWidgets
 )
 

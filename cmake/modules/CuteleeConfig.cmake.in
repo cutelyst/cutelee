@@ -2,8 +2,8 @@
 
 # Any changes in this file will be overwritten by CMake.
 
-if (Cutelee@Cutelee5_VERSION_MAJOR@_FIND_COMPONENTS)
-  foreach( component ${Cutelee@Cutelee5_VERSION_MAJOR@_FIND_COMPONENTS})
+if (Cutelee@Cutelee_VERSION_MAJOR@_FIND_COMPONENTS)
+  foreach( component ${Cutelee@Cutelee_VERSION_MAJOR@_FIND_COMPONENTS})
     if (component STREQUAL "Textdocument")
       set(RequiredQtComponents ${RequiredQtComponents} Gui)
     endif()

@@ -65,7 +65,7 @@ macro(cutelee_templates_unit_tests)
                   ${_testname}.cpp
     )
     add_test(${_testname} ${_testname}_exec )
-    target_link_libraries(${_testname}_exec Cutelee5::Templates template_test_builtins)
+    target_link_libraries(${_testname}_exec Cutelee::Templates template_test_builtins)
 
     if (Qml_FOUND)
       target_compile_definitions(${_testname}_exec PRIVATE HAVE_QTQML_LIB)

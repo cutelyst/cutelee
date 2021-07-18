@@ -40,8 +40,8 @@ target_link_libraries(Cutelee_TextDocument
 )
 
 set_target_properties(Cutelee_TextDocument PROPERTIES
-  VERSION    ${Cutelee5_VERSION}
-  SOVERSION  ${Cutelee5_VERSION_MAJOR}
+  VERSION    ${Cutelee_VERSION}
+  SOVERSION  ${Cutelee_VERSION_MAJOR}
 )
 
 install(TARGETS Cutelee_TextDocument EXPORT cutelee_targets

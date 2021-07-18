@@ -54,7 +54,7 @@ add_library(Cutelee_Templates SHARED
   token.h
   typeaccessor.h
 )
-add_library(Cutelee5::Templates ALIAS Cutelee_Templates)
+add_library(Cutelee::Templates ALIAS Cutelee_Templates)
 generate_export_header(Cutelee_Templates)
 set_property(TARGET Cutelee_Templates PROPERTY
   EXPORT_NAME Templates
@@ -119,8 +119,8 @@ target_link_libraries(Cutelee_Templates
 )
 
 set_target_properties(Cutelee_Templates PROPERTIES
-  VERSION    ${Cutelee5_VERSION}
-  SOVERSION  ${Cutelee5_VERSION_MAJOR}
+  VERSION    ${Cutelee_VERSION}
+  SOVERSION  ${Cutelee_VERSION_MAJOR}
 )
 
 install(TARGETS Cutelee_Templates EXPORT cutelee_targets

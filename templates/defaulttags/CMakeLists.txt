@@ -24,7 +24,7 @@ set_property(TARGET cutelee_defaulttags PROPERTY
   EXPORT_NAME defaulttags
 )
 target_link_libraries(cutelee_defaulttags PRIVATE
-  Cutelee5::Templates
+  Cutelee::Templates
 )
 target_compile_features(cutelee_defaulttags PRIVATE
   cxx_auto_type

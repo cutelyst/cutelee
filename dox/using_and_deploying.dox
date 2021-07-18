@@ -18,7 +18,7 @@ namespace Cutelee
 
   @section finding_with_cmake Finding Cutelee with CMake
 
-  %Cutelee uses the <a href="http://www.cmake.org/">CMake</a> cross platform build system, and installs a cmake file called <tt>Cutelee5Config.cmake</tt>. This config file is automatically searched for by CMake and contains the information needed for other CMake based applications to find headers and link against %Cutelee libraries. See https://cmake.org/cmake/help/latest/manual/cmake-packages.7.html for more.
+  %Cutelee uses the <a href="http://www.cmake.org/">CMake</a> cross platform build system, and installs a cmake file called <tt>Cutelee6Config.cmake</tt>. This config file is automatically searched for by CMake and contains the information needed for other CMake based applications to find headers and link against %Cutelee libraries. See https://cmake.org/cmake/help/latest/manual/cmake-packages.7.html for more.
 
   When creating an application using CMake that depends on %Cutelee, first issue the <tt>find_package</tt> command, and then use the CMake <tt>target_link_libraries</tt> command link to and use the libraries.
 
@@ -30,14 +30,14 @@ namespace Cutelee
     set(CMAKE_AUTOMOC ON)
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-    find_package(Cutelee5 REQUIRED)
+    find_package(Cutelee 6 REQUIRED)
 
     # ... Application sources etc.
 
     target_link_libraries(my_application 
       PRIVATE
         Qt5::Widgets
-        Cutelee5::Templates
+        Cutelee::Templates
     )
   @endcode
 
@@ -179,7 +179,7 @@ namespace Cutelee
     set (_rcc_file "my_qtscript_library.qrc")
     qt5_add_resources(_scripted_rcc_src 
         ${_rcc_file} 
-        OPTIONS -root "/plugins/cutelee/${Cutelee5_VERSION_MAJOR}.${Cutelee5_VERSION_MINOR}" 
+        OPTIONS -root "/plugins/cutelee/${Cutelee_VERSION_MAJOR}.${Cutelee_VERSION_MINOR}"
     )
 
     add_executable(my_app, ${my_app_srcs} ${_scripted_rcc_src})

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project(textedit_cutelee)
 
-find_package(Cutelee5 REQUIRED)
+find_package(Cutelee REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -19,14 +19,14 @@ add_library(customtags MODULE
 cutelee_adjust_plugin_name(customtags)
 
 target_link_libraries(customtags
-  Cutelee5::Templates
-  Cutelee5::TextDocument
+  Cutelee::Templates
+  Cutelee::TextDocument
 )
 
 
 ## Application
 
-get_property(Cutelee_PLUGIN_DIR TARGET Cutelee5::defaulttags PROPERTY LOCATION)
+get_property(Cutelee_PLUGIN_DIR TARGET Cutelee::defaulttags PROPERTY LOCATION)
 get_filename_component(Cutelee_PLUGIN_DIR ${Cutelee_PLUGIN_DIR} PATH)
 get_filename_component(Cutelee_PLUGIN_DIR ${Cutelee_PLUGIN_DIR} PATH)
 get_filename_component(Cutelee_PLUGIN_DIR ${Cutelee_PLUGIN_DIR} PATH)
@@ -43,6 +43,6 @@ add_executable(textedit
 
 target_link_libraries(
   textedit
-  Cutelee5::Templates
+  Cutelee::Templates
   Qt5::Widgets
 )

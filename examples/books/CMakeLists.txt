@@ -2,14 +2,14 @@ cmake_minimum_required(VERSION 3.5)
 
 project(books_cutelee)
 
-find_package(Cutelee5 REQUIRED)
+find_package(Cutelee REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-get_property(Cutelee_PLUGIN_DIR TARGET Cutelee5::defaulttags PROPERTY LOCATION)
+get_property(Cutelee_PLUGIN_DIR TARGET Cutelee::defaulttags PROPERTY LOCATION)
 get_filename_component(Cutelee_PLUGIN_DIR ${Cutelee_PLUGIN_DIR} PATH)
 get_filename_component(Cutelee_PLUGIN_DIR ${Cutelee_PLUGIN_DIR} PATH)
 get_filename_component(Cutelee_PLUGIN_DIR ${Cutelee_PLUGIN_DIR} PATH)
@@ -29,7 +29,7 @@ add_executable(books
 
 target_link_libraries(
   books
-  Cutelee5::Templates
+  Cutelee::Templates
   Qt5::Widgets
   Qt5::Sql
 

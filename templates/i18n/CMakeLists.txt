@@ -12,7 +12,7 @@ set_property(TARGET cutelee_i18ntags PROPERTY
   EXPORT_NAME i18ntags
 )
 target_link_libraries(cutelee_i18ntags PRIVATE
-  Cutelee5::Templates
+  Cutelee::Templates
 )
 target_compile_features(cutelee_i18ntags PRIVATE
   cxx_auto_type

@@ -40,28 +40,18 @@ namespace Cutelee
   Idiomatic use of %Cutelee in the buildsystem is now similar to:
 
   @verbatim
-  find_package(Cutelee5 REQUIRED)
+  find_package(Cutelee REQUIRED)
 
   add_executable(main main.cpp)
   target_link_libraries(main
-    Cutelee5::Templates
+    Cutelee::Templates
   )
   @endverbatim
 
-  @subsection package_numbered CMake Package name changed
-
-  The previous major release of %Cutelee shipped a CMake package findable
-  with
+  For %Cutelee 6.0 specify the version on the find_package command:
 
   @verbatim
-  find_package(Cutelee REQUIRED)
-  @endverbatim
-
-  For %Cutelee 5.0 the package was renamed to include the major version
-  number:
-
-  @verbatim
-  find_package(Cutelee5 REQUIRED)
+  find_package(Cutelee 6.0 REQUIRED)
   @endverbatim
 
   @section cpp_porting C++ porting

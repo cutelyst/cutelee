@@ -1,5 +1,5 @@
 <!DOCTYPE RCC><RCC version="1.0">
-<qresource prefix="/plugins/cutelee/@Cutelee5_MAJOR_MINOR_VERSION_STRING@">
+<qresource prefix="/plugins/cutelee/@Cutelee_MAJOR_MINOR_VERSION_STRING@">
     <file alias="scripteddefaults.qs">@CMAKE_CURRENT_SOURCE_DIR@/scripteddefaults.qs</file>
     <file alias="testtags.qs">@CMAKE_CURRENT_SOURCE_DIR@/testtags.qs</file>
 </qresource>

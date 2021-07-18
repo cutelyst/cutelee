@@ -13,7 +13,7 @@ set_property(TARGET cutelee_loadertags PROPERTY
   EXPORT_NAME loadertags
 )
 target_link_libraries(cutelee_loadertags PRIVATE
-  Cutelee5::Templates
+  Cutelee::Templates
 )
 target_compile_features(cutelee_loadertags PRIVATE
   cxx_auto_type

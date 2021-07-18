@@ -11,7 +11,7 @@ set_property(TARGET cutelee_defaultfilters PROPERTY
     EXPORT_NAME defaultfilters
 )
 target_link_libraries(cutelee_defaultfilters PRIVATE
-  Cutelee5::Templates
+  Cutelee::Templates
 )
 target_compile_features(cutelee_defaultfilters PRIVATE
   cxx_auto_type

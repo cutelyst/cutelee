@@ -1,3 +1,13 @@
+set(cutelee_textdocument_HEADERS
+  cutelee_textdocument.h
+  abstractmarkupbuilder.h
+  bbcodebuilder.h
+  markupdirector.h
+  plaintextmarkupbuilder.h
+  texthtmlbuilder.h
+  mediawikimarkupbuilder.h
+  ${CMAKE_CURRENT_BINARY_DIR}/cutelee_textdocument_export.h
+)
 
 add_library(Cutelee_TextDocument SHARED
   bbcodebuilder.cpp
@@ -6,11 +16,10 @@ add_library(Cutelee_TextDocument SHARED
   texthtmlbuilder.cpp
   mediawikimarkupbuilder.cpp
 
-  # Help IDEs find some non-compiled files.
-  abstractmarkupbuilder.h
-  cutelee_textdocument.h
   markupdirector_p.h
+  ${cutelee_textdocument_HEADERS}
 )
+
 generate_export_header(Cutelee_TextDocument)
 add_library(Cutelee::TextDocument ALIAS Cutelee_TextDocument)
 set_property(TARGET Cutelee_TextDocument PROPERTY
@@ -44,25 +53,15 @@ set_target_properties(Cutelee_TextDocument PROPERTIES
   SOVERSION  ${Cutelee_VERSION_MAJOR}
 )
 
+target_include_directories(Cutelee_TextDocument PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+  $<INSTALL_INTERFACE:include/cutelee${PROJECT_VERSION_MAJOR}-qt${QT_VERSION_MAJOR}>
+)
+
+set_property(TARGET Cutelee_TextDocument PROPERTY PUBLIC_HEADER ${cutelee_textdocument_HEADERS})
 install(TARGETS Cutelee_TextDocument EXPORT cutelee_targets
   RUNTIME DESTINATION bin COMPONENT TextDocument
-  LIBRARY DESTINATION ${LIB_INSTALL_DIR} COMPONENT TextDocument
-  ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT TextDocument
-  INCLUDES DESTINATION include
-)
-
-install(FILES
-  abstractmarkupbuilder.h
-  bbcodebuilder.h
-  markupdirector.h
-  plaintextmarkupbuilder.h
-  texthtmlbuilder.h
-  mediawikimarkupbuilder.h
-  ${CMAKE_CURRENT_BINARY_DIR}/cutelee_textdocument_export.h
-  DESTINATION include/cutelee COMPONENT TextDocument
-)
-
-install(FILES
-  cutelee_textdocument.h
-  DESTINATION include COMPONENT TextDocument
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT TextDocument
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT TextDocument
+  PUBLIC_HEADER DESTINATION include/cutelee${PROJECT_VERSION_MAJOR}-qt${QT_VERSION_MAJOR}/cutelee
 )

@@ -99,37 +99,38 @@ if (BUILD_TEXTDOCUMENT)
   add_subdirectory(textdocument)
 endif()
 
-set(CMAKECONFIG_INSTALL_DIR "${LIB_INSTALL_DIR}/cmake/Cutelee${Cutelee_VERSION_MAJOR}" )
+set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/Cutelee${Cutelee_VERSION_MAJOR}Qt${QT_VERSION_MAJOR}" )
 
 configure_file(
   "${Cutelee_MODULE_DIR}/CuteleeConfig.cmake.in"
-  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee_VERSION_MAJOR}Config.cmake"
+  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee_VERSION_MAJOR}Qt${QT_VERSION_MAJOR}Config.cmake"
   @ONLY
 )
 
 include(CMakePackageConfigHelpers)
-write_basic_package_version_file("${CMAKE_BINARY_DIR}/Cutelee${Cutelee_VERSION_MAJOR}ConfigVersion.cmake"
+write_basic_package_version_file("${CMAKE_BINARY_DIR}/Cutelee${Cutelee_VERSION_MAJOR}Qt${QT_VERSION_MAJOR}ConfigVersion.cmake"
   VERSION ${Cutelee_VERSION}
   COMPATIBILITY AnyNewerVersion
 )
 
 install(FILES
-  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee_VERSION_MAJOR}Config.cmake"
-  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee_VERSION_MAJOR}ConfigVersion.cmake"
+  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee_VERSION_MAJOR}Qt${QT_VERSION_MAJOR}Config.cmake"
+  "${CMAKE_BINARY_DIR}/Cutelee${Cutelee_VERSION_MAJOR}Qt${QT_VERSION_MAJOR}ConfigVersion.cmake"
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
   COMPONENT Common
 )
 
 install(FILES
   "${Cutelee_MODULE_DIR}/CuteleeMacros.cmake"
-  DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+  RENAME "Cutelee${Cutelee_VERSION_MAJOR}Qt${QT_VERSION_MAJOR}Macros.cmake"
+  DESTINATION "${CMAKECONFIG_INSTALL_DIR}/"
   COMPONENT Common
 )
 
 install(EXPORT cutelee_targets
-  DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-  NAMESPACE Cutelee${Cutelee_VERSION_MAJOR}::
-  FILE CuteleeTargets.cmake
+  DESTINATION ${CMAKECONFIG_INSTALL_DIR}
+  FILE "Cutelee${Cutelee_VERSION_MAJOR}Qt${QT_VERSION_MAJOR}Targets.cmake"
+  NAMESPACE Cutelee::
   COMPONENT Common
 )
 

@@ -11,6 +11,33 @@ set_source_files_properties(taglibraryinterface.h PROPERTIES
   SKIP_AUTOMOC TRUE
 )
 
+set(cutelee_templates_HEADERS
+  cutelee_templates.h
+  abstractlocalizer.h
+  cachingloaderdecorator.h
+  context.h
+  engine.h
+  exception.h
+  filter.h
+  filterexpression.h
+  ${CMAKE_CURRENT_BINARY_DIR}/cutelee_templates_export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/cutelee_version.h
+  metatype.h
+  node.h
+  outputstream.h
+  parser.h
+  qtlocalizer.h
+  rendercontext.h
+  safestring.h
+  taglibraryinterface.h
+  template.h
+  templateloader.h
+  typeaccessor.h
+  token.h
+  util.h
+  variable.h
+)
+
 add_library(Cutelee_Templates SHARED
   abstractlocalizer.cpp
   cachingloaderdecorator.cpp
@@ -36,24 +63,21 @@ add_library(Cutelee_Templates SHARED
   util.cpp
   variable.cpp
 
-  # Help IDEs find some non-compiled files.
-  customtyperegistry_p.h
-  engine_p.h
-  exception.h
-  cutelee_tags_p.h
-  cutelee_templates.h
-  lexer_p.h
-  metaenumvariable_p.h
   nodebuiltins_p.h
   nulllocalizer_p.h
   pluginpointer_p.h
   statemachine_p.h
-  taglibraryinterface.h
   template_p.h
   textprocessingmachine_p.h
-  token.h
-  typeaccessor.h
+  customtyperegistry_p.h
+  engine_p.h
+  cutelee_tags_p.h
+  lexer_p.h
+  metaenumvariable_p.h
+
+  ${cutelee_templates_HEADERS}
 )
+
 add_library(Cutelee::Templates ALIAS Cutelee_Templates)
 generate_export_header(Cutelee_Templates)
 set_property(TARGET Cutelee_Templates PROPERTY
@@ -123,41 +147,15 @@ set_target_properties(Cutelee_Templates PROPERTIES
   SOVERSION  ${Cutelee_VERSION_MAJOR}
 )
 
+target_include_directories(Cutelee_Templates PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+  $<INSTALL_INTERFACE:include/cutelee${PROJECT_VERSION_MAJOR}-qt${QT_VERSION_MAJOR}>
+)
+
+set_property(TARGET Cutelee_Templates PROPERTY PUBLIC_HEADER ${cutelee_templates_HEADERS})
 install(TARGETS Cutelee_Templates EXPORT cutelee_targets
   RUNTIME DESTINATION bin COMPONENT Templates
-  LIBRARY DESTINATION ${LIB_INSTALL_DIR} COMPONENT Templates
-  ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT Templates
-  INCLUDES DESTINATION include
-)
-
-install(FILES
-  abstractlocalizer.h
-  cachingloaderdecorator.h
-  context.h
-  engine.h
-  exception.h
-  filter.h
-  filterexpression.h
-  ${CMAKE_CURRENT_BINARY_DIR}/cutelee_templates_export.h
-  ${CMAKE_CURRENT_BINARY_DIR}/cutelee_version.h
-  metatype.h
-  node.h
-  outputstream.h
-  parser.h
-  qtlocalizer.h
-  rendercontext.h
-  safestring.h
-  taglibraryinterface.h
-  template.h
-  templateloader.h
-  typeaccessor.h
-  token.h
-  util.h
-  variable.h
-  DESTINATION include/cutelee COMPONENT Templates
-)
-
-install(FILES
-  cutelee_templates.h
-  DESTINATION include COMPONENT Templates
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT Templates
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT Templates
+  PUBLIC_HEADER DESTINATION include/cutelee${PROJECT_VERSION_MAJOR}-qt${QT_VERSION_MAJOR}/cutelee
 )

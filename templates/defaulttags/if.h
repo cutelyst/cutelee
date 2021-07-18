@@ -43,12 +43,12 @@ public:
   IfNode(QObject *parent = {});
 
   void
-  setNodelistConditions(const QVector<std::pair<std::shared_ptr<IfToken>, NodeList> > &conditionNodelists);
+  setNodelistConditions(const std::vector<std::pair<std::shared_ptr<IfToken>, NodeList> > &conditionNodelists);
 
   void render(OutputStream *stream, Context *c) const override;
 
 private:
-  QVector<std::pair<std::shared_ptr<IfToken>, NodeList>> mConditionNodelists;
+  std::vector<std::pair<std::shared_ptr<IfToken>, NodeList>> mConditionNodelists;
 };
 
 #endif

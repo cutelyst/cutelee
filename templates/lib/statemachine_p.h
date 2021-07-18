@@ -21,8 +21,9 @@
 #ifndef CUTELEE_STATEMACHINE_P_H
 #define CUTELEE_STATEMACHINE_P_H
 
+#include <vector>
 #include <QtCore/QString>
-#include <QtCore/QVector>
+#include <QtAlgorithms>
 
 namespace Cutelee
 {
@@ -64,8 +65,8 @@ public:
     qDeleteAll(m_children);
   }
 
-  void addChild(State<TransitionInterface> *state) { m_children.append(state); }
-  QVector<State<TransitionInterface> *> children() const { return m_children; }
+  void addChild(State<TransitionInterface> *state) { m_children.push_back(state); }
+  std::vector<State<TransitionInterface> *> children() const { return m_children; }
   State<TransitionInterface> *parent() const { return m_parent; }
 
   void setInitialState(State<TransitionInterface> *state)
@@ -76,9 +77,9 @@ public:
 
   void addTransition(Transition *transition)
   {
-    m_transitions.append(transition);
+    m_transitions.push_back(transition);
   }
-  QVector<Transition *> transitions() { return m_transitions; }
+  std::vector<Transition *> transitions() { return m_transitions; }
 
   void setEndTransition(Transition *transition)
   {
@@ -106,8 +107,8 @@ protected:
 
 private:
   State<TransitionInterface> *m_initialState;
-  QVector<Transition *> m_transitions;
-  QVector<State<TransitionInterface> *> m_children;
+  std::vector<Transition *> m_transitions;
+  std::vector<State<TransitionInterface> *> m_children;
   State<TransitionInterface> *const m_parent;
   Transition *m_endTransition;
   State<TransitionInterface> *m_unconditionalTransition;
@@ -179,7 +180,7 @@ private:
     }
     else
     {
-      Q_ASSERT(toState->children().isEmpty());
+      Q_ASSERT(toState->children().empty());
       break;
     }
   }

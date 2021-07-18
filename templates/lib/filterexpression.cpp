@@ -38,7 +38,7 @@ class FilterExpressionPrivate
   FilterExpressionPrivate(FilterExpression *fe) : q_ptr(fe) {}
 
   Variable m_variable;
-  QVector<ArgFilter> m_filters;
+  std::vector<ArgFilter> m_filters;
   QStringList m_filterNames;
 
   Q_DECLARE_PUBLIC(FilterExpression)
@@ -130,11 +130,10 @@ FilterExpression::FilterExpression(const QString &varString, Parser *parser)
         Q_ASSERT(f);
 
         d->m_filterNames << subString;
-        d->m_filters << std::pair<std::shared_ptr<Filter>, Variable>(f,
-                                                                    Variable());
+        d->m_filters.push_back({f, Variable()});
 
       } else if (subString.startsWith(QLatin1Char(FILTER_ARGUMENT_SEPARATOR))) {
-        if (d->m_filters.isEmpty()
+        if (d->m_filters.empty()
             || d->m_filters.at(d->m_filters.size() - 1).second.isValid()) {
           const auto remainder = vs.right(vs.size() - lastPos);
           throw Cutelee::Exception(
@@ -212,12 +211,10 @@ QVariant FilterExpression::resolve(OutputStream *stream, Context *c) const
   Q_D(const FilterExpression);
   auto var = d->m_variable.resolve(c);
 
-  auto it = d->m_filters.constBegin();
-  const auto end = d->m_filters.constEnd();
-  for (; it != end; ++it) {
-    auto filter = it->first;
+  for (const auto &filterPair : d->m_filters) {
+    auto filter = filterPair.first;
     filter->setStream(stream);
-    const auto argVar = it->second;
+    const auto argVar = filterPair.second;
     auto arg = argVar.resolve(c);
 
     if (arg.isValid()) {

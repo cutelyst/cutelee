@@ -37,14 +37,11 @@ void TextProcessingMachine::processCharacter(QString::const_iterator character)
 bool TextProcessingMachine::doProcessCharacter(
     QString::const_iterator character, State<CharTransitionInterface> *state)
 {
-  const auto transitions = state->transitions();
-  auto it = transitions.constBegin();
-  const auto end = transitions.constEnd();
-  for (; it != end; ++it) {
-    if ((*it)->characterTest(character)) {
-      executeTransition(state, *it);
-      return true;
-    }
+  for (const auto &transition : state->transitions()) {
+      if (transition->characterTest(character)) {
+        executeTransition(state, transition);
+        return true;
+      }
   }
   return false;
 }

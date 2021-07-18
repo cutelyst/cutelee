@@ -22,7 +22,6 @@
 #define IF_P_H
 
 #include <QtCore/QStringList>
-#include <QtCore/QVector>
 
 #include "../lib/exception.h"
 #include "filterexpression.h"
@@ -52,7 +51,7 @@ private:
 
 private:
   Cutelee::Parser *mParser;
-  QVector<std::shared_ptr<IfToken>> mParseNodes;
+  std::vector<std::shared_ptr<IfToken>> mParseNodes;
   int mPos = 0;
   std::shared_ptr<IfToken> mCurrentToken;
 };
@@ -208,7 +207,7 @@ IfParser::IfParser(Cutelee::Parser *parser, const QStringList &args)
 
 std::shared_ptr<IfToken> IfParser::consumeToken()
 {
-  if (mPos >= mParseNodes.size()) {
+  if (size_t(mPos) >= mParseNodes.size()) {
     return IfToken::makeSentinal();
   }
   auto t = mParseNodes[mPos];

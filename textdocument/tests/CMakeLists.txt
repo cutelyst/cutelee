@@ -22,4 +22,3 @@ cutelee_textdocument_unit_tests(
   htmlbuildertest
   plainmarkupbuildertest
 )
-target_compile_definitions(plainmarkupbuildertest_exec PRIVATE QT_TESTCASE_BUILDDIR="${CMAKE_BINARY_DIR}")

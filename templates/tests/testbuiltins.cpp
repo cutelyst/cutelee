@@ -293,7 +293,11 @@ void TestBuiltinSyntax::testObjects()
   SafeString s3(s1);
   Q_UNUSED(s3);
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   QMetaType::construct(qMetaTypeId<MetaEnumVariable>(), 0, 0);
+#else
+  QMetaType(qMetaTypeId<MetaEnumVariable>()).construct(0, 0);
+#endif
 }
 
 void TestBuiltinSyntax::testTruthiness_data()

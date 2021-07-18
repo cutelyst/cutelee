@@ -590,8 +590,12 @@ void MarkupDirector::processOpeningElements(QTextBlock::iterator it)
       d->m_openFontPointSize = fragmentFormat.font().pointSize();
       break;
     case SpanFontFamily:
-      m_builder->beginFontFamily(fragmentFormat.fontFamily());
+#if QT_VERSION < QT_VERSION_CHECK(6, 1, 0)
       d->m_openFontFamily = fragmentFormat.fontFamily();
+#else
+      d->m_openFontFamily = fragmentFormat.fontFamilies().toStringList().first();
+#endif
+      m_builder->beginFontFamily(d->m_openFontFamily);
       break;
     case SpanBackground:
       m_builder->beginBackground(fragmentFormat.background());
@@ -669,7 +673,11 @@ QSet<int> MarkupDirector::getElementsToClose(QTextBlock::iterator it) const
   auto fontForeground = fragmentFormat.foreground();
   auto fontBackground = fragmentFormat.background();
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 1, 0)
   auto fontFamily = fragmentFormat.fontFamily();
+#else
+  auto fontFamily = fragmentFormat.fontFamilies().toStringList().first();
+#endif
   auto fontPointSize = fragmentFormat.font().pointSize();
   auto anchorHref = fragmentFormat.anchorHref();
 
@@ -767,7 +775,11 @@ QList<int> MarkupDirector::getElementsToOpen(QTextBlock::iterator it)
   auto fontForeground = fragmentFormat.foreground();
   auto fontBackground = fragmentFormat.background();
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 1, 0)
   auto fontFamily = fragmentFormat.fontFamily();
+#else
+  auto fontFamily = fragmentFormat.fontFamilies().toStringList().first();
+#endif
   auto fontPointSize = fragmentFormat.font().pointSize();
   auto anchorHref = fragmentFormat.anchorHref();
 

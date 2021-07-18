@@ -40,22 +40,22 @@ bool Cutelee::variantIsTrue(const QVariant &variant)
   if (!variant.isValid())
     return false;
   switch (variant.userType()) {
-  case QVariant::Bool: {
+  case QMetaType::Bool: {
     return variant.toBool();
   }
-  case QVariant::Int: {
+  case QMetaType::Int: {
     return variant.value<int>() > 0;
   }
-  case QVariant::UInt: {
+  case QMetaType::UInt: {
     return variant.value<uint>() > 0;
   }
-  case QVariant::LongLong: {
+  case QMetaType::LongLong: {
     return variant.value<qlonglong>() > 0;
   }
-  case QVariant::ULongLong: {
+  case QMetaType::ULongLong: {
     return variant.value<qulonglong>() > 0;
   }
-  case QVariant::Double: {
+  case QMetaType::Double: {
     return variant.value<double>() > 0;
   }
   case QMetaType::Float: {
@@ -74,10 +74,10 @@ bool Cutelee::variantIsTrue(const QVariant &variant)
     }
     return true;
   }
-  case QVariant::List: {
+  case QMetaType::QVariantList: {
     return !variant.value<QVariantList>().isEmpty();
   }
-  case QVariant::Hash: {
+  case QMetaType::QVariantHash: {
     return !variant.value<QVariantHash>().isEmpty();
   }
   }
@@ -116,16 +116,16 @@ bool Cutelee::isSafeString(const QVariant &input)
 {
   const auto type = input.userType();
   return ((type == qMetaTypeId<Cutelee::SafeString>())
-          || type == QVariant::String);
+          || type == QMetaType::QString);
 }
 
 static QList<int> getPrimitives()
 {
   QList<int> primitives;
-  primitives << qMetaTypeId<Cutelee::SafeString>() << QVariant::String
-             << QVariant::Bool << QVariant::Int << QVariant::Double
-             << QMetaType::Float << QVariant::Date << QVariant::Time
-             << QVariant::DateTime;
+  primitives << qMetaTypeId<Cutelee::SafeString>() << QMetaType::QString
+             << QMetaType::Bool << QMetaType::Int << QMetaType::Double
+             << QMetaType::Float << QMetaType::QDate << QMetaType::QTime
+             << QMetaType::QDateTime;
   return primitives;
 }
 
@@ -146,11 +146,11 @@ bool Cutelee::equals(const QVariant &lhs, const QVariant &rhs)
     if (rhs.userType() == qMetaTypeId<Cutelee::SafeString>()) {
       equal = (lhs.value<Cutelee::SafeString>()
                == rhs.value<Cutelee::SafeString>());
-    } else if (rhs.userType() == QVariant::String) {
+    } else if (rhs.userType() == QMetaType::QString) {
       equal = (lhs.value<Cutelee::SafeString>() == rhs.toString());
     }
   } else if (rhs.userType() == qMetaTypeId<Cutelee::SafeString>()
-             && lhs.userType() == QVariant::String) {
+             && lhs.userType() == QMetaType::QString) {
     equal = (rhs.value<Cutelee::SafeString>() == lhs.toString());
   } else if (rhs.userType() == qMetaTypeId<MetaEnumVariable>()) {
     if (lhs.userType() == qMetaTypeId<MetaEnumVariable>()) {

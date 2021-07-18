@@ -261,7 +261,11 @@ QVariant Cutelee::MetaType::lookup(const QVariant &object,
 
     return QVariant();
   }
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   auto mo = QMetaType::metaObjectForType(object.userType());
+#else
+  auto mo = QMetaType(object.userType()).metaObject();
+#endif
   if (mo) {
     QMetaType mt(object.userType());
     if (mt.flags().testFlag(QMetaType::IsGadget)) {

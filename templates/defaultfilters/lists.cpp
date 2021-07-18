@@ -179,8 +179,13 @@ QVariant MakeListFilter::doFilter(const QVariant &_input,
 
   auto input = _input;
 
-  if (input.userType() == qMetaTypeId<int>())
-    input.convert(QVariant::String);
+  if (input.userType() == qMetaTypeId<int>()) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    input.convert(QMetaType::QString);
+#else
+    input.convert(QMetaType(QMetaType::QString));
+#endif
+  }
 
   if (input.userType() == qMetaTypeId<SafeString>()
       || input.userType() == qMetaTypeId<QString>()) {
@@ -260,27 +265,27 @@ struct DictSortLessThan {
     const auto l = lp.first;
     const auto r = rp.first;
     switch (l.userType()) {
-    case QVariant::Invalid:
+    case QMetaType::UnknownType:
       return (r.isValid());
-    case QVariant::Int:
+    case QMetaType::Int:
       return l.value<int>() < r.value<int>();
-    case QVariant::UInt:
+    case QMetaType::UInt:
       return l.value<uint>() < r.value<uint>();
-    case QVariant::LongLong:
+    case QMetaType::LongLong:
       return l.value<long long>() < r.value<long long>();
-    case QVariant::ULongLong:
+    case QMetaType::ULongLong:
       return l.value<unsigned long long>() < r.value<unsigned long long>();
     case QMetaType::Float:
       return l.value<float>() < r.value<float>();
-    case QVariant::Double:
+    case QMetaType::Double:
       return l.value<double>() < r.value<double>();
-    case QVariant::Char:
+    case QMetaType::Char:
       return l.toChar() < r.toChar();
-    case QVariant::Date:
+    case QMetaType::QDate:
       return l.toDate() < r.toDate();
-    case QVariant::Time:
+    case QMetaType::QTime:
       return l.toTime() < r.toTime();
-    case QVariant::DateTime:
+    case QMetaType::QDateTime:
       return l.toDateTime() < r.toDateTime();
     case QMetaType::QObjectStar:
       return l.value<QObject *>() < r.value<QObject *>();

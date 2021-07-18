@@ -305,7 +305,11 @@ void QtLocalizer::pushLocale(const QString &localeName)
     localeStruct = new Locale(QLocale(localeName));
     auto qtTranslator = new QTranslator;
     qtTranslator->load(QStringLiteral("qt_") + localeName,
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
                        QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+#else
+                       QLibraryInfo::path(QLibraryInfo::TranslationsPath));
+#endif
     localeStruct->systemTranslators.append(qtTranslator);
     auto appTranslator = new QTranslator;
     appTranslator->load(d->m_appTranslatorPrefix + localeName,

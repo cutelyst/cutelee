@@ -165,7 +165,11 @@ QStringList Variable::lookups() const
 class StaticQtMetaObject : public QObject
 {
 public:
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   static const QMetaObject *_smo() { return &QObject::staticQtMetaObject; }
+#else
+  static const QMetaObject *_smo() { return &QObject::staticMetaObject; }
+#endif
 };
 
 QVariant Variable::resolve(Context *c) const

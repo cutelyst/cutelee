@@ -24,6 +24,7 @@
 #include "util.h"
 #include "variable.h"
 
+#include <QSequentialIterable>
 #include <QtCore/QDateTime>
 
 QVariant JoinFilter::doFilter(const QVariant &input, const QVariant &argument,
@@ -138,8 +139,8 @@ QVariant RandomFilter::doFilter(const QVariant &input, const QVariant &argument,
   if (varList.isEmpty())
     return QVariant();
 
-  qsrand(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch());
-  auto rnd = qrand() % varList.size();
+  srand(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch());
+  auto rnd = rand() % varList.size();
   return varList.at(rnd);
 }
 
@@ -184,9 +185,12 @@ QVariant MakeListFilter::doFilter(const QVariant &_input,
   if (input.userType() == qMetaTypeId<SafeString>()
       || input.userType() == qMetaTypeId<QString>()) {
     QVariantList list;
-    const auto parts = getSafeString(input).get().split(
-                QString(), QString::SkipEmptyParts);
-    for (const QVariant &var : parts) {
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+    const auto parts = getSafeString(input).get().split(QString(), QString::SkipEmptyParts);
+#else
+    const auto parts = getSafeString(input).get().split(QString(), Qt::SkipEmptyParts);
+#endif
+    for (const auto &var : parts) {
       list << var;
     }
     return list;

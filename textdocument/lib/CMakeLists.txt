@@ -36,7 +36,7 @@ if (CMAKE_GENERATOR MATCHES "Visual Studio")
 endif()
 
 target_link_libraries(Cutelee_TextDocument
-  PUBLIC Qt5::Gui
+  PUBLIC Qt${QT_VERSION_MAJOR}::Gui
 )
 
 set_target_properties(Cutelee_TextDocument PROPERTIES

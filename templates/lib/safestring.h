@@ -172,8 +172,10 @@ public:
 
     SafeString &append(const SafeString &str);
     SafeString &append(const QString &str);
-    SafeString &append(const QStringRef &reference);
-    SafeString &append(const QLatin1String &str);
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 2)
+    SafeString &append(QStringView reference);
+#endif
+    SafeString &append(QLatin1String str);
 #ifndef QT_NO_CAST_FROM_ASCII
     SafeString &append(const QByteArray &ba)
     {
@@ -195,7 +197,7 @@ public:
 
     SafeString &insert(int position, const SafeString &str);
     SafeString &insert(int position, const QString &str);
-    SafeString &insert(int position, const QLatin1String &str);
+    SafeString &insert(int position, QLatin1String str);
     SafeString &insert(int position, const QChar *unicode, int size);
     SafeString &insert(int position, QChar ch);
 
@@ -210,7 +212,7 @@ public:
 
     SafeString &prepend(const SafeString &str);
     SafeString &prepend(const QString &str);
-    SafeString &prepend(const QLatin1String &str);
+    SafeString &prepend(QLatin1String str);
 #ifndef QT_NO_CAST_FROM_ASCII
     SafeString &prepend(const QByteArray &ba)
     {
@@ -259,17 +261,17 @@ public:
                         Qt::CaseSensitivity cs = Qt::CaseSensitive);
     SafeString &replace(QChar before, QChar after,
                         Qt::CaseSensitivity cs = Qt::CaseSensitive);
-    SafeString &replace(const QLatin1String &before, const QLatin1String &after,
+    SafeString &replace(QLatin1String before, QLatin1String after,
                         Qt::CaseSensitivity cs = Qt::CaseSensitive);
-    SafeString &replace(const QLatin1String &before, const SafeString &after,
+    SafeString &replace(QLatin1String before, const SafeString &after,
                         Qt::CaseSensitivity cs = Qt::CaseSensitive);
-    SafeString &replace(const QLatin1String &before, const QString &after,
+    SafeString &replace(QLatin1String before, const QString &after,
                         Qt::CaseSensitivity cs = Qt::CaseSensitive);
-    SafeString &replace(const SafeString &before, const QLatin1String &after,
+    SafeString &replace(const SafeString &before, QLatin1String after,
                         Qt::CaseSensitivity cs = Qt::CaseSensitive);
-    SafeString &replace(const QString &before, const QLatin1String &after,
+    SafeString &replace(const QString &before, QLatin1String after,
                         Qt::CaseSensitivity cs = Qt::CaseSensitive);
-    SafeString &replace(QChar c, const QLatin1String &after,
+    SafeString &replace(QChar c, QLatin1String after,
                         Qt::CaseSensitivity cs = Qt::CaseSensitive);
     SafeString &replace(const QRegularExpression &rx, const SafeString &after);
     SafeString &replace(const QRegularExpression &rx, const QString &after);
@@ -300,16 +302,29 @@ public:
     SafeString &setUtf16(const ushort *unicode, int size);
     SafeString simplified() const;
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
     QStringList split(const SafeString &sep,
-                      SplitBehavior behavior = KeepEmptyParts,
+                      QString::SplitBehavior behavior = QString::KeepEmptyParts,
                       Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
     QStringList split(const QString &sep,
-                      SplitBehavior behavior = KeepEmptyParts,
+                      QString::SplitBehavior behavior = QString::KeepEmptyParts,
                       Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-    QStringList split(const QChar &sep, SplitBehavior behavior = KeepEmptyParts,
+    QStringList split(const QChar &sep, QString::SplitBehavior behavior = QString::KeepEmptyParts,
                       Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
     QStringList split(const QRegularExpression &rx,
-                      SplitBehavior behavior = KeepEmptyParts) const;
+                      QString::SplitBehavior behavior = QString::KeepEmptyParts) const;
+#else
+    QStringList split(const SafeString &sep,
+                      Qt::SplitBehavior behavior = Qt::KeepEmptyParts,
+                      Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+    QStringList split(const QString &sep,
+                      Qt::SplitBehavior behavior = Qt::KeepEmptyParts,
+                      Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+    QStringList split(const QChar &sep, Qt::SplitBehavior behavior = Qt::KeepEmptyParts,
+                      Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+    QStringList split(const QRegularExpression &rx,
+                      Qt::SplitBehavior behavior = Qt::KeepEmptyParts) const;
+#endif
 
     SafeString toLower() const;
     SafeString toUpper() const;

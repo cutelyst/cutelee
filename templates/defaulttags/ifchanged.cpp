@@ -28,7 +28,11 @@ IfChangedNodeFactory::IfChangedNodeFactory() {}
 
 Node *IfChangedNodeFactory::getNode(const QString &tagContent, Parser *p) const
 {
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
   auto expr = tagContent.split(QLatin1Char(' '), QString::SkipEmptyParts);
+#else
+  auto expr = tagContent.split(QLatin1Char(' '), Qt::SkipEmptyParts);
+#endif
 
   expr.takeAt(0);
   auto n = new IfChangedNode(getFilterExpressionList(expr, p), p);

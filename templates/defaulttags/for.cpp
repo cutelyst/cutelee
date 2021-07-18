@@ -24,7 +24,9 @@
 #include "metaenumvariable_p.h"
 #include "parser.h"
 
-ForNodeFactory::ForNodeFactory() {}
+#include <QSequentialIterable>
+
+ForNodeFactory::ForNodeFactory() = default;
 
 Node *ForNodeFactory::getNode(const QString &tagContent, Parser *p) const
 {
@@ -55,7 +57,11 @@ Node *ForNodeFactory::getNode(const QString &tagContent, Parser *p) const
   QStringList vars;
   const auto parts = expr.mid(0, expr.size() - 2);
   for (const QString &arg : parts) {
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
       const auto args = arg.split(QLatin1Char(','), QString::SkipEmptyParts);
+#else
+      const auto args = arg.split(QLatin1Char(','), Qt::SkipEmptyParts);
+#endif
       for (const QString &var : args) {
           if (var.isEmpty()) {
               throw Cutelee::Exception(

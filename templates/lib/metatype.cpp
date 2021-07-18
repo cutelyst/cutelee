@@ -26,9 +26,11 @@
 
 #include <QtCore/QDebug>
 #include <QJsonValue>
+#include <QAssociativeIterable>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QSequentialIterable>
 
 using namespace Cutelee;
 

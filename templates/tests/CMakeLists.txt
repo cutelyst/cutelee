@@ -1,4 +1,5 @@
-find_package(Qt5Test 5.2.0 REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Test LinguistTools REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Test LinguistTools REQUIRED)
 
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 
@@ -6,12 +7,11 @@ set( CUTELEE_PLUGIN_PATH "${CMAKE_BINARY_DIR}/" )
 
 configure_file(cutelee_paths.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/cutelee_paths.h)
 
-find_package(Qt5LinguistTools QUIET)
-if (Qt5LinguistTools_FOUND)
+if (LinguistTools_FOUND)
   set(TESTS_LOCALES "fr_FR" "de_DE")
 
-  set(QT_LUPDATE_EXECUTABLE Qt5::lupdate)
-  set(QT_LRELEASE_EXECUTABLE Qt5::lrelease)
+  set(QT_LUPDATE_EXECUTABLE Qt${QT_VERSION_MAJOR}::lupdate)
+  set(QT_LRELEASE_EXECUTABLE Qt${QT_VERSION_MAJOR}::lrelease)
 
   set(LINGUIST_TS_ARGS COMMAND "${QT_LUPDATE_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/test_input.cpp" "-ts")
 
@@ -46,13 +46,17 @@ configure_file(testresource.qrc.cmake "${CMAKE_CURRENT_BINARY_DIR}/testresource.
 
 set (_rcc_file "${CMAKE_CURRENT_BINARY_DIR}/testresource.qrc")
 
-qt5_add_resources(_testresource_rcc_src ${_rcc_file} OPTIONS -root "/" )
+if (${QT_VERSION_MAJOR} STREQUAL "5")
+  qt5_add_resources(_testresource_rcc_src ${_rcc_file} OPTIONS -root "/" )
+else()
+  qt_add_resources(_testresource_rcc_src ${_rcc_file} OPTIONS -root "/" )
+endif()
 
 add_library(template_test_builtins STATIC coverageobject.cpp
   coverageobject.cpp
   ${_testresource_rcc_src}
 )
-target_link_libraries(template_test_builtins Qt5::Test)
+target_link_libraries(template_test_builtins Qt${QT_VERSION_MAJOR}::Test)
 target_compile_definitions(template_test_builtins PUBLIC cxx_auto_type)
 
 macro(cutelee_templates_unit_tests)
@@ -63,7 +67,7 @@ macro(cutelee_templates_unit_tests)
     add_test(${_testname} ${_testname}_exec )
     target_link_libraries(${_testname}_exec Cutelee5::Templates template_test_builtins)
 
-    if (Qt5Qml_FOUND)
+    if (Qml_FOUND)
       target_compile_definitions(${_testname}_exec PRIVATE HAVE_QTQML_LIB)
     endif()
 
@@ -83,13 +87,13 @@ cutelee_templates_unit_tests(
   testinsertlibrary
 )
 
-if (Qt5Qml_FOUND)
+if (Qml_FOUND)
   cutelee_templates_unit_tests(
     testscriptabletags
   )
 endif()
 
-if (Qt5LinguistTools_FOUND)
+if (LinguistTools_FOUND)
   cutelee_templates_unit_tests(
     testinternationalization
   )

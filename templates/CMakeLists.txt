@@ -1,6 +1,5 @@
-
-find_package(Qt5Core 5.2.0 REQUIRED)
-find_package(Qt5Qml 5.2.0)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Qml REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} 5.6.0 COMPONENTS Core Qml REQUIRED)
 
 add_subdirectory(lib)
 

@@ -1,11 +1,12 @@
-find_package(Qt5Test 5.2.0 REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Test  REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Test REQUIRED)
 
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 
 add_library(textdocument_test_builtins STATIC
   coverageobject.cpp
 )
-target_link_libraries(textdocument_test_builtins Qt5::Test)
+target_link_libraries(textdocument_test_builtins Qt${QT_VERSION_MAJOR}::Test)
 target_compile_features(textdocument_test_builtins PUBLIC cxx_auto_type)
 
 macro(CUTELEE_TEXTDOCUMENT_UNIT_TESTS)

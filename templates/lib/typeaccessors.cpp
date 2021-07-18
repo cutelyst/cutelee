@@ -157,9 +157,9 @@ TypeAccessor<Cutelee::SafeString &>::lookUp(const Cutelee::SafeString &object,
       if (it.hasNext()) {
         match = it.peekNext();
         nextPos = match.capturedStart();
-        output += s.midRef(pos + matchedLength, nextPos - pos - 1);
+        output += s.mid(pos + matchedLength, nextPos - pos - 1);
       } else {
-        output += s.rightRef(s.length() - (pos + matchedLength));
+        output += s.right(s.length() - (pos + matchedLength));
       }
     }
 

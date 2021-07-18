@@ -29,7 +29,11 @@ NowNodeFactory::NowNodeFactory() {}
 
 Node *NowNodeFactory::getNode(const QString &tagContent, Parser *p) const
 {
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
   auto expr = tagContent.split(QLatin1Char('"'), QString::KeepEmptyParts);
+#else
+  auto expr = tagContent.split(QLatin1Char('"'), Qt::KeepEmptyParts);
+#endif
 
   if (expr.size() != 3) {
     throw Cutelee::Exception(TagSyntaxError,

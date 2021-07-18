@@ -285,7 +285,7 @@ QSharedPointer<IfToken> IfParser::createNode(const QString &content) const
       Cutelee::FilterExpression(content, mParser));
 }
 
-QVariant IfToken::evaluate(Context *c) const
+QVariant IfToken::evaluate(Cutelee::Context *c) const
 {
   try {
     switch (mOpCode) {
@@ -310,13 +310,13 @@ QVariant IfToken::evaluate(Context *c) const
       return !Cutelee::equals(mArgs.first->evaluate(c),
                                mArgs.second->evaluate(c));
     case GtCode:
-      return mArgs.first->evaluate(c) > mArgs.second->evaluate(c);
+      return Cutelee::gt(mArgs.first->evaluate(c), mArgs.second->evaluate(c));
     case GteCode:
-      return mArgs.first->evaluate(c) >= mArgs.second->evaluate(c);
+      return Cutelee::gte(mArgs.first->evaluate(c), mArgs.second->evaluate(c));
     case LtCode:
-      return mArgs.first->evaluate(c) < mArgs.second->evaluate(c);
+      return Cutelee::lt(mArgs.first->evaluate(c), mArgs.second->evaluate(c));
     case LteCode:
-      return mArgs.first->evaluate(c) <= mArgs.second->evaluate(c);
+      return Cutelee::lte(mArgs.first->evaluate(c), mArgs.second->evaluate(c));
     default:
       Q_ASSERT(!"Invalid OpCode");
       return QVariant();

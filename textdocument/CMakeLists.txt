@@ -1,5 +1,5 @@
-
-find_package(Qt5Gui 5.2.0 REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Gui REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui REQUIRED)
 
 add_subdirectory(lib)
 

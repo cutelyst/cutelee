@@ -414,7 +414,7 @@ void TestDefaultTags::testIfTag_data()
   dict.clear();
   dict.insert(QStringLiteral("foo"), QStringLiteral("abcde"));
   QTest::newRow("if-tag-filter01")
-      << QStringLiteral("{% if foo|length == 5 %}yes{% else %}no{% endif %}")
+      << QStringLiteral("{% if foo|length == 5 %}yes{% else %}{{ foo|length }}{% endif %}")
       << dict << QStringLiteral("yes") << NoError;
 
   dict.clear();
@@ -469,7 +469,7 @@ void TestDefaultTags::testIfTag_data()
   QTest::newRow("if-tag-eq08")
           << QStringLiteral("{% if foo == \"bar\" %}yes{% else %}no{% endif %}")
           << dict << QStringLiteral("yes") << NoError;
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   dict.clear();
   dict.insert(QStringLiteral("zoo"), QVariant::fromValue(new Zoo(this)));
   dict.insert(QStringLiteral("tigersEnum"),
@@ -477,6 +477,7 @@ void TestDefaultTags::testIfTag_data()
   QTest::newRow("if-tag-eq07") << QStringLiteral(
       "{% if tigersEnum == zoo.Tigers %}yes{% else %}no{% endif %}")
                                << dict << QStringLiteral("yes") << NoError;
+#endif
 
   // Comparison
 

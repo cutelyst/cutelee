@@ -85,6 +85,10 @@ CUTELEE_TEMPLATES_EXPORT bool supportedOutputType(const QVariant &input);
   @see QVariant::operator==
 */
 CUTELEE_TEMPLATES_EXPORT bool equals(const QVariant &lhs, const QVariant &rhs);
+CUTELEE_TEMPLATES_EXPORT bool gt(const QVariant& lhs, const QVariant& rhs);
+CUTELEE_TEMPLATES_EXPORT bool gte(const QVariant& lhs, const QVariant& rhs);
+CUTELEE_TEMPLATES_EXPORT bool lt(const QVariant& lhs, const QVariant& rhs);
+CUTELEE_TEMPLATES_EXPORT bool lte(const QVariant& lhs, const QVariant& rhs);
 
 /**
   Converts @p size into the nearest file size unit like MB or MiB, based on the

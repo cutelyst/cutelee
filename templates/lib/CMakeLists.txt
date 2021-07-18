@@ -1,3 +1,5 @@
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} 5.6.0 COMPONENTS Core REQUIRED)
 
 configure_file(cutelee_version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/cutelee_version.h)
 
@@ -82,7 +84,7 @@ target_compile_definitions(Cutelee_Templates
     PLUGINS_PREFER_DEBUG_POSTFIX=$<CONFIG:Debug>
 )
 
-if (Qt5Qml_FOUND)
+if (Qml_FOUND)
   set(scriptabletags_FILES
     scriptablecontext.cpp
     scriptablefilterexpression.cpp
@@ -102,7 +104,7 @@ if (Qt5Qml_FOUND)
   target_sources(Cutelee_Templates PRIVATE ${scriptabletags_SRCS})
   target_include_directories(Cutelee_Templates PRIVATE ../scriptabletags)
   target_link_libraries(Cutelee_Templates
-    PRIVATE Qt5::Qml
+    PRIVATE Qt${QT_VERSION_MAJOR}::Qml
   )
 endif()
 
@@ -113,7 +115,7 @@ endif()
 configure_file(cutelee_test_export.h.in "${CMAKE_CURRENT_BINARY_DIR}/cutelee_test_export.h")
 
 target_link_libraries(Cutelee_Templates
-  LINK_PUBLIC Qt5::Core
+  LINK_PUBLIC Qt${QT_VERSION_MAJOR}::Core
 )
 
 set_target_properties(Cutelee_Templates PROPERTIES

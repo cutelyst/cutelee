@@ -145,14 +145,16 @@ SafeString &SafeString::NestedString::append(const QString &str)
   return *m_safeString;
 }
 
-SafeString &SafeString::NestedString::append(const QStringRef &reference)
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 2)
+SafeString &SafeString::NestedString::append(QStringView reference)
 {
   QString::append(reference);
   m_safeString->m_safety = IsNotSafe;
   return *m_safeString;
 }
+#endif
 
-SafeString &SafeString::NestedString::append(const QLatin1String &str)
+SafeString &SafeString::NestedString::append(QLatin1String str)
 {
   QString::append(str);
   m_safeString->m_safety = IsNotSafe;
@@ -196,7 +198,7 @@ SafeString &SafeString::NestedString::insert(int position, const QString &str)
 }
 
 SafeString &SafeString::NestedString::insert(int position,
-                                             const QLatin1String &str)
+                                             QLatin1String str)
 {
   QString::insert(position, str);
   return *m_safeString;
@@ -261,7 +263,7 @@ SafeString &SafeString::NestedString::prepend(const QString &str)
   return *m_safeString;
 }
 
-SafeString &SafeString::NestedString::prepend(const QLatin1String &str)
+SafeString &SafeString::NestedString::prepend(QLatin1String str)
 {
   QString::prepend(str);
   m_safeString->m_safety = IsNotSafe;
@@ -430,8 +432,8 @@ SafeString &SafeString::NestedString::replace(QChar before, QChar after,
   return *m_safeString;
 }
 
-SafeString &SafeString::NestedString::replace(const QLatin1String &before,
-                                              const QLatin1String &after,
+SafeString &SafeString::NestedString::replace(QLatin1String before,
+                                              QLatin1String after,
                                               Qt::CaseSensitivity cs)
 {
   QString::replace(before, after, cs);
@@ -439,7 +441,7 @@ SafeString &SafeString::NestedString::replace(const QLatin1String &before,
   return *m_safeString;
 }
 
-SafeString &SafeString::NestedString::replace(const QLatin1String &before,
+SafeString &SafeString::NestedString::replace(QLatin1String before,
                                               const Cutelee::SafeString &after,
                                               Qt::CaseSensitivity cs)
 {
@@ -448,7 +450,7 @@ SafeString &SafeString::NestedString::replace(const QLatin1String &before,
   return *m_safeString;
 }
 
-SafeString &SafeString::NestedString::replace(const QLatin1String &before,
+SafeString &SafeString::NestedString::replace(QLatin1String before,
                                               const QString &after,
                                               Qt::CaseSensitivity cs)
 {
@@ -459,7 +461,7 @@ SafeString &SafeString::NestedString::replace(const QLatin1String &before,
 
 SafeString &
 SafeString::NestedString::replace(const Cutelee::SafeString &before,
-                                  const QLatin1String &after,
+                                  QLatin1String after,
                                   Qt::CaseSensitivity cs)
 {
   QString::replace(before.get(), after, cs);
@@ -468,7 +470,7 @@ SafeString::NestedString::replace(const Cutelee::SafeString &before,
 }
 
 SafeString &SafeString::NestedString::replace(const QString &before,
-                                              const QLatin1String &after,
+                                              QLatin1String after,
                                               Qt::CaseSensitivity cs)
 {
   QString::replace(before, after, cs);
@@ -477,7 +479,7 @@ SafeString &SafeString::NestedString::replace(const QString &before,
 }
 
 SafeString &SafeString::NestedString::replace(QChar c,
-                                              const QLatin1String &after,
+                                              QLatin1String after,
                                               Qt::CaseSensitivity cs)
 {
   QString::replace(c, after, cs);
@@ -635,6 +637,7 @@ SafeString SafeString::NestedString::simplified() const
   return SafeString(QString::simplified(), m_safeString->m_safety);
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
 QStringList SafeString::NestedString::split(const Cutelee::SafeString &sep,
                                             QString::SplitBehavior behavior,
                                             Qt::CaseSensitivity cs) const
@@ -662,6 +665,35 @@ SafeString::NestedString::split(const QRegularExpression &rx,
 {
   return QString::split(rx, behavior);
 }
+#else
+QStringList SafeString::NestedString::split(const Cutelee::SafeString &sep,
+                                            Qt::SplitBehavior behavior,
+                                            Qt::CaseSensitivity cs) const
+{
+  return QString::split(sep.get(), behavior, cs);
+}
+
+QStringList SafeString::NestedString::split(const QString &sep,
+                                            Qt::SplitBehavior behavior,
+                                            Qt::CaseSensitivity cs) const
+{
+  return QString::split(sep, behavior, cs);
+}
+
+QStringList SafeString::NestedString::split(const QChar &sep,
+                                            Qt::SplitBehavior behavior,
+                                            Qt::CaseSensitivity cs) const
+{
+  return QString::split(sep, behavior, cs);
+}
+
+QStringList
+SafeString::NestedString::split(const QRegularExpression &rx,
+                                Qt::SplitBehavior behavior) const
+{
+  return QString::split(rx, behavior);
+}
+#endif
 
 SafeString SafeString::NestedString::toLower() const
 {

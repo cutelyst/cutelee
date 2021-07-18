@@ -231,7 +231,11 @@ QVariant TruncateWordsFilter::doFilter(const QVariant &input,
   }
 
   QString inputString = getSafeString(input);
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
   auto words = inputString.split(QLatin1Char(' '), QString::SkipEmptyParts);
+#else
+  auto words = inputString.split(QLatin1Char(' '), Qt::SkipEmptyParts);
+#endif
 
   if (words.size() > numWords) {
     words = words.mid(0, numWords);
@@ -348,7 +352,11 @@ QVariant WordWrapFilter::doFilter(const QVariant &input,
   Q_UNUSED(autoescape)
   QString _input = getSafeString(input);
   auto width = argument.value<int>();
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
   auto partList = _input.split(QLatin1Char(' '), QString::SkipEmptyParts);
+#else
+  auto partList = _input.split(QLatin1Char(' '), Qt::SkipEmptyParts);
+#endif
   if (partList.isEmpty())
     return QVariant();
   auto output = partList.takeFirst();
@@ -408,9 +416,12 @@ QVariant SafeSequenceFilter::doFilter(const QVariant &input,
   Q_UNUSED(argument)
   Q_UNUSED(autoescape)
   QVariantList list;
-  if (input.userType() == qMetaTypeId<QVariantList>())
-    Q_FOREACH (const QVariant &item, input.value<QVariantList>())
-      list << markSafe(getSafeString(item));
+  if (input.userType() == qMetaTypeId<QVariantList>()) {
+      const auto inputList = input.value<QVariantList>();
+      for (const auto &item : inputList) {
+          list << markSafe(getSafeString(item));
+      }
+  }
   return list;
 }
 
@@ -505,7 +516,11 @@ QVariant FileSizeFormatFilter::doFilter(const QVariant &input,
   qreal multiplier = 1.0f;
 
   if (!arg.get().isEmpty()) {
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
       const auto argList = arg.get().split(QLatin1Char(','), QString::SkipEmptyParts);
+#else
+      const auto argList = arg.get().split(QLatin1Char(','), Qt::SkipEmptyParts);
+#endif
       const auto numArgs = argList.size();
       if (numArgs > 0) {
           unitSystem = argList.at(0).toInt(&numberConvert);

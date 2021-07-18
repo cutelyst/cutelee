@@ -1,4 +1,4 @@
-﻿/*
+/*
   This file is part of the Cutelee template system.
 
   Copyright (c) 2009,2010 Stephen Kelly <steveire@gmail.com>
@@ -30,6 +30,7 @@
 #include "coverageobject.h"
 #include "engine.h"
 #include "cutelee_paths.h"
+
 #include "template.h"
 #include <util.h>
 
@@ -367,7 +368,7 @@ void TestFilters::testDateBasedFilters_data()
   QTest::newRow("filter-timeuntil15") << QStringLiteral("{{|timeuntil}}")
                                       << dict << QStringLiteral("") << NoError;
 
-  QDateTime d(QDate(2008, 1, 1));
+  QDate d(2008, 1, 1);
 
   dict.clear();
   dict.insert(QStringLiteral("d"), d);
@@ -884,6 +885,7 @@ void TestFilters::testStringFilters_data()
       << QStringLiteral("{{ a|escape|escape }}") << dict
       << QStringLiteral("x&amp;y") << NoError;
 
+
   //  Force_escape is applied immediately. It can be used to provide
   //  double-escaping, for example.
 
@@ -894,6 +896,7 @@ void TestFilters::testStringFilters_data()
   QTest::newRow("filter-force-escape02")
       << QStringLiteral("{{ a|force_escape }}") << dict
       << QStringLiteral("x&amp;y") << NoError;
+
   QTest::newRow("filter-force-escape03")
       << QStringLiteral("{% autoescape off %}{{ a|force_escape|force_escape "
                         "}}{% endautoescape %}")

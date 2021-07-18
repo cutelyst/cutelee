@@ -20,6 +20,9 @@ endif()
 
 include(GNUInstallDirs)
 
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} 5.6.0 COMPONENTS Core REQUIRED)
+
 option(BUILD_SHARED_LIBS "Build in shared lib mode" ON)
 option( BUILD_TEMPLATES "Build the Cutelee template library" TRUE )
 option( BUILD_TEXTDOCUMENT "Build the Cutelee textdocument library" TRUE )
@@ -223,7 +226,9 @@ if(LCOV_FOUND)
   # For an unknown reason lcov does not work with absolute paths such as ${CMAKE_BINARY_DIR}
   file(RELATIVE_PATH relBinaryDir / ${CMAKE_BINARY_DIR})
 
-  find_package(Qt5Core REQUIRED)
+  find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
+  find_package(Qt${QT_VERSION_MAJOR} 5.6.0 COMPONENTS Core REQUIRED)
+
   get_property(qmake_loc TARGET Qt5::qmake PROPERTY LOCATION)
   execute_process(COMMAND "${qmake_loc}" -query QT_INSTALL_HEADERS
     RESULT_VARIABLE return_code

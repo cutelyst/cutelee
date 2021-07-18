@@ -33,9 +33,9 @@ Node *WithNodeFactory::getNode(const QString &tagContent, Parser *p) const
     if (expr.size() != 4 || expr.at(2) != QStringLiteral("as")) {
         bool newSyntax = false;
         for (int i = 1; i < expr.size(); ++i) {
-            const auto parts = expr.at(i).splitRef(QLatin1Char('='));
+            const auto parts = expr.at(i).split(QLatin1Char('='));
             if (parts.size() == 2) {
-                namedExpressions.push_back({ parts.at(0).toString(), FilterExpression(parts.at(1).toString(), p) });
+                namedExpressions.push_back({ parts.at(0), FilterExpression(parts.at(1), p) });
                 newSyntax = true;
             } else {
                 newSyntax = false;

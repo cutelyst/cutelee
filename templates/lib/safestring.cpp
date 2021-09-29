@@ -145,7 +145,7 @@ SafeString &SafeString::NestedString::append(const QString &str)
   return *m_safeString;
 }
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 12, 2)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 2)
 SafeString &SafeString::NestedString::append(QStringView reference)
 {
   QString::append(reference);

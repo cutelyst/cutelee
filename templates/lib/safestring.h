@@ -172,7 +172,7 @@ public:
 
     SafeString &append(const SafeString &str);
     SafeString &append(const QString &str);
-#if QT_VERSION < QT_VERSION_CHECK(5, 12, 2)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 2)
     SafeString &append(QStringView reference);
 #endif
     SafeString &append(QLatin1String str);

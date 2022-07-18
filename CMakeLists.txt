@@ -223,7 +223,7 @@ if(LCOV_FOUND)
   find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
   find_package(Qt${QT_VERSION_MAJOR} 5.6.0 COMPONENTS Core REQUIRED)
 
-  get_property(qmake_loc TARGET Qt5::qmake PROPERTY LOCATION)
+  get_property(qmake_loc TARGET Qt${QT_VERSION_MAJOR}::qmake PROPERTY LOCATION)
   execute_process(COMMAND "${qmake_loc}" -query QT_INSTALL_HEADERS
     RESULT_VARIABLE return_code
     OUTPUT_VARIABLE output

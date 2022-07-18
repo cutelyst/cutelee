@@ -2,7 +2,7 @@ set(CPACK_PACKAGE_VENDOR "Daniel Nicoletti")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A Qt Template Engine based on Django templates")
 set(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_PACKAGE_CONTACT "Daniel Nicoletti <dantti12@gmail.com>")
-
+set(CPACK_PACKAGE_NAME "${PROJECT_NAME}${PROJECT_VERSION_MAJOR}-qt${QT_VERSION_MAJOR}")
 
 # http://www.vtk.org/Wiki/CMake:Component_Install_With_CPack
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/COPYING.LIB")

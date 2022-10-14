@@ -1,6 +1,8 @@
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} 5.6.0 COMPONENTS Core REQUIRED)
 
+set(templates_target_name CuteleeQt${QT_VERSION_MAJOR}Templates)
+
 configure_file(cutelee_version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/cutelee_version.h)
 
 set(Cutelee_PLUGIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR} )
@@ -38,7 +40,7 @@ set(cutelee_templates_HEADERS
   variable.h
 )
 
-add_library(Cutelee_Templates SHARED
+add_library(${templates_target_name} SHARED
   abstractlocalizer.cpp
   cachingloaderdecorator.cpp
   customtyperegistry.cpp
@@ -78,12 +80,12 @@ add_library(Cutelee_Templates SHARED
   ${cutelee_templates_HEADERS}
 )
 
-add_library(Cutelee::Templates ALIAS Cutelee_Templates)
-generate_export_header(Cutelee_Templates)
-set_property(TARGET Cutelee_Templates PROPERTY
+add_library(Cutelee::Templates ALIAS ${templates_target_name})
+generate_export_header(${templates_target_name})
+set_property(TARGET ${templates_target_name} PROPERTY
   EXPORT_NAME Templates
 )
-target_compile_features(Cutelee_Templates
+target_compile_features(${templates_target_name}
   PRIVATE
     cxx_auto_type
   PUBLIC
@@ -92,18 +94,18 @@ target_compile_features(Cutelee_Templates
 
 if (CMAKE_GENERATOR MATCHES "Visual Studio")
 
-  set_property(TARGET Cutelee_Templates PROPERTY DEBUG_POSTFIX "d")
+  set_property(TARGET ${templates_target_name} PROPERTY DEBUG_POSTFIX "d")
 
   foreach(cfg ${CMAKE_CONFIGURATION_TYPES})
     string(TOUPPER ${cfg} CFG)
-    set_target_properties(Cutelee_Templates
+    set_target_properties(${templates_target_name}
       PROPERTIES
       LIBRARY_OUTPUT_DIRECTORY_${CFG} "${CMAKE_CURRENT_BINARY_DIR}"
       RUNTIME_OUTPUT_DIRECTORY_${CFG} "${CMAKE_CURRENT_BINARY_DIR}"
       )
   endforeach()
 endif()
-target_compile_definitions(Cutelee_Templates
+target_compile_definitions(${templates_target_name}
   PRIVATE
     PLUGINS_PREFER_DEBUG_POSTFIX=$<CONFIG:Debug>
 )
@@ -125,9 +127,9 @@ if (Qml_FOUND)
     list(APPEND scriptabletags_SRCS ${CMAKE_SOURCE_DIR}/templates/scriptabletags/${file})
   endforeach()
 
-  target_sources(Cutelee_Templates PRIVATE ${scriptabletags_SRCS})
-  target_include_directories(Cutelee_Templates PRIVATE ../scriptabletags)
-  target_link_libraries(Cutelee_Templates
+  target_sources(${templates_target_name} PRIVATE ${scriptabletags_SRCS})
+  target_include_directories(${templates_target_name} PRIVATE ../scriptabletags)
+  target_link_libraries(${templates_target_name}
     PRIVATE Qt${QT_VERSION_MAJOR}::Qml
   )
 endif()
@@ -138,22 +140,22 @@ endif()
 
 configure_file(cutelee_test_export.h.in "${CMAKE_CURRENT_BINARY_DIR}/cutelee_test_export.h")
 
-target_link_libraries(Cutelee_Templates
+target_link_libraries(${templates_target_name}
   LINK_PUBLIC Qt${QT_VERSION_MAJOR}::Core
 )
 
-set_target_properties(Cutelee_Templates PROPERTIES
+set_target_properties(${templates_target_name} PROPERTIES
   VERSION    ${Cutelee_VERSION}
   SOVERSION  ${Cutelee_VERSION_MAJOR}
 )
 
-target_include_directories(Cutelee_Templates PUBLIC
+target_include_directories(${templates_target_name} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<INSTALL_INTERFACE:include/cutelee${PROJECT_VERSION_MAJOR}-qt${QT_VERSION_MAJOR}>
 )
 
-set_property(TARGET Cutelee_Templates PROPERTY PUBLIC_HEADER ${cutelee_templates_HEADERS})
-install(TARGETS Cutelee_Templates EXPORT cutelee_targets
+set_property(TARGET ${templates_target_name} PROPERTY PUBLIC_HEADER ${cutelee_templates_HEADERS})
+install(TARGETS ${templates_target_name} EXPORT cutelee_targets
   RUNTIME DESTINATION bin COMPONENT Templates
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT Templates
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT Templates

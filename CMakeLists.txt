@@ -83,7 +83,7 @@ set(Cutelee_MAJOR_MINOR_VERSION_STRING "${Cutelee_VERSION_MAJOR}.${Cutelee_VERSI
 set (LIB_SUFFIX "" CACHE STRING "Define suffix of library directory name (eg. '64')")
 
 set( LIB_INSTALL_DIR lib${LIB_SUFFIX} )
-set( PLUGIN_INSTALL_DIR ${LIB_INSTALL_DIR}/cutelee/${Cutelee_MAJOR_MINOR_VERSION_STRING} )
+set( PLUGIN_INSTALL_DIR ${LIB_INSTALL_DIR}/cutelee-qt${QT_VERSION_MAJOR}/${Cutelee_MAJOR_MINOR_VERSION_STRING} )
 
 # set up RPATH/install_name_dir
 set( CMAKE_INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})

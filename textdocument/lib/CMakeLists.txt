@@ -22,7 +22,7 @@ add_library(${textdocs_target_name} SHARED
   ${cutelee_textdocument_HEADERS}
 )
 
-generate_export_header(${textdocs_target_name})
+generate_export_header(${textdocs_target_name} BASE_NAME cutelee_textdocument)
 add_library(Cutelee::TextDocument ALIAS ${textdocs_target_name})
 set_property(TARGET ${textdocs_target_name} PROPERTY
   EXPORT_NAME TextDocument

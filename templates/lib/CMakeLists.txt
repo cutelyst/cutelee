@@ -81,7 +81,7 @@ add_library(${templates_target_name} SHARED
 )
 
 add_library(Cutelee::Templates ALIAS ${templates_target_name})
-generate_export_header(${templates_target_name})
+generate_export_header(${templates_target_name} BASE_NAME cutelee_templates)
 set_property(TARGET ${templates_target_name} PROPERTY
   EXPORT_NAME Templates
 )

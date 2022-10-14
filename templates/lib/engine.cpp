@@ -265,8 +265,8 @@ QString EnginePrivate::getScriptLibraryName(const QString &name,
 {
   auto pluginIndex = 0;
   const QString prefix
-      = QStringLiteral("/cutelee/") + QString::number(CUTELEE_VERSION_MAJOR)
-        + QLatin1Char('.') + QString::number(minorVersion) + QLatin1Char('/');
+      = QStringLiteral("/cutelee-qt") + QString::number(QT_VERSION_MAJOR) + QLatin1Char('/')
+        + QString::number(CUTELEE_VERSION_MAJOR) + QLatin1Char('.') + QString::number(minorVersion) + QLatin1Char('/');
   while (m_pluginDirs.size() > pluginIndex) {
     const auto nextDir = m_pluginDirs.at(pluginIndex++);
     const QString libFileName = nextDir + prefix + name + QStringLiteral(".qs");
@@ -328,7 +328,7 @@ EnginePrivate::loadCppLibrary(const QString &name, uint minorVersion)
   while (m_pluginDirs.size() > pluginIndex) {
     const auto nextDir = m_pluginDirs.at(pluginIndex++);
     const QString pluginDirString
-        = nextDir + QStringLiteral("/cutelee/")
+        = nextDir + QStringLiteral("/cutelee-qt") + QString::number(QT_VERSION_MAJOR) + QLatin1Char('/')
           + QString::number(CUTELEE_VERSION_MAJOR) + QLatin1Char('.')
           + QString::number(minorVersion) + QLatin1Char('/');
 

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(Cutelee VERSION 6.0.0 LANGUAGES CXX)
+project(Cutelee VERSION 6.1.0 LANGUAGES CXX)
 
 # Workaround for http://public.kitware.com/Bug/view.php?id=12301
 if (MINGW)

@@ -71,6 +71,7 @@ public:
     filters.insert(QStringLiteral("force_escape"), new ForceEscapeFilter());
     filters.insert(QStringLiteral("get_digit"), new GetDigitFilter());
     filters.insert(QStringLiteral("join"), new JoinFilter());
+    filters.insert(QStringLiteral("json_script"), new JsonScriptFilter());
     filters.insert(QStringLiteral("last"), new LastFilter());
     filters.insert(QStringLiteral("length"), new LengthFilter());
     filters.insert(QStringLiteral("length_is"), new LengthIsFilter());

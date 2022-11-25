@@ -607,7 +607,26 @@ QVariant JsonScriptFilter::doFilter(const QVariant &input, const QVariant &argum
     const QString arg = escape(getSafeString(argument));
 
     QJsonDocument json;
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    if (input.userType() == qMetaTypeId<QJsonDocument>()) {
+        json = input.toJsonDocument();
+    } else if (input.userType() == qMetaTypeId<QJsonObject>()) {
+        json.setObject(input.toJsonObject());
+    } else if (input.userType() == qMetaTypeId<QJsonArray>()) {
+        json.setArray(input.toJsonArray());
+    } else if (input.userType() == qMetaTypeId<QVariantHash>()) {
+        json.setObject(QJsonObject::fromVariantHash(input.toHash()));
+    } else if (input.userType() == qMetaTypeId<QVariantMap>()) {
+        json.setObject(QJsonObject::fromVariantMap(input.toMap()));
+    } else if (input.userType() == qMetaTypeId<QVariantList>()) {
+        json.setArray(QJsonArray::fromVariantList(input.toList()));
+    } else if (input.userType() == qMetaTypeId<QStringList>()) {
+        json.setArray(QJsonArray::fromStringList(input.toStringList()));
+    } else {
+        qWarning("%s", "Can not convert input data into QJsonObject or QJSonArray.");
+        return QVariant();
+    }
+#else
     if (input.canConvert<QJsonDocument>()) {
         json = input.toJsonDocument();
     } else if (input.canConvert<QJsonObject>()) {
@@ -618,6 +637,7 @@ QVariant JsonScriptFilter::doFilter(const QVariant &input, const QVariant &argum
         qWarning("%s", "Can not convert input data into QJsonObject or QJSonArray.");
         return QVariant();
     }
+#endif
 
     QString jsonString = QString::fromUtf8(json.toJson(QJsonDocument::Compact));
 

@@ -604,6 +604,10 @@ static QList<std::pair<QString, QString>> getJsonEscapes()
 QVariant JsonScriptFilter::doFilter(const QVariant &input, const QVariant &argument, bool autoescape) const
 {
     Q_UNUSED(autoescape)
+    if (input.isNull() || !input.isValid()) {
+        return QVariant();
+    }
+
     const QString arg = escape(getSafeString(argument));
 
     QJsonDocument json;

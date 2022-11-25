@@ -588,17 +588,25 @@ QVariant TruncateCharsFilter::doFilter(const QVariant &input, const QVariant &ar
     return retString;
 }
 
-static QList<std::pair<QString, QString>> getJsonEscapes()
+static QString escapeJson(const QString &input)
 {
-  QList<std::pair<QString, QString>> jsonEscapes;
-  jsonEscapes << std::pair<QString, QString>(QChar::fromLatin1('>'),
-                                       QStringLiteral("\\\\u003E"))
-            << std::pair<QString, QString>(QChar::fromLatin1('<'),
-                                       QStringLiteral("\\\\u003C"))
-            << std::pair<QString, QString>(QChar::fromLatin1('&'),
-                                       QStringLiteral("\\\\u0026"));
-
-  return jsonEscapes;
+    QString esc;
+    const int len = input.length();
+    esc.reserve(static_cast<int>(len * 1.2));
+    for (int i = 0; i < len; ++i) {
+        const QChar ch = input.at(i);
+        if (ch == QLatin1Char('>')) {
+            esc += QStringLiteral("\\\\u003E");
+        } else if (ch == QLatin1Char('<')) {
+            esc += QStringLiteral("\\\\u003C");
+        } else if (ch == QLatin1Char('&')) {
+            esc += QStringLiteral("\\\\u0026");
+        } else {
+            esc += ch;
+        }
+    }
+    esc.squeeze();
+    return esc;
 }
 
 QVariant JsonScriptFilter::doFilter(const QVariant &input, const QVariant &argument, bool autoescape) const
@@ -643,13 +651,7 @@ QVariant JsonScriptFilter::doFilter(const QVariant &input, const QVariant &argum
     }
 #endif
 
-    QString jsonString = QString::fromUtf8(json.toJson(QJsonDocument::Compact));
-
-    static const auto jsonEscapes = getJsonEscapes();
-
-    for (auto &escape : jsonEscapes) {
-        jsonString = jsonString.replace(escape.first, escape.second);
-    }
+    const QString jsonString = escapeJson(QString::fromUtf8(json.toJson(QJsonDocument::Compact)));
 
     const QString scriptString = u"<script id=\"" + arg + u"\" type=\"application/json\">" + jsonString + u"</script>";
 

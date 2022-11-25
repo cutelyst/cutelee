@@ -24,6 +24,10 @@
 
 #include <QtCore/QRegularExpression>
 #include <QtCore/QVariant>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonObject>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonParseError>
 
 QVariant AddSlashesFilter::doFilter(const QVariant &input,
                                     const QVariant &argument,
@@ -583,4 +587,32 @@ QVariant TruncateCharsFilter::doFilter(const QVariant &input, const QVariant &ar
     retString.truncate(count);
     retString.append(QStringLiteral("..."));
     return retString;
+}
+
+QVariant JsonScriptFilter::doFilter(const QVariant &input, const QVariant &argument, bool autoescape) const
+{
+    Q_UNUSED(autoescape)
+    const QString arg = escape(getSafeString(argument));
+
+    QJsonDocument json;
+
+    if (input.canConvert<QJsonDocument>()) {
+        json = input.toJsonDocument();
+    } else if (input.canConvert<QJsonObject>()) {
+        json.setObject(input.toJsonObject());
+    } else if (input.canConvert<QJsonArray>()) {
+        json.setArray(input.toJsonArray());
+    } else {
+        qWarning("%s", "Can not convert input data into QJsonObject or QJSonArray.");
+        return QVariant();
+    }
+
+    QString jsonString = QString::fromUtf8(json.toJson(QJsonDocument::Compact));
+    jsonString.replace(QLatin1Char('<'), QStringLiteral("\\\\u003C"));
+    jsonString.replace(QLatin1Char('>'), QStringLiteral("\\\\u003E"));
+    jsonString.replace(QLatin1Char('&'), QStringLiteral("\\\\u0026"));
+
+    QString scriptString = u"<script id=\"" + arg + u"\" type=\"application/json\">" + jsonString + u"</script>";
+
+    return SafeString(scriptString, true);
 }

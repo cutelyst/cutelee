@@ -24,6 +24,9 @@
 #include <QtCore/QDebug>
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
+#include <QtCore/QJsonArray>
 #include <QtTest/QTest>
 
 #include "context.h"
@@ -1062,6 +1065,53 @@ void TestFilters::testStringFilters_data()
      << dict
      << fsExpect
      << NoError;
+
+  const QString jsonSK = QStringLiteral("jsondata"); // stash/dict key
+  const QString jsonObjectExpect = QStringLiteral(R"(<script id="hello-data" type="application/json">{"hello":"world"}</script>)");
+  const QString jsonArrayExpect = QStringLiteral(R"(<script id="hello-data" type="application/json">["hello","world"]</script>)");
+
+  const QString jsonInput = QStringLiteral(R"({{ jsondata|json_script:"hello-data" }})");
+
+  const QJsonObject jsonObject{{QStringLiteral("hello"),QStringLiteral("world")}};
+  dict.clear();
+  dict.insert(jsonSK, jsonObject);
+  QTest::newRow("filter-json_script-JsonObj") << jsonInput << dict << jsonObjectExpect << NoError;
+
+  const QJsonDocument jsonDoc(jsonObject);
+  dict.clear();
+  dict.insert(jsonSK, jsonDoc);
+  QTest::newRow("filter-json_script-JsonDoc") << jsonInput << dict << jsonObjectExpect << NoError;
+
+  const QJsonArray jsonArray{QStringLiteral("hello"), QStringLiteral("world")};
+  dict.clear();
+  dict.insert(jsonSK, jsonArray);
+  QTest::newRow("filter-json_script-JsonArr") << jsonInput << dict << jsonArrayExpect << NoError;
+
+  const QVariantHash jsonVarHash{{QStringLiteral("hello"),QStringLiteral("world")}};
+  dict.clear();
+  dict.insert(jsonSK, jsonVarHash);
+  QTest::newRow("filter-json_script-VarHash") << jsonInput << dict << jsonObjectExpect << NoError;
+
+  const QVariantMap jsonVarMap{{QStringLiteral("hello"),QStringLiteral("world")}};
+  dict.clear();
+  dict.insert(jsonSK, jsonVarMap);
+  QTest::newRow("filter-json_script-VarMap") << jsonInput << dict << jsonObjectExpect << NoError;
+
+  const QVariantList jsonVarList{QStringLiteral("hello"), QStringLiteral("world")};
+  dict.clear();
+  dict.insert(jsonSK, jsonVarList);
+  QTest::newRow("filter-json_script-VarList") << jsonInput << dict << jsonArrayExpect << NoError;
+
+  const QStringList jsonStringList{QStringLiteral("hello"), QStringLiteral("world")};
+  dict.clear();
+  dict.insert(jsonSK, jsonStringList);
+  QTest::newRow("filter-json_script-StringList") << jsonInput << dict << jsonArrayExpect << NoError;
+
+  const QJsonObject jsonEscapeInput{{QStringLiteral("hello"),QStringLiteral("world</script>&amp;")}};
+  const QString jsonEscapeExpect = QStringLiteral(R"(<script id="hello-data" type="application/json">{"hello":"world\\u003C/script\\u003E\\u0026amp;"}</script>)");
+  dict.clear();
+  dict.insert(jsonSK, jsonEscapeInput);
+  QTest::newRow("filter-json_script-escape") << jsonInput << dict << jsonEscapeExpect << NoError;
 }
 
 void TestFilters::testListFilters_data()

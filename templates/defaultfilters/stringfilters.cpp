@@ -651,7 +651,8 @@ QVariant JsonScriptFilter::doFilter(const QVariant &input, const QVariant &argum
     }
 #endif
 
-    const QString jsonString = escapeJson(QString::fromUtf8(json.toJson(QJsonDocument::Compact)));
+    QString jsonString = QString::fromUtf8(json.toJson(QJsonDocument::Compact));
+    jsonString = escapeJson(jsonString);
 
     const QString scriptString = u"<script id=\"" + arg + u"\" type=\"application/json\">" + jsonString + u"</script>";
 

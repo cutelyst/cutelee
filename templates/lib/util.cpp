@@ -265,7 +265,6 @@ std::pair<qreal,QString> Cutelee::calcFileSize(qreal size, int unitSystem, qreal
                                            QStringLiteral("YB")
                                        });
 
-  bool found = false;
   int count = 0;
   const qreal baseVal = (_unitSystem == 10) ? 1000.0f : 1024.0f;
 #if FLT_EVAL_METHOD == 2
@@ -276,10 +275,9 @@ std::pair<qreal,QString> Cutelee::calcFileSize(qreal size, int unitSystem, qreal
   qreal current = 1.0f;
 #endif
   int units = decimalUnits.size();
-  while (!found && (count < units)) {
+  while (count < units) {
       current *= baseVal;
       if (_size < current) {
-          found = true;
           break;
       }
       count++;

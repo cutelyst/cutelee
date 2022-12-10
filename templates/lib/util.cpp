@@ -26,6 +26,8 @@
 #include <QtCore/QStringList>
 #include <QDebug>
 
+#include <cfloat>
+
 QString Cutelee::unescapeStringLiteral(const QString &input)
 {
   return input.mid(1, input.size() - 2)
@@ -266,7 +268,13 @@ std::pair<qreal,QString> Cutelee::calcFileSize(qreal size, int unitSystem, qreal
   bool found = false;
   int count = 0;
   const qreal baseVal = (_unitSystem == 10) ? 1000.0f : 1024.0f;
+#if FLT_EVAL_METHOD == 2
+  // Avoid that this is treated as long double, as the increased
+  // precision breaks the comparison below.
+  volatile qreal current = 1.0F;
+#else
   qreal current = 1.0f;
+#endif
   int units = decimalUnits.size();
   while (!found && (count < units)) {
       current *= baseVal;

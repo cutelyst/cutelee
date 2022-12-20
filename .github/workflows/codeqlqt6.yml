@@ -5,6 +5,10 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+    paths-ignore:
+      - '**/tests.yml'
+      - '**/*.md'
+      - '**/*.dox'
   schedule:
     - cron: '20 20 * * 0'
 

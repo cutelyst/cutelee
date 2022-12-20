@@ -1,0 +1,52 @@
+name: Tests
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  BUILD_TYPE: Debug
+
+jobs:
+  build_and_test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        qt: [qt5, qt6]
+        compiler: [gcc, clang]
+        include:
+          - compiler: gcc
+            cpp_compiler: g++
+          - compiler: clang
+            cpp_compiler: clang++
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies for Qt5 on Ubuntu
+      if: matrix.os == 'ubuntu-latest' && matrix.qt == qt5
+      run: |
+        sudo apt-get update -qq
+        sudo apt-get install -y qtbase5-dev qtdeclarative5-dev qttools5-dev qttools5-dev-tools
+
+    - name: Install dependencies for Qt6 on Ubuntu
+      if: matrix.os == 'ubuntu-latest' && matrix.qt == qt6
+      run: |
+        sudo apt-get update -qq
+        sudo apt-get install -y qt6-base-dev qt6-declarative-dev qt6-l10n-tools qt6-tools-dev qt6-tools-dev-tools libgl1-mesa-dev
+
+    - name: Configure CMake on Ubuntu
+      if: matrix.os == 'ubuntu-latest'
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_C_COMPILER:STRING=${{matrix.compiler}} -DCMAKE_CXX_COMPILER:STRING=${{matrix.cpp_compiler}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_TESTS:BOOL=ON
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Test on Ubuntu
+      if: matrix.os == 'ubuntu-latest'
+      working-directory: ${{github.workspace}}/build
+      run: xvfb-run -a ctest -C ${{env.BUILD_TYPE}} --output-on-failure

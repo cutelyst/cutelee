@@ -5,6 +5,10 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+    paths-ignore:
+      - '**/codeqlqt6.yml'
+      - '**/*.md'
+      - '**/*.dox'
 
 env:
   BUILD_TYPE: Debug

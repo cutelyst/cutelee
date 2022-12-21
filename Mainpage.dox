@@ -84,12 +84,10 @@ namespace Cutelee
 
   @section start_community Community
 
-  The %Cutelee project mailing list is kde-pim@kde.org, and the IRC channel is \#cutelee on freenode.
+  The source repository is located at https://github.com/cutelyst/cutelee
 
-  The source repository is located at https://github.com/steveire/cutelee
-
-  - Existing bugs https://bugs.kde.org/buglist.cgi?product=cutelee
-  - File new bug https://bugs.kde.org/enter_bug.cgi?product=cutelee
+  - Existing bugs https://github.com/cutelyst/cutelee/issues?q=is%3Aopen+is%3Aissue
+  - File new bug https://github.com/cutelyst/cutelee/issues/new
 
 */
 

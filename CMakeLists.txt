@@ -22,6 +22,8 @@ option( BUILD_TEXTDOCUMENT "Build the Cutelee textdocument library" TRUE )
 option( BUILD_MAIN_PLUGINS "Build the Cutelee Templates plugins" TRUE )
 option( BUILD_I18N_PLUGIN "Build the Cutelee Templates i18n plugin" TRUE )
 option( BUILD_TESTS "Build the Cutelee tests" TRUE )
+option( BUILD_DOCS "Build the Cutelee API documentation using doxygen" FALSE)
+option( BUILD_DOCS_QUIET "Tell doxygen to be quiet while building the documentation" FALSE)
 
 if (BUILD_TESTS)
   enable_testing()
@@ -146,55 +148,152 @@ add_custom_target(uninstall
 
 if (BUILD_DOCS)
     find_package(Doxygen REQUIRED dot)
-    if (DOXYGEN_FOUND AND DOXYGEN_DOT_FOUND)
-    message (STATUS "Doxygen and dot found. make docs target is available")
-    # Add support for a docs target
+
+    # get qmake location and query some Qt installation paths for later use
+    get_property(QMAKE_EXE_PATH TARGET Qt${QT_VERSION_MAJOR}::qmake PROPERTY LOCATION)
+
+    execute_process(COMMAND ${QMAKE_EXE_PATH} -query QT_INSTALL_DOCS RESULT_VARIABLE QMAKE_RESULT OUTPUT_VARIABLE QT_INSTALL_DOCS OUTPUT_STRIP_TRAILING_WHITESPACE)
+    if(QMAKE_RESULT)
+        message(FATAL_ERROR "Failed to use qmake to query QT_INSTALL_DOCS")
+    endif(QMAKE_RESULT)
+
+    execute_process(COMMAND ${QMAKE_EXE_PATH} -query QT_INSTALL_LIBEXECS RESULT_VARIABLE QMAKE_RESULT OUTPUT_VARIABLE QT_INSTALL_LIBEXECS OUTPUT_STRIP_TRAILING_WHITESPACE)
+    if(QMAKE_RESULT)
+        message(FATAL_ERROR "Failed to use qmake to query QT_INSTALL_LIBEXECS")
+    endif(QMAKE_RESULT)
+
+    execute_process(COMMAND ${QMAKE_EXE_PATH} -query QT_INSTALL_BINS RESULT_VARIABLE QMAKE_RESULT OUTPUT_VARIABLE QT_INSTALL_BINS OUTPUT_STRIP_TRAILING_WHITESPACE)
+    if (QMAKE_RESULT)
+        message(FATAL_ERROR "Failed to use qmake to query QT_INSTALL_BINS")
+    endif (QMAKE_RESULT)
+
+    set(DOCS_QTDOCSDIR ${QT_INSTALL_DOCS} CACHE PATH "Path to a directory containing the Qt Documentation")
+
+    # umbrella target to build qtdocs and local htmldocs
+    add_custom_target(docs)
+
+    # Project related configuration options
+    set(DOXYGEN_REPEAT_BRIEF NO)
+    set(DOXYGEN_STRIP_FROM_PATH ${CMAKE_SOURCE_DIR})
+    set(DOXYGEN_QT_AUTOBRIEF YES)
+    set(DOXYGEN_TAB_SIZE 8)
+    set(DOXYGEN_ALIASES
+        "gr_tag{1}=<tt>{%&nbsp\;\\1&nbsp\;%}</tt>"
+        "gr_var{1}=<tt>{{&nbsp\;\\1&nbsp\;}}</tt>"
+    )
+    # Build related configuration options
+    set(DOXYGEN_EXTRACT_STATIC YES)
+    set(DOXYGEN_INTERNAL_DOCS YES)
+    set(DOXYGEN_SORT_BRIEF_DOCS YES)
+    set(DOXYGEN_SORT_MEMBERS_CTORS_1ST YES)
+    set(DOXYGEN_MAX_INITIALIZER_LINES 0)
+    set(DOXYGEN_SHOW_USED_FILES NO)
+    # Configuration options related to warning and progress messages
+    if (BUILD_DOCS_QUIET)
+        set(DOXYGEN_QUIET YES)
+        set(DOXYGEN_WARNINGS NO)
+        set(DOXYGEN_WARN_IF_UNDOCUMENTED NO)
+        set(DOXYGEN_WARN_IF_DOC_ERROR NO)
+    else(BUILD_DOCS_QUIET)
+        set(DOXYGEN_QUIET NO)
+        set(DOXYGEN_WARNINGS YES)
+        set(DOXYGEN_WARN_IF_UNDOCUMENTED YES)
+        set(DOXYGEN_WARN_IF_DOC_ERROR YES)
+    endif(BUILD_DOCS_QUIET)
+    # Configuration options related to the input files
+    set(DOXYGEN_FILE_PATTERN *.h *.dox)
+    set(DOXYGEN_EXCLUDE_PATTERNS .* *_p*)
+    set(DOXYGEN_IMAGE_PATH ${CMAKE_SOURCE_DIR}/dox)
+    #  Configuration options related to source browsing
+    set(DOXYGEN_SOURCE_BROWSER YES)
+    set(DOXYGEN_REFERENCED_BY_RELATION YES)
+    set(DOXYGEN_REFERENCES_RELATION YES)
+    # Configuration options related to the alphabetical class index
+    set(DOXYGEN_ALPHABETICAL_INDEX NO)
+    # Configuration options related to the HTML output
+    set(DOXYGEN_HTML_EXTRA_STYLESHEET ${CMAKE_SOURCE_DIR}/dox/stylesheet.css)
+    set(DOXYGEN_SEARCHENGINE NO)
+    # Configuration options related to the preprocessor
+    set(DOXYGEN_MACRO_EXPANSION YES)
+    set(DOXYGEN_EXPAND_ONLY_PREDEF YES)
+    set(DOXYGEN_PREDEFINED Q_QDOC TemplateImpl:Template CUTELEE_TEMPLATES_EXPORT=)
+    set(DOXYGEN_EXPAND_AS_DEFINED TemplateImpl)
+    # Configuration options related to external references
+    set(DOXYGEN_GENERATE_TAGFILE ${CMAKE_CURRENT_BINARY_DIR}/cutelee${PROJECT_VERSION_MAJOR}.tags)
+    # Configuration options related to the dot tool
+    set(DOXYGEN_COLLABORATION_GRAPH NO)
+    set(DOXYGEN_DOTFILE_DIRS ${CMAKE_SOURCE_DIR}/dox)
+    set(DOXYGEN_MAX_DOT_GRAPH_DEPTH 1000)
+    if (DOXYGEN_VERSION VERSION_GREATER_EQUAL 1.9.5)
+        set(DOXYGEN_DOT_COMMON_ATTR fontname=FreeSans,fontsize=10)
+        set(DOXYGEN_DOT_EDGE_ATTR labelfontname=FreeSans,labelfontsize=10)
+    else (DOXYGEN_VERSION VERSION_GREATER_EQUAL 1.9.5)
+        set(DOXYGEN_DOT_FONTNAME FreeSans)
+        set(DOXYGEN_DOT_FONTSIZE 10)
+    endif (DOXYGEN_VERSION VERSION_GREATER_EQUAL 1.9.5)
+
 
     # Available from http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/libstdc++.tag
-    set(STLTAGFILE "${CMAKE_SOURCE_DIR}/scripts/libstdc++.tag=http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen")
-    find_file(qtcore_tag_file
-        qtcore.tags
-        HINTS
-        "/usr/share/qt5/doc/qtcore"
-        )
-    set(QTTAGFILE "${qtcore_tag_file}=https://doc.qt.io/qt-5/")
+    set(DOCS_STLTAGFILE "${CMAKE_CURRENT_SOURCE_DIR}/scripts/libstdc++.tag" CACHE FILEPATH "Path to the doxygen tag file of the libstdc++")
+    if(EXISTS DOCS_STLTAGFILE)
+        list(APPEND ONLINETAGS "${DOCS_STLTAGFILE}=http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/")
+    else(EXISTS DOCS_STLTAGFILE)
+        set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
+    endif(EXISTS DOCS_STLTAGFILE)
 
-    set(TAGFILES "${QTTAGFILE} ${STLTAGFILE}")
-    set(DOCS_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
-    configure_file(
-        "${Cutelee_MODULE_DIR}/Doxyfile.in"
-        "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
-        @ONLY)
+    set(QT_ONLINE_DOCS_URL "https://doc.qt.io/qt-${QT_VERSION_MAJOR}/")
+    set(QT_DOCS_COMPONENTS "qtcore" "qtgui" "qtqml")
 
-    # Add support for a Qt assistant docs target
-    # qttags.tag is too big to distribute with Cutelee. Get it
-    # from http://api.kde.org/kdereview-api/kdereview.tar.gz for example.
-    if(EXISTS ${qtcore_tag_file})
-        set(DOCS_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/qtdocs")
+    foreach(_QTDOCCOMP ${QT_DOCS_COMPONENTS})
+        find_file(_QTDOCCOMPTAGS "${_QTDOCCOMP}.tags" PATHS "${DOCS_QTDOCSDIR}" PATH_SUFFIXES "${_QTDOCCOMP}" NO_DEFAULT_PATH)
+        if (_QTDOCCOMPTAGS)
+            list(APPEND ONLINETAGS "${_QTDOCCOMPTAGS}=${QT_ONLINE_DOCS_URL}")
+            if (IS_DIRECTORY "${DOCS_QTDOCSDIR}/${_QTDOCCOMP}")
+                list(APPEND LOCALHTMLTAGS "${_QTDOCCOMPTAGS}=${DOCS_QTDOCSDIR}/${_QTDOCCOMP}/")
+            endif (IS_DIRECTORY "${DOCS_QTDOCSDIR}/${_QTDOCCOMP}")
+            if (EXISTS "${DOCS_QTDOCSDIR}/${_QTDOCCOMP}.qch")
+                list(APPEND QCHTAGS "${_QTDOCCOMPTAGS}=qthelp://org.qt-project.${_QTDOCCOMP}.${QT_VERSION_MAJOR}${QT_VERSION_MINOR}${QT_VERSION_PATCH}/${_QTDOCCOMP}/")
+            endif (EXISTS "${DOCS_QTDOCSDIR}/${_QTDOCCOMP}.qch")
+        endif (_QTDOCCOMPTAGS)
+        unset(_QTDOCCOMPTAGS CACHE)
+    endforeach(_QTDOCCOMP ${QT_DOCS_COMPONENTS})
 
-        # Available from http://steveire.com/libstdc++-longnames.tag
-        # Also recommended: http://www.steveire.com/libstdc++-v3.qch
-        set(STLTAGFILE "${CMAKE_SOURCE_DIR}/scripts/libstdc++-longnames.tag=qthelp://org.gnu.libstdcxx/libstdc++-v3/")
-        set(QTTAGFILE "${qtcore_tag_file}=qthelp://org.qt-project.qtcore/qtcore/")
-
-        set(TAGFILES "${QTTAGFILE} ${STLTAGFILE}")
-        set(GENERATE_QHP "yes")
-
-        configure_file(
-        "${Cutelee_MODULE_DIR}/Doxyfile.in"
-        "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.qt"
-        @ONLY)
-    endif()
-
-    set( DOCS_ARGS ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile" )
-    if(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.qt")
-        set(DOCS_ARGS ${DOCS_ARGS} COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.qt" )
-    endif()
-
-    add_custom_target(docs
-        ${DOCS_ARGS}
+    set(DOXYGEN_HTML_TIMESTAMP "YES")
+    set(DOXYGEN_TAGFILES ${ONLINETAGS})
+    set(DOXYGEN_HTML_OUTPUT "webdocs")
+    doxygen_add_docs(webdocs
+        ${CMAKE_SOURCE_DIR}/Mainpage.dox ${CMAKE_SOURCE_DIR}/dox ${CMAKE_SOURCE_DIR}/templates ${CMAKE_SOURCE_DIR}/textdocument
+        COMMENT "Generate HTML documentation for online usage"
     )
-    endif()
+    message(STATUS "Adding build target webdocs")
+
+    set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
+    set(DOXYGEN_HTML_TIMESTAMP "NO")
+    set(DOXYGEN_TAGFILES ${LOCALHTMLTAGS})
+    set(DOXYGEN_HTML_OUTPUT "htmldocs")
+    doxygen_add_docs(htmldocs
+        ${CMAKE_SOURCE_DIR}/Mainpage.dox ${CMAKE_SOURCE_DIR}/dox ${CMAKE_SOURCE_DIR}/templates ${CMAKE_SOURCE_DIR}/textdocument
+        COMMENT "Generate HTML documentation for local usage"
+    )
+    add_dependencies(docs htmldocs)
+    message(STATUS "Adding build target htmldocs")
+
+    find_program(DOXYGEN_QHG_LOCATION NAMES qhelpgenerator-qt${QT_VERSION_MAJOR} qhelpgenerator${QT_VERSION_MAJOR} qhelpgenerator HINTS ${QT_INSTALL_LIBEXECS} ${QT_INSTALL_BINS})
+    if(DOXYGEN_QHG_LOCATION)
+        set(DOXYGEN_TAGFILES ${QCHTAGS})
+        set(DOXYGEN_HTML_OUTPUT "qtdocs")
+        set(DOXYGEN_GENERATE_QHP "YES")
+        set(DOXYGEN_QHP_NAMESPACE "org.cutelee.${PROJECT_VERSION_MAJOR}${PROJECT_VERSION_MINOR}${PROJECT_VERSION_PATCH}")
+        set(DOXYGEN_QHP_VIRTUAL_FOLDER "cutelee-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
+        set(DOXYGEN_QCH_FILE "${CMAKE_BINARY_DIR}/cutelee${PROJECT_VERSION_MAJOR}.qch")
+
+        doxygen_add_docs(qtdocs
+            ${CMAKE_SOURCE_DIR}/Mainpage.dox ${CMAKE_SOURCE_DIR}/dox ${CMAKE_SOURCE_DIR}/templates ${CMAKE_SOURCE_DIR}/textdocument
+            COMMENT "Generate Qt QCH documentation for local usage"
+        )
+        add_dependencies(docs qtdocs)
+        message(STATUS "Adding build target qtdocs")
+    endif(DOXYGEN_QHG_LOCATION)
 endif()
 
 find_package(LCov)

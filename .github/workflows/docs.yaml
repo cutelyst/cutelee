@@ -1,0 +1,62 @@
+name: Documentation
+
+on: [push, pull_request]
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y doxygen graphviz qt6-base-dev qt6-declarative-dev qt6-l10n-tools qt6-tools-dev qt6-tools-dev-tools libgl1-mesa-dev
+
+      - name: Build docs
+        run: |
+          cmake -D BUILD_DOCS:BOOL=ON -S "$GITHUB_WORKSPACE" -B "$RUNNER_TEMP"
+          cmake --build "$RUNNER_TEMP" --target docs
+
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs
+          path: "${{ runner.temp }}/qtdocs"
+          if-no-files-found: error
+
+  publish:
+    runs-on: ubuntu-latest
+    if: success() && (github.ref == 'refs/heads/master')
+    needs: generate
+    steps:
+      - name: Checkout doc branch
+        uses: actions/checkout@v4
+        with:
+          ref: doc
+
+      - name: Clear previous docs
+        run: rm -rf docs
+
+      - name: Download docs artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: docs
+          path: docs
+
+      - name: Inspect changes # for diagnostics only.
+        run: git status && git diff
+
+      - name: Push updates
+        run: |
+          [[ -z $(git status --porcelain) ]] || {
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git pull
+            git add .
+            git commit -m "Update generated docs for ${GITHUB_SHA}"
+            git push
+          }

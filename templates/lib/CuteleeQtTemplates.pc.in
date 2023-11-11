@@ -1,0 +1,12 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+includedir=${prefix}/include/cutelee@PROJECT_VERSION_MAJOR@-qt@QT_VERSION_MAJOR@
+
+Name: Cutelee Qt@QT_VERSION_MAJOR@ Templates
+Description: Cutelee template library
+Version: @PROJECT_VERSION@
+Requires: Qt@QT_VERSION_MAJOR@Core >= @QT_MINIMUM_VERSION@
+Libs: -L${libdir} -lCuteleeQt@QT_VERSION_MAJOR@Templates
+Cflags: -I${includedir}/cutelee -I${includedir}
+

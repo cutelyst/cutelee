@@ -1,0 +1,12 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+includedir=${prefix}/include/cutelee@PROJECT_VERSION_MAJOR@-qt@QT_VERSION_MAJOR@
+
+Name: Cutelee Qt@QT_VERSION_MAJOR@ TextDocument
+Description: Cutelee text document library
+Version: @PROJECT_VERSION@
+Requires: Qt@QT_VERSION_MAJOR@Gui
+Libs: -L${libdir} -lCuteleeQt@QT_VERSION_MAJOR@TextDocument
+Cflags: -I${includedir}/cutelee -I${includedir}
+

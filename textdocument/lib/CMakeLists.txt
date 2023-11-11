@@ -67,3 +67,11 @@ install(TARGETS ${textdocs_target_name} EXPORT cutelee_targets
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT TextDocument
   PUBLIC_HEADER DESTINATION include/cutelee${PROJECT_VERSION_MAJOR}-qt${QT_VERSION_MAJOR}/cutelee
 )
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CuteleeQtTextDocument.pc.in
+  ${CMAKE_CURRENT_BINARY_DIR}/CuteleeQt${QT_VERSION_MAJOR}TextDocument.pc
+  @ONLY
+)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/CuteleeQt${QT_VERSION_MAJOR}TextDocument.pc
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+)

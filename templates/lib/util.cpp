@@ -82,6 +82,9 @@ bool Cutelee::variantIsTrue(const QVariant &variant)
   case QMetaType::QVariantHash: {
     return !variant.value<QVariantHash>().isEmpty();
   }
+  case QMetaType::QVariantMap: {
+    return !variant.value<QVariantMap>().isEmpty();
+  }
   }
 
   return !getSafeString(variant).get().isEmpty();

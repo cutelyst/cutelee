@@ -216,7 +216,8 @@ QVariant Cutelee::MetaType::lookup(const QVariant &object,
 
     return iter.at(listIndex);
   }
-  if (object.canConvert<QVariantHash>()) {
+  if (object.canConvert<QVariantHash>() ||
+      object.canConvert<QVariantMap>()) {
 
     auto iter = object.value<QAssociativeIterable>();
 

@@ -1018,48 +1018,59 @@ void TestDefaultTags::testIfTag_data()
   QTest::newRow("if-truthiness04")
       << QStringLiteral("{% if var %}Yes{% else %}No{% endif %}") << dict
       << QStringLiteral("Yes") << NoError;
+  QVariantMap map;
+  dict.insert(QStringLiteral("var"), map);
+  QTest::newRow("if-truthiness05")
+      << QStringLiteral("{% if var %}Yes{% else %}No{% endif %}") << dict
+      << QStringLiteral("No") << NoError;
+  map.insert(QStringLiteral("foo"), QStringLiteral("bar"));
+  dict.insert(QStringLiteral("var"), map);
+  QTest::newRow("if-truthiness06")
+      << QStringLiteral("{% if var %}Yes{% else %}No{% endif %}") << dict
+      << QStringLiteral("Yes") << NoError;
+
 
   QVariant var;
   dict.insert(QStringLiteral("var"), var);
-  QTest::newRow("if-truthiness05")
+  QTest::newRow("if-truthiness07")
       << QStringLiteral("{% if var %}Yes{% else %}No{% endif %}") << dict
       << QStringLiteral("No") << NoError;
   var = QStringLiteral("foo");
   dict.insert(QStringLiteral("var"), var);
-  QTest::newRow("if-truthiness06")
+  QTest::newRow("if-truthiness08")
       << QStringLiteral("{% if var %}Yes{% else %}No{% endif %}") << dict
       << QStringLiteral("Yes") << NoError;
 
   QString str;
   dict.insert(QStringLiteral("var"), str);
-  QTest::newRow("if-truthiness07")
+  QTest::newRow("if-truthiness09")
       << QStringLiteral("{% if var %}Yes{% else %}No{% endif %}") << dict
       << QStringLiteral("No") << NoError;
   str = QStringLiteral("foo");
   dict.insert(QStringLiteral("var"), str);
-  QTest::newRow("if-truthiness08")
+  QTest::newRow("if-truthiness10")
       << QStringLiteral("{% if var %}Yes{% else %}No{% endif %}") << dict
       << QStringLiteral("Yes") << NoError;
 
   auto i = 0;
   dict.insert(QStringLiteral("var"), i);
-  QTest::newRow("if-truthiness07")
+  QTest::newRow("if-truthiness11")
       << QStringLiteral("{% if var %}Yes{% else %}No{% endif %}") << dict
       << QStringLiteral("No") << NoError;
   i = 7;
   dict.insert(QStringLiteral("var"), i);
-  QTest::newRow("if-truthiness08")
+  QTest::newRow("if-truthiness12")
       << QStringLiteral("{% if var %}Yes{% else %}No{% endif %}") << dict
       << QStringLiteral("Yes") << NoError;
 
   auto r = 0.0;
   dict.insert(QStringLiteral("var"), r);
-  QTest::newRow("if-truthiness09")
+  QTest::newRow("if-truthiness13")
       << QStringLiteral("{% if var %}Yes{% else %}No{% endif %}") << dict
       << QStringLiteral("No") << NoError;
   r = 7.1;
   dict.insert(QStringLiteral("var"), r);
-  QTest::newRow("if-truthiness10")
+  QTest::newRow("if-truthiness14")
       << QStringLiteral("{% if var %}Yes{% else %}No{% endif %}") << dict
       << QStringLiteral("Yes") << NoError;
 

@@ -377,18 +377,24 @@ void TestBuiltinSyntax::testTruthiness_data()
     h.insert(QStringLiteral("value"), 1);
     QTest::newRow("truthtest-28") << QVariant::fromValue(h) << true;
   }
+  {
+    QVariantMap m;
+    QTest::newRow("truthtest-29") << QVariant::fromValue(m) << false;
+    m.insert(QStringLiteral("value"), 1);
+    QTest::newRow("truthtest-30") << QVariant::fromValue(m) << true;
+  }
 
   {
-    QTest::newRow("truthtest-29")
+    QTest::newRow("truthtest-31")
         << QVariant::fromValue<QObject *>(nullptr) << false;
     auto plainO = new QObject(this);
-    QTest::newRow("truthtest-30") << QVariant::fromValue(plainO) << true;
+    QTest::newRow("truthtest-32") << QVariant::fromValue(plainO) << true;
     auto trueO = new QObject(this);
     trueO->setProperty("__true__", true);
-    QTest::newRow("truthtest-31") << QVariant::fromValue(trueO) << true;
+    QTest::newRow("truthtest-33") << QVariant::fromValue(trueO) << true;
     auto falseO = new QObject(this);
     falseO->setProperty("__true__", false);
-    QTest::newRow("truthtest-32") << QVariant::fromValue(falseO) << false;
+    QTest::newRow("truthtest-34") << QVariant::fromValue(falseO) << false;
   }
 }
 
@@ -580,11 +586,21 @@ void TestBuiltinSyntax::testBasicSyntax_data()
   hash.clear();
   hash.insert(QStringLiteral("bar"), QStringLiteral("baz"));
   dict.insert(QStringLiteral("foo"), hash);
-  QTest::newRow("basic-syntax18") << QStringLiteral("{{ foo.bar }}") << dict
+  QTest::newRow("basic-syntax18a") << QStringLiteral("{{ foo.bar }}") << dict
                                   << QStringLiteral("baz") << NoError;
 
   // Fail silently when a variable's dictionary key isn't found
-  QTest::newRow("basic-syntax19")
+  QTest::newRow("basic-syntax19a")
+      << QStringLiteral("{{ foo.spam }}") << dict << QString() << NoError;
+
+  QVariantMap map;
+  map.insert(QStringLiteral("bar"), QStringLiteral("baz"));
+  dict.insert(QStringLiteral("foo"), map);
+  QTest::newRow("basic-syntax18b") << QStringLiteral("{{ foo.bar }}") << dict
+                                   << QStringLiteral("baz") << NoError;
+
+  // Fail silently when a variable's dictionary key isn't found
+  QTest::newRow("basic-syntax19a")
       << QStringLiteral("{{ foo.spam }}") << dict << QString() << NoError;
 
   dict.clear();

@@ -22,7 +22,7 @@ jobs:
           cmake --build "$RUNNER_TEMP" --target docs
 
       - name: Upload docs artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v5
         with:
           name: docs
           path: "${{ runner.temp }}/qtdocs"
@@ -42,7 +42,7 @@ jobs:
         run: rm -rf docs
 
       - name: Download docs artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v6
         with:
           name: docs
           path: docs

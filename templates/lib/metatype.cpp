@@ -221,10 +221,6 @@ QVariant Cutelee::MetaType::lookup(const QVariant &object,
 
     auto iter = object.value<QAssociativeIterable>();
 
-    auto mappedValue = iter.value(property);
-    if (mappedValue.isValid())
-      return mappedValue;
-
     if (property == QStringLiteral("size")
         || property == QStringLiteral("count")) {
       return iter.size();
@@ -259,6 +255,10 @@ QVariant Cutelee::MetaType::lookup(const QVariant &object,
       }
       return list;
     }
+
+    auto mappedValue = iter.value(property);
+    if (mappedValue.isValid())
+      return mappedValue;
 
     return QVariant();
   }

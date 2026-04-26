@@ -590,11 +590,7 @@ void MarkupDirector::processOpeningElements(QTextBlock::iterator it)
       d->m_openFontPointSize = fragmentFormat.font().pointSize();
       break;
     case SpanFontFamily:
-#if QT_VERSION < QT_VERSION_CHECK(6, 1, 0)
-      d->m_openFontFamily = fragmentFormat.fontFamily();
-#else
       d->m_openFontFamily = fragmentFormat.fontFamilies().toStringList().first();
-#endif
       m_builder->beginFontFamily(d->m_openFontFamily);
       break;
     case SpanBackground:
@@ -650,11 +646,7 @@ QSet<int> MarkupDirector::getElementsToClose(QTextBlock::iterator it) const
 
   if (it.atEnd()) {
     // End of block?. Close all open tags.
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-    auto elementsToClose = d->m_openElements.toSet();
-#else
     auto elementsToClose = QSet<int>(d->m_openElements.begin(), d->m_openElements.end());
-#endif
     return elementsToClose.unite(d->m_elementsToOpen);
   }
 
@@ -673,12 +665,8 @@ QSet<int> MarkupDirector::getElementsToClose(QTextBlock::iterator it) const
   auto fontForeground = fragmentFormat.foreground();
   auto fontBackground = fragmentFormat.background();
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 1, 0)
-  auto fontFamily = fragmentFormat.fontFamily();
-#else
   const QStringList fontFamilies = fragmentFormat.fontFamilies().toStringList();
   auto fontFamily = !fontFamilies.empty() ? fontFamilies.first() : QString();
-#endif
   auto fontPointSize = fragmentFormat.font().pointSize();
   auto anchorHref = fragmentFormat.anchorHref();
 
@@ -776,12 +764,8 @@ QList<int> MarkupDirector::getElementsToOpen(QTextBlock::iterator it)
   auto fontForeground = fragmentFormat.foreground();
   auto fontBackground = fragmentFormat.background();
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 1, 0)
-  auto fontFamily = fragmentFormat.fontFamily();
-#else
   const QStringList fontFamilies = fragmentFormat.fontFamilies().toStringList();
   auto fontFamily = !fontFamilies.empty() ? fontFamilies.first() : QString();
-#endif
   auto fontPointSize = fragmentFormat.font().pointSize();
   auto anchorHref = fragmentFormat.anchorHref();
 
@@ -861,11 +845,7 @@ QList<int> MarkupDirector::getElementsToOpen(QTextBlock::iterator it)
   }
 
   if (d->m_elementsToOpen.size() <= 1) {
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-    auto elementsToClose = d->m_elementsToOpen.toList();
-#else
     return QList<int>(d->m_elementsToOpen.begin(), d->m_elementsToOpen.end());
-#endif
   }
   return sortOpeningOrder(d->m_elementsToOpen, it);
 }

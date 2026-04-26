@@ -234,11 +234,7 @@ QVariant TruncateWordsFilter::doFilter(const QVariant &input,
   }
 
   QString inputString = getSafeString(input);
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-  auto words = inputString.split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
   auto words = inputString.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
 
   if (words.size() > numWords) {
     words = words.mid(0, numWords);
@@ -355,11 +351,7 @@ QVariant WordWrapFilter::doFilter(const QVariant &input,
   Q_UNUSED(autoescape)
   QString _input = getSafeString(input);
   auto width = argument.value<int>();
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-  auto partList = _input.split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
   auto partList = _input.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
   if (partList.isEmpty())
     return QVariant();
   auto output = partList.takeFirst();
@@ -519,11 +511,7 @@ QVariant FileSizeFormatFilter::doFilter(const QVariant &input,
   qreal multiplier = 1.0f;
 
   if (!arg.get().isEmpty()) {
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-      const auto argList = arg.get().split(QLatin1Char(','), QString::SkipEmptyParts);
-#else
       const auto argList = arg.get().split(QLatin1Char(','), Qt::SkipEmptyParts);
-#endif
       const auto numArgs = argList.size();
       if (numArgs > 0) {
           unitSystem = argList.at(0).toInt(&numberConvert);
@@ -619,26 +607,6 @@ QVariant JsonScriptFilter::doFilter(const QVariant &input, const QVariant &argum
     const QString arg = escape(getSafeString(argument));
 
     QJsonDocument json;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    if (input.userType() == qMetaTypeId<QJsonDocument>()) {
-        json = input.toJsonDocument();
-    } else if (input.userType() == qMetaTypeId<QJsonObject>()) {
-        json.setObject(input.toJsonObject());
-    } else if (input.userType() == qMetaTypeId<QJsonArray>()) {
-        json.setArray(input.toJsonArray());
-    } else if (input.userType() == qMetaTypeId<QVariantHash>()) {
-        json.setObject(QJsonObject::fromVariantHash(input.toHash()));
-    } else if (input.userType() == qMetaTypeId<QVariantMap>()) {
-        json.setObject(QJsonObject::fromVariantMap(input.toMap()));
-    } else if (input.userType() == qMetaTypeId<QVariantList>()) {
-        json.setArray(QJsonArray::fromVariantList(input.toList()));
-    } else if (input.userType() == qMetaTypeId<QStringList>()) {
-        json.setArray(QJsonArray::fromStringList(input.toStringList()));
-    } else {
-        qWarning("%s", "Can not convert input data into QJsonObject or QJSonArray.");
-        return QVariant();
-    }
-#else
     if (input.canConvert<QJsonDocument>()) {
         json = input.toJsonDocument();
     } else if (input.canConvert<QJsonObject>()) {
@@ -649,7 +617,6 @@ QVariant JsonScriptFilter::doFilter(const QVariant &input, const QVariant &argum
         qWarning("%s", "Can not convert input data into QJsonObject or QJSonArray.");
         return QVariant();
     }
-#endif
 
     QString jsonString = QString::fromUtf8(json.toJson(QJsonDocument::Compact));
     jsonString = escapeJson(jsonString);

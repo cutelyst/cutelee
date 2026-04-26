@@ -293,11 +293,7 @@ void TestBuiltinSyntax::testObjects()
   SafeString s3(s1);
   Q_UNUSED(s3);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  QMetaType::construct(qMetaTypeId<MetaEnumVariable>(), 0, 0);
-#else
   QMetaType(qMetaTypeId<MetaEnumVariable>()).construct(0, 0);
-#endif
 }
 
 void TestBuiltinSyntax::testTruthiness_data()
@@ -908,20 +904,16 @@ void TestBuiltinSyntax::testEnums_data()
   QTest::newRow("enums-compare04")
           << QStringLiteral("{% if var.animals >= var2.animals %}true{% else %}false{% endif %}") << dict
           << QStringLiteral("true") << NoError;
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
   QTest::newRow("enums-compare05")
           << QStringLiteral("{% if var.animals > var3.animals %}true{% else %}false{% endif %}") << dict
           << QStringLiteral("false") << NoError;
-#endif
 
   QTest::newRow("enums-compare06")
           << QStringLiteral("{% if var.animals > var2.animals %}true{% else %}false{% endif %}") << dict
           << QStringLiteral("true") << NoError;
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
   QTest::newRow("enums-compare07")
           << QStringLiteral("{% if var.animals <= var3.animals %}true{% else %}false{% endif %}") << dict
           << QStringLiteral("true") << NoError;
-#endif
   QTest::newRow("enums-compare08")
           << QStringLiteral("{% if var.animals <= var2.animals %}true{% else %}false{% endif %}") << dict
           << QStringLiteral("false") << NoError;

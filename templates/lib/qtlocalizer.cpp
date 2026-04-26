@@ -303,18 +303,23 @@ void QtLocalizer::pushLocale(const QString &localeName)
   Locale *localeStruct = 0;
   if (!d->m_availableLocales.contains(localeName)) {
     localeStruct = new Locale(QLocale(localeName));
+
     auto qtTranslator = new QTranslator;
-    qtTranslator->load(QStringLiteral("qt_") + localeName,
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-                       QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-#else
-                       QLibraryInfo::path(QLibraryInfo::TranslationsPath));
-#endif
-    localeStruct->systemTranslators.append(qtTranslator);
+    if (qtTranslator->load(QStringLiteral("qt_") + localeName,
+                           QLibraryInfo::path(QLibraryInfo::TranslationsPath))) {
+      localeStruct->systemTranslators.append(qtTranslator);
+    } else {
+      delete qtTranslator;
+    }
+
     auto appTranslator = new QTranslator;
-    appTranslator->load(d->m_appTranslatorPrefix + localeName,
-                        d->m_appTranslatorPath);
-    localeStruct->systemTranslators.append(appTranslator);
+    if (appTranslator->load(d->m_appTranslatorPrefix + localeName,
+                            d->m_appTranslatorPath)) {
+      localeStruct->systemTranslators.append(appTranslator);
+    } else {
+      delete appTranslator;
+    }
+
     d->m_availableLocales.insert(localeName, localeStruct);
   } else {
     localeStruct = d->m_availableLocales[localeName];

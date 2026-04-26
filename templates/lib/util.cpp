@@ -168,52 +168,30 @@ bool Cutelee::equals(const QVariant &lhs, const QVariant &rhs)
       equal = (lhs.value<MetaEnumVariable>() == rhs.value<int>());
     }
   } else {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    equal = ((lhs == rhs) && (lhs.userType() == rhs.userType()));
-#else
     equal = lhs == rhs;
-#endif
   }
   return equal;
 }
 
 bool Cutelee::gt(const QVariant& lhs, const QVariant& rhs)
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    return lhs > rhs;
-#else
     return QVariant::compare(lhs, rhs) == QPartialOrdering::Greater;
-#endif
 }
 
 bool Cutelee::gte(const QVariant& lhs, const QVariant& rhs)
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    return lhs >= rhs;
-#else
     return equals(lhs, rhs) || gt(lhs, rhs);
-#endif
 }
 
 bool Cutelee::lt(const QVariant &lhs, const QVariant &rhs)
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    return lhs < rhs;
-#else
     return QVariant::compare(lhs, rhs) == QPartialOrdering::Less;
-#endif
 }
-
 
 bool Cutelee::lte(const QVariant &lhs, const QVariant &rhs)
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    return lhs <= rhs;
-#else
     return equals(lhs, rhs) || lt(lhs, rhs);
-#endif
 }
-
 
 std::pair<qreal,QString> Cutelee::calcFileSize(qreal size, int unitSystem, qreal multiplier)
 {

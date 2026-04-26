@@ -34,7 +34,7 @@ to do that, see the [API documentation](http://www.cutelee.org/apidox/extension.
 Installation
 ------------
 
-To build Cutelee, you need at least Qt5.3 (with development packages) and CMake 3.1.
+To build Cutelee, you need at least Qt6.4 and CMake 3.30.
 Out-of-source builds are recommended:
 
     mkdir build

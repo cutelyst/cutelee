@@ -145,14 +145,12 @@ SafeString &SafeString::NestedString::append(const QString &str)
   return *m_safeString;
 }
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 2)
 SafeString &SafeString::NestedString::append(QStringView reference)
 {
   QString::append(reference);
   m_safeString->m_safety = IsNotSafe;
   return *m_safeString;
 }
-#endif
 
 SafeString &SafeString::NestedString::append(QLatin1String str)
 {
@@ -637,35 +635,6 @@ SafeString SafeString::NestedString::simplified() const
   return SafeString(QString::simplified(), m_safeString->m_safety);
 }
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-QStringList SafeString::NestedString::split(const Cutelee::SafeString &sep,
-                                            QString::SplitBehavior behavior,
-                                            Qt::CaseSensitivity cs) const
-{
-  return QString::split(sep.get(), behavior, cs);
-}
-
-QStringList SafeString::NestedString::split(const QString &sep,
-                                            QString::SplitBehavior behavior,
-                                            Qt::CaseSensitivity cs) const
-{
-  return QString::split(sep, behavior, cs);
-}
-
-QStringList SafeString::NestedString::split(const QChar &sep,
-                                            QString::SplitBehavior behavior,
-                                            Qt::CaseSensitivity cs) const
-{
-  return QString::split(sep, behavior, cs);
-}
-
-QStringList
-SafeString::NestedString::split(const QRegularExpression &rx,
-                                QString::SplitBehavior behavior) const
-{
-  return QString::split(rx, behavior);
-}
-#else
 QStringList SafeString::NestedString::split(const Cutelee::SafeString &sep,
                                             Qt::SplitBehavior behavior,
                                             Qt::CaseSensitivity cs) const
@@ -693,7 +662,6 @@ SafeString::NestedString::split(const QRegularExpression &rx,
 {
   return QString::split(rx, behavior);
 }
-#endif
 
 SafeString SafeString::NestedString::toLower() const
 {

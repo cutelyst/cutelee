@@ -172,9 +172,7 @@ public:
 
     SafeString &append(const SafeString &str);
     SafeString &append(const QString &str);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 2)
     SafeString &append(QStringView reference);
-#endif
     SafeString &append(QLatin1String str);
 #ifndef QT_NO_CAST_FROM_ASCII
     SafeString &append(const QByteArray &ba)
@@ -302,18 +300,6 @@ public:
     SafeString &setUtf16(const ushort *unicode, int size);
     SafeString simplified() const;
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-    QStringList split(const SafeString &sep,
-                      QString::SplitBehavior behavior = QString::KeepEmptyParts,
-                      Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-    QStringList split(const QString &sep,
-                      QString::SplitBehavior behavior = QString::KeepEmptyParts,
-                      Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-    QStringList split(const QChar &sep, QString::SplitBehavior behavior = QString::KeepEmptyParts,
-                      Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-    QStringList split(const QRegularExpression &rx,
-                      QString::SplitBehavior behavior = QString::KeepEmptyParts) const;
-#else
     QStringList split(const SafeString &sep,
                       Qt::SplitBehavior behavior = Qt::KeepEmptyParts,
                       Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
@@ -324,7 +310,6 @@ public:
                       Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
     QStringList split(const QRegularExpression &rx,
                       Qt::SplitBehavior behavior = Qt::KeepEmptyParts) const;
-#endif
 
     SafeString toLower() const;
     SafeString toUpper() const;

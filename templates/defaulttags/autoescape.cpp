@@ -31,12 +31,7 @@ AutoescapeNodeFactory::AutoescapeNodeFactory() {}
 
 Node *AutoescapeNodeFactory::getNode(const QString &tagContent, Parser *p) const
 {
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-  auto expr = tagContent.split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
   auto expr = tagContent.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
-
   if (expr.size() != 2) {
     throw Cutelee::Exception(
         TagSyntaxError, QStringLiteral("autoescape takes two arguments."));

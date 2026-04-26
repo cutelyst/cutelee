@@ -139,7 +139,7 @@ QVariant RandomFilter::doFilter(const QVariant &input, const QVariant &argument,
   if (varList.isEmpty())
     return QVariant();
 
-  srand(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch());
+  srand(QDateTime::currentMSecsSinceEpoch());
   auto rnd = rand() % varList.size();
   return varList.at(rnd);
 }
@@ -180,21 +180,13 @@ QVariant MakeListFilter::doFilter(const QVariant &_input,
   auto input = _input;
 
   if (input.userType() == qMetaTypeId<int>()) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    input.convert(QMetaType::QString);
-#else
     input.convert(QMetaType(QMetaType::QString));
-#endif
   }
 
   if (input.userType() == qMetaTypeId<SafeString>()
       || input.userType() == qMetaTypeId<QString>()) {
     QVariantList list;
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-    const auto parts = getSafeString(input).get().split(QString(), QString::SkipEmptyParts);
-#else
     const auto parts = getSafeString(input).get().split(QString(), Qt::SkipEmptyParts);
-#endif
     for (const auto &var : parts) {
       list << var;
     }

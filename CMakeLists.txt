@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.30)
 
-project(Cutelee VERSION 6.1.0 LANGUAGES CXX)
+project(Cutelee VERSION 6.2.0 LANGUAGES CXX)
 
 # Workaround for http://public.kitware.com/Bug/view.php?id=12301
 if (MINGW)
@@ -13,9 +13,9 @@ endif()
 
 include(GNUInstallDirs)
 
-set(QT_MINIMUM_VERSION 5.6.0)
+set(QT_MINIMUM_VERSION 6.4.0)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
+find_package(QT NAMES Qt6 COMPONENTS Core REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} ${QT_MINIMUM_VERSION} COMPONENTS Core REQUIRED)
 
 option(BUILD_SHARED_LIBS "Build in shared lib mode" ON)
@@ -71,7 +71,7 @@ add_definitions(
     -DQT_USE_QSTRINGBUILDER
     -DQT_NO_SIGNALS_SLOTS_KEYWORDS
     -DQT_USE_FAST_OPERATOR_PLUS
-    -DQT_DISABLE_DEPRECATED_BEFORE=0x050c00
+    -DQT_DISABLE_DEPRECATED_BEFORE=0x060400
 )
 
 # Always include the source and build directories in the include path

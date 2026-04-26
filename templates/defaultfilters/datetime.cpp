@@ -96,11 +96,7 @@ QVariant DateFilter::doFilter(const QVariant &input, const QVariant &argument,
     } else if (input.userType() == QMetaType::QTime) {
         d.setTime(input.toTime());
     } else {
-#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
-        d = QDateTime::fromString(getSafeString(input), QStringLiteral("yyyy-MM-ddThh:mm:ss"));
-#else
-        d = QDateTime::fromString(getSafeString(input), QStringLiteral("yyyy-MM-ddThh:mm:ss.zzz"));
-#endif
+        d = QDateTime::fromString(getSafeString(input), u"yyyy-MM-ddThh:mm:ss.zzz");
     }
 
   auto argString = getSafeString(argument);
@@ -108,7 +104,7 @@ QVariant DateFilter::doFilter(const QVariant &input, const QVariant &argument,
   if (!argString.get().isEmpty())
     return d.toString(argString);
 
-  return d.toString(QStringLiteral("MMM. d, yyyy"));
+  return d.toString(u"MMM. d, yyyy");
 }
 
 QVariant TimeFilter::doFilter(const QVariant &input, const QVariant &argument,
@@ -123,11 +119,7 @@ QVariant TimeFilter::doFilter(const QVariant &input, const QVariant &argument,
     } else if (input.userType() == QMetaType::QTime) {
         d.setTime(input.toTime());
     } else {
-#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
-        d = QDateTime::fromString(getSafeString(input), QStringLiteral("yyyy-MM-ddThh:mm:ss"));
-#else
-        d = QDateTime::fromString(getSafeString(input), QStringLiteral("yyyy-MM-ddThh:mm:ss.zzz"));
-#endif
+        d = QDateTime::fromString(getSafeString(input), u"yyyy-MM-ddThh:mm:ss.zzz");
     }
 
     auto argString = getSafeString(argument);

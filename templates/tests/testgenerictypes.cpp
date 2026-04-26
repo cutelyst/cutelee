@@ -303,7 +303,6 @@ template <typename Container> void doTestSequentialContainer_Variant()
 template <typename Container>
 void testAssociativeValues(Cutelee::Context &c, bool unordered = {})
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   Cutelee::Engine engine;
 
   engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
@@ -324,16 +323,11 @@ void testAssociativeValues(Cutelee::Context &c, bool unordered = {})
       QVERIFY(result.contains(QStringLiteral("(Alan:50),")));
     }
   }
-#else
-  Q_UNUSED(c);
-  Q_UNUSED(unordered);
-#endif
 }
 
 template <typename Container>
 void testAssociativeItems(Cutelee::Context &c, bool unordered)
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   Cutelee::Engine engine;
 
   engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
@@ -353,10 +347,6 @@ void testAssociativeItems(Cutelee::Context &c, bool unordered)
       QVERIFY(result.contains(QStringLiteral("(Alan:50),")));
     }
   }
-#else
-  Q_UNUSED(c);
-  Q_UNUSED(unordered);
-#endif
 }
 
 template <typename Container>
@@ -578,7 +568,6 @@ typedef QList<QVector<qint16>> ListVectorInt;
 typedef QMap<int, QList<QVector<qint16>>> MapListVectorInt;
 typedef QStack<QMap<int, QList<QVector<qint16>>>> StackMapListVectorInt;
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 static QVector<qint16> getNumbers()
 {
   static auto n = 0;
@@ -614,11 +603,9 @@ static StackMapListVectorInt getMapStack()
   }
   return stack;
 }
-#endif
 
 void TestGenericTypes::testNestedContainers()
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   Cutelee::Engine engine;
 
   engine.setPluginPaths({QStringLiteral(CUTELEE_PLUGIN_PATH)});
@@ -654,7 +641,6 @@ void TestGenericTypes::testNestedContainers()
       "(V 9,10,),(V 11,12,),),(1 : (L (V 13,14,),(V 15,16,),),),");
 
   QCOMPARE(result, expectedResult);
-#endif
 }
 
 class CustomObject : public QObject

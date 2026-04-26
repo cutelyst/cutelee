@@ -2,9 +2,6 @@
 The Cutelee Libraries
 ======================
 
-[![OSX/Linux Build Status](https://travis-ci.org/steveire/cutelee.svg?branch=master)](https://travis-ci.org/steveire/cutelee)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/steveire/cutelee?branch=master&svg=true)](https://ci.appveyor.com/project/steveire/cutelee/branch/master)
-
 * About Cutelee
 * Installation
 * Licensing
